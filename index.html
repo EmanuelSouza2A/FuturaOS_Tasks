@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scripts Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top, rgba(25, 55, 130, 0.25), transparent 35%),
+        linear-gradient(180deg, #050816 0%, #040714 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+
+    .glass-box {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(8, 12, 30, 0.85);
+      border: 1px solid rgba(102, 122, 255, 0.15);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(80,130,255,0.08), transparent 40%, rgba(0,255,170,0.04));
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(77, 111, 255, 0.12);
+      border: 1px solid rgba(99, 130, 255, 0.18);
+      color: #b9c7ff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      max-width: 700px;
+      color: #b6bdd8;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: .25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #5d7cff, #7c4dff);
+      color: white;
+      box-shadow: 0 10px 30px rgba(92, 105, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(92, 105, 255, 0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+
+    .donation-card {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .panel h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .panel p {
+      color: #b6bdd8;
+      line-height: 1.7;
+    }
+
+    .pix-box {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(16, 24, 52, 0.95);
+      border: 1px solid rgba(95, 120, 255, 0.16);
+    }
+
+    .pix-label {
+      color: #96a0c6;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .pix-key {
+      font-size: 15px;
+      font-weight: 700;
+      word-break: break-all;
+      color: #ffffff;
+    }
+
+    .progress-wrap {
+      margin-top: 22px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      color: #d6ddff;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 16px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #00d2ff, #5d7cff, #7c4dff);
+      border-radius: 999px;
+      transition: width .5s ease;
+    }
+
+    .donate-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .donate-inputs input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 15px 16px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .donate-note {
+      font-size: 13px;
+      color: #8c96be;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    .main-page {
+      padding: 56px 20px 80px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .hero .badge {
+      margin-bottom: 18px;
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      font-weight: 900;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #b6bdd8;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(8,12,30,0.96), rgba(7,10,25,0.92));
+      border: 1px solid rgba(117, 130, 255, 0.12);
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 220px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 10px 24px rgba(0,0,0,0.18);
+      transition: .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(117, 130, 255, 0.28);
+      box-shadow: 0 20px 35px rgba(0,0,0,0.28);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .mini-label {
+      font-size: 11px;
+      color: #8d97bf;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .status {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(0, 255, 136, 0.12);
+      color: #00df82;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border: 1px solid rgba(0,255,136,0.14);
+    }
+
+    .card h3 {
+      font-size: 1.7rem;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .card p {
+      color: #aeb7d5;
+      line-height: 1.7;
+      font-size: 15px;
+      margin-bottom: 22px;
+    }
+
+    .author {
+      color: #8d97bf;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card a.card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #cdd6ff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: .25s ease;
+    }
+
+    .card a.card-link:hover {
+      background: linear-gradient(135deg, rgba(93,124,255,0.16), rgba(124,77,255,0.12));
+      border-color: rgba(93,124,255,0.25);
+    }
+
+    .footer-actions {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .instagram-btn {
+      background: linear-gradient(135deg, #ff3cac, #784ba0, #2b86c5);
+      color: white;
+      min-width: 220px;
+    }
+
+    .small-text {
+      text-align: center;
+      color: #7e88b2;
+      font-size: 13px;
+      margin-top: 18px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .donation-card {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .glass-box {
+        padding: 24px;
+        border-radius: 22px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: auto;
+      }
+
+      h1,
+      .hero h2 {
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tela 1 -->
+  <section class="screen" id="welcomeScreen">
+    <div class="glass-box">
+      <div class="badge">⚡ ACESSO PREMIUM</div>
+      <h1>Olá, seja muito bem-vindo.</h1>
+      <p class="subtitle">
+        Preparamos uma experiência moderna, profissional e futurística para apresentar conteúdos, scripts
+        e materiais de forma elegante. Clique abaixo para continuar e acessar a próxima etapa.
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goToDonation()">Entrar agora</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela 2 -->
+  <section class="screen hidden" id="donationScreen">
+    <div class="glass-box">
+      <div class="donation-card">
+        <div class="panel">
+          <div class="badge">💖 APOIO VIA PIX</div>
+          <h2>Ajude este projeto a crescer</h2>
+          <p>
+            Se quiser apoiar, você pode contribuir via Pix. O valor arrecadado aparece na meta abaixo.
+            A meta atual vai de R$0 até R$200.
+          </p>
+
+          <div class="pix-box">
+            <div class="pix-label">Chave Pix</div>
+            <div class="pix-key" id="pixKey">seu-pix-aqui@email.com</div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-top">
+              <span>Arrecadado: <strong id="currentValue">R$ 0,00</strong></span>
+              <span>Meta: <strong>R$ 200,00</strong></span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <p class="donate-note">
+            Observação: aqui está uma versão visual e funcional da casca. Para o valor subir automaticamente
+            a cada Pix real recebido, depois será necessário integrar com uma API, backend ou sistema de consulta
+            do pagamento.
+          </p>
+        </div>
+
+        <div class="panel">
+          <h2>Simular contribuição</h2>
+          <p>
+            Enquanto a integração automática não é conectada, você pode testar o funcionamento da meta
+            com um valor entre R$0 e R$200.
+          </p>
+
+          <div class="donate-inputs">
+            <input type="number" id="donationInput" min="0" max="200" step="0.01" placeholder="Digite um valor, ex: 25">
+            <button class="btn btn-primary" onclick="addDonation()">Enviar valor</button>
+            <button class="btn btn-secondary" onclick="enterMainPage()">Ir para página principal</button>
+          </div>
+
+          <p class="donate-note">
+            Depois que você me mandar o seu script real de doação/Pix, eu adapto essa parte para ficar do jeito certo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela 3 -->
+  <main class="main-page hidden" id="mainPage">
+    <div class="container">
+      <section class="hero">
+        <div class="badge">🔥 SCRIPTS DISPONÍVEIS</div>
+        <h2>Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
+        <p>
+          Uma vitrine premium com aparência empresarial, moderna e tecnológica, pronta para receber
+          seus textos, links clicáveis e materiais organizados em cards profissionais.
+        </p>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <div class="card-top">
+            <span class="mini-label">Script</span>
+            <span class="status">Online</span>
+          </div>
+          <h3>Título do Texto 1</h3>
+          <p>Descrição curta do conteúdo. Aqui você vai colocar o texto que quiser depois.</p>
+          <div class="author">por Seu Nome</div>
+          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="mini-label">Script</span>
+            <span class="status">Online</span>
+          </div>
+          <h3>Título do Texto 2</h3>
+          <p>Descrição curta do conteúdo. Estrutura pronta para link clicável depois.</p>
+          <div class="author">por Seu Nome</div>
+          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="mini-label">Script</span>
+            <span class="status">Online</span>
+          </div>
+          <h3>Título do Texto 3</h3>
+          <p>Modelo visual futurístico, premium e pronto para personalização completa.</p>
+          <div class="author">por Seu Nome</div>
+          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="mini-label">Script</span>
+            <span class="status">Online</span>
+          </div>
+          <h3>Título do Texto 4</h3>
+          <p>Você poderá trocar esse conteúdo pelos seus textos reais e links individuais.</p>
+          <div class="author">por Seu Nome</div>
+          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="mini-label">Script</span>
+            <span class="status">Online</span>
+          </div>
+          <h3>Título do Texto 5</h3>
+          <p>Card com estilo elegante, sombra suave e bordas premium no padrão escuro.</p>
+          <div class="author">por Seu Nome</div>
+          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <span class="mini-label">Script</span>
+            <span class="status">Online</span>
+          </div>
+          <h3>Título do Texto 6</h3>
+          <p>Espaço ideal para você me mandar depois os textos e eu plugar tudo certinho.</p>
+          <div class="author">por Seu Nome</div>
+          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+        </article>
+      </section>
+
+      <div class="footer-actions">
+        <a class="btn instagram-btn" href="https://instagram.com/" target="_blank">
+          📷 Ir para o Instagram
+        </a>
+      </div>
+
+      <p class="small-text">
+        Depois eu posso substituir esse link pelo seu Instagram real e também inserir os links clicáveis
+        de cada card individualmente.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    let currentAmount = 0;
+    const goal = 200;
+
+    function goToDonation() {
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('donationScreen').classList.remove('hidden');
+    }
+
+    function enterMainPage() {
+      document.getElementById('donationScreen').classList.add('hidden');
+      document.getElementById('mainPage').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+      const percentage = Math.min((currentAmount / goal) * 100, 100);
+      document.getElementById('progressFill').style.width = percentage + '%';
+      document.getElementById('currentValue').innerText =
+        currentAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function addDonation() {
+      const input = document.getElementById('donationInput');
+      const value = parseFloat(input.value);
+
+      if (isNaN(value) || value < 0) {
+        alert('Digite um valor válido.');
+        return;
+      }
+
+      currentAmount += value;
+      if (currentAmount > goal) currentAmount = goal;
+
+      updateProgress();
+      input.value = '';
+      alert('Valor adicionado com sucesso!');
+    }
+
+    updateProgress();
+  </script>
+</body>
+</html>
