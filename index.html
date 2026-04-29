@@ -4,29 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scripts Premium</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
     body {
-      background:
-        radial-gradient(circle at top, rgba(25, 55, 130, 0.25), transparent 35%),
-        linear-gradient(180deg, #050816 0%, #040714 100%);
+      background: radial-gradient(circle at top, rgba(25,55,130,0.25), transparent 35%),
+                  linear-gradient(180deg, #050816 0%, #040714 100%);
       color: #fff;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
     .screen {
       min-height: 100vh;
@@ -39,9 +29,9 @@
     .glass-box {
       width: 100%;
       max-width: 980px;
-      background: rgba(8, 12, 30, 0.85);
-      border: 1px solid rgba(102, 122, 255, 0.15);
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+      background: rgba(8,12,30,0.85);
+      border: 1px solid rgba(102,122,255,0.15);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.45);
       backdrop-filter: blur(18px);
       border-radius: 28px;
       padding: 36px;
@@ -63,8 +53,8 @@
       gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(77, 111, 255, 0.12);
-      border: 1px solid rgba(99, 130, 255, 0.18);
+      background: rgba(77,111,255,0.12);
+      border: 1px solid rgba(99,130,255,0.18);
       color: #b9c7ff;
       font-size: 12px;
       font-weight: 700;
@@ -88,13 +78,6 @@
       margin-bottom: 28px;
     }
 
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 8px;
-    }
-
     .btn {
       border: none;
       outline: none;
@@ -114,13 +97,10 @@
     .btn-primary {
       background: linear-gradient(135deg, #5d7cff, #7c4dff);
       color: white;
-      box-shadow: 0 10px 30px rgba(92, 105, 255, 0.35);
+      box-shadow: 0 10px 30px rgba(92,105,255,0.35);
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 34px rgba(92, 105, 255, 0.45);
-    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(92,105,255,0.45); }
 
     .btn-secondary {
       background: rgba(255,255,255,0.06);
@@ -128,10 +108,7 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.12);
-      transform: translateY(-2px);
-    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
 
     .donation-card {
       display: grid;
@@ -146,45 +123,25 @@
       padding: 24px;
     }
 
-    .panel h2 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-    }
-
-    .panel p {
-      color: #b6bdd8;
-      line-height: 1.7;
-    }
+    .panel h2 { font-size: 1.4rem; margin-bottom: 10px; }
+    .panel p { color: #b6bdd8; line-height: 1.7; }
 
     .pix-box {
       margin-top: 20px;
       padding: 16px;
       border-radius: 18px;
-      background: rgba(16, 24, 52, 0.95);
-      border: 1px solid rgba(95, 120, 255, 0.16);
+      background: rgba(16,24,52,0.95);
+      border: 1px solid rgba(95,120,255,0.16);
     }
 
-    .pix-label {
-      color: #96a0c6;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
+    .pix-label { color: #96a0c6; font-size: 13px; margin-bottom: 8px; }
+    .pix-key { font-size: 15px; font-weight: 700; word-break: break-all; color: #fff; }
 
-    .pix-key {
-      font-size: 15px;
-      font-weight: 700;
-      word-break: break-all;
-      color: #ffffff;
-    }
-
-    .progress-wrap {
-      margin-top: 22px;
-    }
+    .progress-wrap { margin-top: 22px; }
 
     .progress-top {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       font-size: 14px;
       color: #d6ddff;
       margin-bottom: 10px;
@@ -196,7 +153,6 @@
       background: rgba(255,255,255,0.08);
       border-radius: 999px;
       overflow: hidden;
-      position: relative;
     }
 
     .progress-fill {
@@ -207,12 +163,7 @@
       transition: width .5s ease;
     }
 
-    .donate-inputs {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-top: 18px;
-    }
+    .donate-inputs { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
 
     .donate-inputs input {
       width: 100%;
@@ -225,32 +176,14 @@
       outline: none;
     }
 
-    .donate-note {
-      font-size: 13px;
-      color: #8c96be;
-      line-height: 1.6;
-      margin-top: 12px;
-    }
+    .donate-note { font-size: 13px; color: #8c96be; line-height: 1.6; margin-top: 12px; }
 
-    .main-page {
-      padding: 56px 20px 80px;
-    }
+    /* PÁGINA PRINCIPAL */
+    .main-page { padding: 56px 20px 80px; }
 
-    .container {
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
+    .container { width: 100%; max-width: 1280px; margin: 0 auto; }
 
-    .hero {
-      text-align: center;
-      margin-bottom: 42px;
-    }
-
-    .hero .badge {
-      margin-bottom: 18px;
-    }
-
+    .hero { text-align: center; margin-bottom: 42px; }
     .hero h2 {
       font-size: clamp(2rem, 5vw, 4rem);
       line-height: 1.06;
@@ -258,14 +191,7 @@
       margin-bottom: 16px;
       font-weight: 900;
     }
-
-    .hero p {
-      max-width: 760px;
-      margin: 0 auto;
-      color: #b6bdd8;
-      line-height: 1.8;
-      font-size: 1rem;
-    }
+    .hero p { max-width: 760px; margin: 0 auto; color: #b6bdd8; line-height: 1.8; font-size: 1rem; }
 
     .grid {
       display: grid;
@@ -276,19 +202,20 @@
 
     .card {
       background: linear-gradient(180deg, rgba(8,12,30,0.96), rgba(7,10,25,0.92));
-      border: 1px solid rgba(117, 130, 255, 0.12);
+      border: 1px solid rgba(117,130,255,0.12);
       border-radius: 24px;
       padding: 24px;
-      min-height: 220px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 10px 24px rgba(0,0,0,0.18);
       transition: .25s ease;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .card:hover {
       transform: translateY(-6px);
-      border-color: rgba(117, 130, 255, 0.28);
+      border-color: rgba(117,130,255,0.28);
       box-shadow: 0 20px 35px rgba(0,0,0,0.28);
     }
 
@@ -296,20 +223,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
-    .mini-label {
-      font-size: 11px;
-      color: #8d97bf;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
+    .mini-label { font-size: 11px; color: #8d97bf; letter-spacing: .08em; text-transform: uppercase; }
 
     .status {
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(0, 255, 136, 0.12);
+      background: rgba(0,255,136,0.12);
       color: #00df82;
       font-size: 11px;
       font-weight: 800;
@@ -318,25 +240,16 @@
     }
 
     .card h3 {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       line-height: 1.15;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-weight: 800;
       letter-spacing: -0.03em;
     }
 
-    .card p {
-      color: #aeb7d5;
-      line-height: 1.7;
-      font-size: 15px;
-      margin-bottom: 22px;
-    }
+    .card p { color: #aeb7d5; line-height: 1.7; font-size: 14px; margin-bottom: 16px; flex: 1; }
 
-    .author {
-      color: #8d97bf;
-      font-size: 14px;
-      margin-bottom: 18px;
-    }
+    .author { color: #8d97bf; font-size: 13px; margin-bottom: 16px; }
 
     .card a.card-link {
       display: inline-flex;
@@ -350,6 +263,7 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.06);
       transition: .25s ease;
+      font-size: 14px;
     }
 
     .card a.card-link:hover {
@@ -358,7 +272,7 @@
     }
 
     .footer-actions {
-      margin-top: 48px;
+      margin-top: 56px;
       display: flex;
       justify-content: center;
       gap: 14px;
@@ -369,75 +283,51 @@
       background: linear-gradient(135deg, #ff3cac, #784ba0, #2b86c5);
       color: white;
       min-width: 220px;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 16px 28px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(255,60,172,0.3);
     }
 
-    .small-text {
-      text-align: center;
-      color: #7e88b2;
-      font-size: 13px;
-      margin-top: 18px;
-      line-height: 1.6;
-    }
+    .instagram-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(255,60,172,0.45); }
+
+    .small-text { text-align: center; color: #7e88b2; font-size: 13px; margin-top: 18px; line-height: 1.6; }
 
     @media (max-width: 980px) {
-      .donation-card {
-        grid-template-columns: 1fr;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .donation-card { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 640px) {
-      .glass-box {
-        padding: 24px;
-        border-radius: 22px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        min-height: auto;
-      }
-
-      h1,
-      .hero h2 {
-        word-break: break-word;
-      }
+      .glass-box { padding: 24px; border-radius: 22px; }
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Tela 1 -->
+  <!-- TELA 1: BOAS-VINDAS -->
   <section class="screen" id="welcomeScreen">
     <div class="glass-box">
       <div class="badge">⚡ ACESSO PREMIUM</div>
       <h1>Olá, seja muito bem-vindo.</h1>
       <p class="subtitle">
-        Preparamos uma experiência moderna, profissional e futurística para apresentar conteúdos, scripts
-        e materiais de forma elegante. Clique abaixo para continuar e acessar a próxima etapa.
+        Preparamos uma experiência moderna, profissional e futurística para apresentar conteúdos,
+        scripts e materiais de forma elegante. Clique abaixo para continuar.
       </p>
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="goToDonation()">Entrar agora</button>
-      </div>
+      <button class="btn btn-primary" onclick="goToDonation()">Entrar agora →</button>
     </div>
   </section>
 
-  <!-- Tela 2 -->
+  <!-- TELA 2: DOAÇÃO -->
   <section class="screen hidden" id="donationScreen">
     <div class="glass-box">
       <div class="donation-card">
         <div class="panel">
           <div class="badge">💖 APOIO VIA PIX</div>
           <h2>Ajude este projeto a crescer</h2>
-          <p>
-            Se quiser apoiar, você pode contribuir via Pix. O valor arrecadado aparece na meta abaixo.
-            A meta atual vai de R$0 até R$200.
-          </p>
+          <p>Se quiser apoiar, contribua via Pix. O valor arrecadado aparece na meta abaixo. A meta atual vai de R$0 até R$200.</p>
 
           <div class="pix-box">
             <div class="pix-label">Chave Pix</div>
@@ -453,125 +343,214 @@
               <div class="progress-fill" id="progressFill"></div>
             </div>
           </div>
-
-          <p class="donate-note">
-            Observação: aqui está uma versão visual e funcional da casca. Para o valor subir automaticamente
-            a cada Pix real recebido, depois será necessário integrar com uma API, backend ou sistema de consulta
-            do pagamento.
-          </p>
         </div>
 
         <div class="panel">
           <h2>Simular contribuição</h2>
-          <p>
-            Enquanto a integração automática não é conectada, você pode testar o funcionamento da meta
-            com um valor entre R$0 e R$200.
-          </p>
-
+          <p>Teste o funcionamento da meta com um valor entre R$0 e R$200.</p>
           <div class="donate-inputs">
             <input type="number" id="donationInput" min="0" max="200" step="0.01" placeholder="Digite um valor, ex: 25">
             <button class="btn btn-primary" onclick="addDonation()">Enviar valor</button>
-            <button class="btn btn-secondary" onclick="enterMainPage()">Ir para página principal</button>
+            <button class="btn btn-secondary" onclick="enterMainPage()">Ir para página principal →</button>
           </div>
-
-          <p class="donate-note">
-            Depois que você me mandar o seu script real de doação/Pix, eu adapto essa parte para ficar do jeito certo.
-          </p>
+          <p class="donate-note">Quando me mandar o script real do Pix, eu integro o contador automático.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Tela 3 -->
+  <!-- TELA 3: PÁGINA PRINCIPAL COM 19 CARDS -->
   <main class="main-page hidden" id="mainPage">
     <div class="container">
       <section class="hero">
         <div class="badge">🔥 SCRIPTS DISPONÍVEIS</div>
         <h2>Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
-        <p>
-          Uma vitrine premium com aparência empresarial, moderna e tecnológica, pronta para receber
-          seus textos, links clicáveis e materiais organizados em cards profissionais.
-        </p>
+        <p>Suite completa de automações desenvolvidas com tecnologia de ponta para revolucionar sua experiência. Clique em qualquer card para acessar o conteúdo.</p>
       </section>
 
       <section class="grid">
+
+        <!-- CARD 1 -->
         <article class="card">
-          <div class="card-top">
-            <span class="mini-label">Script</span>
-            <span class="status">Online</span>
-          </div>
-          <h3>Título do Texto 1</h3>
-          <p>Descrição curta do conteúdo. Aqui você vai colocar o texto que quiser depois.</p>
-          <div class="author">por Seu Nome</div>
-          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Taskitos</h3>
+          <p>Ferramenta para automatizar tarefas do Sala do Futuro.</p>
+          <div class="author">por flowings, cupiditys</div>
+          <a class="card-link" href="LINK_1_AQUI" target="_blank">Acessar conteúdo →</a>
         </article>
 
+        <!-- CARD 2 -->
         <article class="card">
-          <div class="card-top">
-            <span class="mini-label">Script</span>
-            <span class="status">Online</span>
-          </div>
-          <h3>Título do Texto 2</h3>
-          <p>Descrição curta do conteúdo. Estrutura pronta para link clicável depois.</p>
-          <div class="author">por Seu Nome</div>
-          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Redação Eclipse</h3>
+          <p>Ferramenta para automatizar a criação de redações para o sistema Paulista.</p>
+          <div class="author">por crimsonstrauss</div>
+          <a class="card-link" href="LINK_2_AQUI" target="_blank">Acessar conteúdo →</a>
         </article>
 
+        <!-- CARD 3 -->
         <article class="card">
-          <div class="card-top">
-            <span class="mini-label">Script</span>
-            <span class="status">Online</span>
-          </div>
-          <h3>Título do Texto 3</h3>
-          <p>Modelo visual futurístico, premium e pronto para personalização completa.</p>
-          <div class="author">por Seu Nome</div>
-          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Khanto</h3>
+          <p>Conjunto de ferramentas para automatizar tarefas no Khan Academy.</p>
+          <div class="author">por cupiditys</div>
+          <a class="card-link" href="LINK_3_AQUI" target="_blank">Acessar conteúdo →</a>
         </article>
 
+        <!-- CARD 4 -->
         <article class="card">
-          <div class="card-top">
-            <span class="mini-label">Script</span>
-            <span class="status">Online</span>
-          </div>
-          <h3>Título do Texto 4</h3>
-          <p>Você poderá trocar esse conteúdo pelos seus textos reais e links individuais.</p>
-          <div class="author">por Seu Nome</div>
-          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Elefante Letrado</h3>
+          <p>Ferramenta para automatizar a leitura de livros no Elefante Letrado.</p>
+          <div class="author">por crimsonstrauss</div>
+          <a class="card-link" href="LINK_4_AQUI" target="_blank">Acessar conteúdo →</a>
         </article>
 
+        <!-- CARD 5 -->
         <article class="card">
-          <div class="card-top">
-            <span class="mini-label">Script</span>
-            <span class="status">Online</span>
-          </div>
-          <h3>Título do Texto 5</h3>
-          <p>Card com estilo elegante, sombra suave e bordas premium no padrão escuro.</p>
-          <div class="author">por Seu Nome</div>
-          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Matific</h3>
+          <p>Ferramenta para automatizar tarefas na plataforma Matific.</p>
+          <div class="author">por flowings, cupiditys</div>
+          <a class="card-link" href="LINK_5_AQUI" target="_blank">Acessar conteúdo →</a>
         </article>
 
+        <!-- CARD 6 -->
         <article class="card">
-          <div class="card-top">
-            <span class="mini-label">Script</span>
-            <span class="status">Online</span>
-          </div>
-          <h3>Título do Texto 6</h3>
-          <p>Espaço ideal para você me mandar depois os textos e eu plugar tudo certinho.</p>
-          <div class="author">por Seu Nome</div>
-          <a class="card-link" href="#" target="_blank">Acessar conteúdo</a>
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Tarefas SP</h3>
+          <p>Ferramenta para automatizar tarefas do Sala do Futuro.</p>
+          <div class="author">por crimsonstrauss</div>
+          <a class="card-link" href="LINK_6_AQUI" target="_blank">Acessar conteúdo →</a>
         </article>
+
+        <!-- CARD 7 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Redação Neji</h3>
+          <p>Conjunto de ferramentas para automatizar Redações.</p>
+          <div class="author">por Nejizzuki</div>
+          <a class="card-link" href="LINK_7_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 8 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Educação Profissional</h3>
+          <p>Conjunto de ferramentas para automatizar tarefas no Educação Profissional.</p>
+          <div class="author">por Nejizzuki</div>
+          <a class="card-link" href="LINK_8_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 9 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Open English</h3>
+          <p>Conjunto de ferramentas para automatizar tarefas no Open English.</p>
+          <div class="author">por Nejizzuki</div>
+          <a class="card-link" href="LINK_9_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 10 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Apostilas Neji</h3>
+          <p>Livros do estudante.</p>
+          <div class="author">por Nejizzuki</div>
+          <a class="card-link" href="LINK_10_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 11 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Speak</h3>
+          <p>Ferramenta para automatizar tarefas no Speak.</p>
+          <div class="author">por flowings, cupiditys</div>
+          <a class="card-link" href="LINK_11_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 12 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Redação Paulista</h3>
+          <p>Ferramenta para automatizar a criação de redações para o sistema Paulista.</p>
+          <div class="author">por cupiditys</div>
+          <a class="card-link" href="LINK_12_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 13 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Khan Eclipse</h3>
+          <p>Conjunto de ferramentas para automatizar tarefas no Khan Academy.</p>
+          <div class="author">por crimsonstrauss</div>
+          <a class="card-link" href="LINK_13_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 14 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Expansão Noturna</h3>
+          <p>Ferramenta para automatizar tarefas no Expansão Noturna.</p>
+          <div class="author">por crimsonstraus</div>
+          <a class="card-link" href="LINK_14_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 15 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Livro do Estudante</h3>
+          <p>Apostilas do estudante.</p>
+          <div class="author">por crimsonstrauss</div>
+          <a class="card-link" href="LINK_15_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 16 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Apostilas</h3>
+          <p>Livros do estudante.</p>
+          <div class="author">por Who Asked & Tecniccomsono</div>
+          <a class="card-link" href="LINK_16_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 17 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Cmsp Bots</h3>
+          <p>Bots no discord para automatizar plataformas.</p>
+          <div class="author">por lsnouu</div>
+          <a class="card-link" href="LINK_17_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 18 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Alura Eclipse</h3>
+          <p>Script para automatizar tarefas na plataforma Alura.</p>
+          <div class="author">por crimsonstraus</div>
+          <a class="card-link" href="LINK_18_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
+        <!-- CARD 19 -->
+        <article class="card">
+          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
+          <h3>Khanware v3.0.9</h3>
+          <p>Conjunto de ferramentas para automatizar tarefas no Khan Academy.</p>
+          <div class="author">por Niximlkk</div>
+          <a class="card-link" href="LINK_19_AQUI" target="_blank">Acessar conteúdo →</a>
+        </article>
+
       </section>
 
+      <!-- BOTÃO INSTAGRAM -->
       <div class="footer-actions">
-        <a class="btn instagram-btn" href="https://instagram.com/" target="_blank">
-          📷 Ir para o Instagram
+        <a class="btn instagram-btn" href="https://instagram.com/SEU_INSTAGRAM_AQUI" target="_blank">
+          📷 Seguir no Instagram
         </a>
       </div>
 
-      <p class="small-text">
-        Depois eu posso substituir esse link pelo seu Instagram real e também inserir os links clicáveis
-        de cada card individualmente.
-      </p>
+      <p class="small-text">Me mande os 19 links e o seu @ do Instagram para eu atualizar tudo certinho.</p>
     </div>
   </main>
 
@@ -591,8 +570,8 @@
     }
 
     function updateProgress() {
-      const percentage = Math.min((currentAmount / goal) * 100, 100);
-      document.getElementById('progressFill').style.width = percentage + '%';
+      const pct = Math.min((currentAmount / goal) * 100, 100);
+      document.getElementById('progressFill').style.width = pct + '%';
       document.getElementById('currentValue').innerText =
         currentAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
@@ -600,18 +579,11 @@
     function addDonation() {
       const input = document.getElementById('donationInput');
       const value = parseFloat(input.value);
-
-      if (isNaN(value) || value < 0) {
-        alert('Digite um valor válido.');
-        return;
-      }
-
-      currentAmount += value;
-      if (currentAmount > goal) currentAmount = goal;
-
+      if (isNaN(value) || value < 0) { alert('Digite um valor válido.'); return; }
+      currentAmount = Math.min(currentAmount + value, goal);
       updateProgress();
       input.value = '';
-      alert('Valor adicionado com sucesso!');
+      alert('✅ Valor adicionado com sucesso!');
     }
 
     updateProgress();
