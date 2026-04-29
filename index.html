@@ -3,590 +3,368 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scripts Premium</title>
+  <title>FuturaOS_Tasks</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-
-    body {
-      background: radial-gradient(circle at top, rgba(25,55,130,0.25), transparent 35%),
-                  linear-gradient(180deg, #050816 0%, #040714 100%);
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+    :root{
+      --bg:#07090f;--bg2:#0c0f1c;--border:rgba(255,255,255,0.07);
+      --text:#e2e8f0;--muted:#7a85a3;--green:#22c55e;
+      --green-bg:rgba(34,197,94,0.12);--accent:#6366f1;--accent-bg:rgba(99,102,241,0.12);
     }
-
-    .hidden { display: none !important; }
-
-    .screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 20px;
-    }
-
-    .glass-box {
-      width: 100%;
-      max-width: 980px;
-      background: rgba(8,12,30,0.85);
-      border: 1px solid rgba(102,122,255,0.15);
-      box-shadow: 0 20px 80px rgba(0,0,0,0.45);
-      backdrop-filter: blur(18px);
-      border-radius: 28px;
-      padding: 36px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .glass-box::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(80,130,255,0.08), transparent 40%, rgba(0,255,170,0.04));
-      pointer-events: none;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(77,111,255,0.12);
-      border: 1px solid rgba(99,130,255,0.18);
-      color: #b9c7ff;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .04em;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 5vw, 4.2rem);
-      line-height: 1.05;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
-    }
-
-    .subtitle {
-      max-width: 700px;
-      color: #b6bdd8;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-
-    .btn {
-      border: none;
-      outline: none;
-      cursor: pointer;
-      border-radius: 16px;
-      padding: 14px 22px;
-      font-size: 15px;
-      font-weight: 700;
-      transition: .25s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #5d7cff, #7c4dff);
-      color: white;
-      box-shadow: 0 10px 30px rgba(92,105,255,0.35);
-    }
-
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(92,105,255,0.45); }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .btn-secondary:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
-
-    .donation-card {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 28px;
-    }
-
-    .panel {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 24px;
-      padding: 24px;
-    }
-
-    .panel h2 { font-size: 1.4rem; margin-bottom: 10px; }
-    .panel p { color: #b6bdd8; line-height: 1.7; }
-
-    .pix-box {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(16,24,52,0.95);
-      border: 1px solid rgba(95,120,255,0.16);
-    }
-
-    .pix-label { color: #96a0c6; font-size: 13px; margin-bottom: 8px; }
-    .pix-key { font-size: 15px; font-weight: 700; word-break: break-all; color: #fff; }
-
-    .progress-wrap { margin-top: 22px; }
-
-    .progress-top {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      color: #d6ddff;
-      margin-bottom: 10px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 16px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #00d2ff, #5d7cff, #7c4dff);
-      border-radius: 999px;
-      transition: width .5s ease;
-    }
-
-    .donate-inputs { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
-
-    .donate-inputs input {
-      width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 15px 16px;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-    }
-
-    .donate-note { font-size: 13px; color: #8c96be; line-height: 1.6; margin-top: 12px; }
-
-    /* PÁGINA PRINCIPAL */
-    .main-page { padding: 56px 20px 80px; }
-
-    .container { width: 100%; max-width: 1280px; margin: 0 auto; }
-
-    .hero { text-align: center; margin-bottom: 42px; }
-    .hero h2 {
-      font-size: clamp(2rem, 5vw, 4rem);
-      line-height: 1.06;
-      letter-spacing: -0.04em;
-      margin-bottom: 16px;
-      font-weight: 900;
-    }
-    .hero p { max-width: 760px; margin: 0 auto; color: #b6bdd8; line-height: 1.8; font-size: 1rem; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 28px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(8,12,30,0.96), rgba(7,10,25,0.92));
-      border: 1px solid rgba(117,130,255,0.12);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 10px 24px rgba(0,0,0,0.18);
-      transition: .25s ease;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(117,130,255,0.28);
-      box-shadow: 0 20px 35px rgba(0,0,0,0.28);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .mini-label { font-size: 11px; color: #8d97bf; letter-spacing: .08em; text-transform: uppercase; }
-
-    .status {
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(0,255,136,0.12);
-      color: #00df82;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      border: 1px solid rgba(0,255,136,0.14);
-    }
-
-    .card h3 {
-      font-size: 1.5rem;
-      line-height: 1.15;
-      margin-bottom: 10px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .card p { color: #aeb7d5; line-height: 1.7; font-size: 14px; margin-bottom: 16px; flex: 1; }
-
-    .author { color: #8d97bf; font-size: 13px; margin-bottom: 16px; }
-
-    .card a.card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: #cdd6ff;
-      text-decoration: none;
-      font-weight: 700;
-      padding: 12px 16px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: .25s ease;
-      font-size: 14px;
-    }
-
-    .card a.card-link:hover {
-      background: linear-gradient(135deg, rgba(93,124,255,0.16), rgba(124,77,255,0.12));
-      border-color: rgba(93,124,255,0.25);
-    }
-
-    .footer-actions {
-      margin-top: 56px;
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .instagram-btn {
-      background: linear-gradient(135deg, #ff3cac, #784ba0, #2b86c5);
-      color: white;
-      min-width: 220px;
-      font-size: 15px;
-      font-weight: 800;
-      padding: 16px 28px;
-      border-radius: 999px;
-      box-shadow: 0 10px 30px rgba(255,60,172,0.3);
-    }
-
-    .instagram-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(255,60,172,0.45); }
-
-    .small-text { text-align: center; color: #7e88b2; font-size: 13px; margin-top: 18px; line-height: 1.6; }
-
-    @media (max-width: 980px) {
-      .donation-card { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 640px) {
-      .glass-box { padding: 24px; border-radius: 22px; }
-      .grid { grid-template-columns: 1fr; }
-    }
+    html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+    .hidden{display:none!important}
+    .screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 20px}
+    .glass-box{width:100%;max-width:900px;background:rgba(12,15,28,0.9);border:1px solid rgba(99,102,241,0.18);box-shadow:0 24px 80px rgba(0,0,0,0.5);backdrop-filter:blur(20px);border-radius:28px;padding:40px;position:relative;overflow:hidden}
+    .glass-box::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,0.06),transparent 40%);pointer-events:none}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#a5b4fc;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:22px}
+    h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.06;font-weight:900;letter-spacing:-0.04em;margin-bottom:16px}
+    .subtitle{color:var(--muted);font-size:1rem;line-height:1.75;margin-bottom:32px;max-width:600px}
+    .btn{border:none;outline:none;cursor:pointer;border-radius:14px;padding:14px 24px;font-size:15px;font-weight:700;transition:.22s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+    .btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 8px 28px rgba(99,102,241,0.35)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(99,102,241,0.45)}
+    .btn-secondary{background:rgba(255,255,255,0.05);color:#fff;border:1px solid var(--border)}
+    .btn-secondary:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px)}
+    .donation-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+    .panel{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:20px;padding:24px}
+    .panel h2{font-size:1.35rem;margin-bottom:10px;font-weight:800}
+    .panel p{color:var(--muted);line-height:1.75;font-size:14px}
+    .pix-box{margin-top:18px;padding:14px 16px;border-radius:16px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.14)}
+    .pix-label{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+    .pix-key{font-size:14px;font-weight:700;word-break:break-all}
+    .progress-wrap{margin-top:20px}
+    .progress-top{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:10px}
+    .progress-top strong{color:var(--text)}
+    .progress-bar{width:100%;height:14px;background:rgba(255,255,255,0.07);border-radius:999px;overflow:hidden}
+    .progress-fill{width:0%;height:100%;background:linear-gradient(90deg,#06b6d4,#6366f1,#8b5cf6);border-radius:999px;transition:width .5s ease}
+    .donate-inputs{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+    .donate-inputs input{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:14px 16px;color:#fff;font-size:15px;outline:none}
+    .donate-note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
+    .main-page{padding:60px 20px 90px}
+    .container{width:100%;max-width:1280px;margin:0 auto}
+    .hero{text-align:center;margin-bottom:50px}
+    .hero h2{font-size:clamp(2rem,5vw,3.8rem);line-height:1.06;letter-spacing:-0.04em;font-weight:900;margin-bottom:14px}
+    .hero p{max-width:680px;margin:0 auto;color:var(--muted);line-height:1.8;font-size:.95rem}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:32px}
+    .card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:24px;cursor:pointer;transition:.22s ease;display:flex;flex-direction:column;min-height:210px}
+    .card:hover{border-color:rgba(99,102,241,0.3);transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.3)}
+    .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .mini-label{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+    .status-badge{padding:5px 12px;border-radius:999px;background:var(--green-bg);color:var(--green);font-size:10px;font-weight:800;text-transform:uppercase;border:1px solid rgba(34,197,94,0.18);letter-spacing:.05em}
+    .card h3{font-size:1.4rem;line-height:1.15;margin-bottom:10px;font-weight:800;letter-spacing:-0.03em}
+    .card .desc{color:var(--muted);line-height:1.7;font-size:14px;flex:1;margin-bottom:14px}
+    .card .author-line{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:6px}
+    .card .author-line svg{width:14px;height:14px;flex-shrink:0}
+    .detail-page{padding:48px 20px 80px;min-height:100vh}
+    .detail-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+    .back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:32px;border:none;background:none;transition:.2s}
+    .back-btn:hover{color:var(--text)}
+    .back-btn svg{width:16px;height:16px}
+    .detail-breadcrumb{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+    .breadcrumb-icon{width:36px;height:36px;background:var(--accent-bg);border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .breadcrumb-text{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+    .detail-title{font-size:clamp(2rem,5vw,3.8rem);font-weight:900;letter-spacing:-0.04em;margin-bottom:14px;line-height:1.05}
+    .detail-desc{color:var(--muted);font-size:1rem;line-height:1.75;margin-bottom:28px}
+    .info-box{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:20px 24px;margin-bottom:20px}
+    .info-box-label{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;font-weight:700}
+    .url-link{color:#818cf8;font-size:15px;font-weight:600;word-break:break-all;text-decoration:none;transition:.2s}
+    .url-link:hover{color:#a5b4fc;text-decoration:underline}
+    .code-block{background:#0a0d1a;border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:10px;position:relative}
+    .code-text{font-family:'Courier New',monospace;font-size:13px;color:#94a3b8;line-height:1.6;word-break:break-all;white-space:pre-wrap}
+    .copy-btn{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
+    .copy-btn:hover{transform:scale(1.05)}
+    .info-sidebar{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:24px}
+    .info-sidebar h4{font-size:16px;font-weight:800;margin-bottom:4px}
+    .info-updated{font-size:13px;color:var(--muted);margin-bottom:20px}
+    .info-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+    .info-item:last-of-type{border-bottom:none}
+    .info-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+    .info-icon.green{background:var(--green-bg)}
+    .info-icon.blue{background:rgba(99,102,241,0.12)}
+    .info-icon.purple{background:rgba(139,92,246,0.12)}
+    .info-icon.red{background:rgba(239,68,68,0.1)}
+    .info-value{font-size:15px;font-weight:700;line-height:1.2}
+    .info-key{font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;font-weight:600;margin-top:2px}
+    .info-id{font-size:12px;color:var(--muted);margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+    .footer{background:rgba(7,9,15,0.98);border-top:1px solid var(--border);padding:40px 20px;margin-top:60px}
+    .footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap}
+    .footer-brand{font-size:18px;font-weight:800;margin-bottom:8px}
+    .footer-brand-text{color:var(--muted);font-size:13px;max-width:280px;line-height:1.6}
+    .footer-links{display:flex;gap:40px;flex-wrap:wrap}
+    .footer-col h5{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
+    .footer-col a{display:block;font-size:14px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:.2s}
+    .footer-col a:hover{color:var(--text)}
+    .footer-bottom{margin-top:56px;display:flex;justify-content:center}
+    .ig-btn{background:linear-gradient(135deg,#f43f8e,#a855f7,#3b82f6);color:#fff;min-width:200px;border-radius:999px;padding:14px 26px;font-size:15px;font-weight:800;box-shadow:0 8px 24px rgba(244,63,142,0.3);text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:.22s}
+    .ig-btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(244,63,142,0.4)}
+    @media(max-width:900px){.donation-grid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.detail-inner{grid-template-columns:1fr}}
+    @media(max-width:560px){.grid{grid-template-columns:1fr}.glass-box{padding:24px;border-radius:22px}}
   </style>
 </head>
 <body>
 
-  <!-- TELA 1: BOAS-VINDAS -->
-  <section class="screen" id="welcomeScreen">
-    <div class="glass-box">
-      <div class="badge">⚡ ACESSO PREMIUM</div>
-      <h1>Olá, seja muito bem-vindo.</h1>
-      <p class="subtitle">
-        Preparamos uma experiência moderna, profissional e futurística para apresentar conteúdos,
-        scripts e materiais de forma elegante. Clique abaixo para continuar.
-      </p>
-      <button class="btn btn-primary" onclick="goToDonation()">Entrar agora →</button>
-    </div>
-  </section>
+<!-- TELA 1: BOAS-VINDAS -->
+<section class="screen" id="welcomeScreen">
+  <div class="glass-box">
+    <div class="badge">⚡ Acesso Premium</div>
+    <h1>Olá, seja muito bem-vindo ao FuturaOS_Tasks.</h1>
+    <p class="subtitle">Uma vitrine profissional e futurística para apresentar scripts, ferramentas e conteúdos de forma elegante. Clique para continuar.</p>
+    <button class="btn btn-primary" onclick="goToDonation()">Entrar agora →</button>
+  </div>
+</section>
 
-  <!-- TELA 2: DOAÇÃO -->
-  <section class="screen hidden" id="donationScreen">
-    <div class="glass-box">
-      <div class="donation-card">
-        <div class="panel">
-          <div class="badge">💖 APOIO VIA PIX</div>
-          <h2>Ajude este projeto a crescer</h2>
-          <p>Se quiser apoiar, contribua via Pix. O valor arrecadado aparece na meta abaixo. A meta atual vai de R$0 até R$200.</p>
-
-          <div class="pix-box">
-            <div class="pix-label">Chave Pix</div>
-            <div class="pix-key" id="pixKey">seu-pix-aqui@email.com</div>
-          </div>
-
-          <div class="progress-wrap">
-            <div class="progress-top">
-              <span>Arrecadado: <strong id="currentValue">R$ 0,00</strong></span>
-              <span>Meta: <strong>R$ 200,00</strong></span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" id="progressFill"></div>
-            </div>
+<!-- TELA 2: DOAÇÃO -->
+<section class="screen hidden" id="donationScreen">
+  <div class="glass-box">
+    <div class="donation-grid">
+      <div class="panel">
+        <div class="badge">💜 Apoio via Pix</div>
+        <h2>Ajude o FuturaOS_Tasks a crescer</h2>
+        <p>Se quiser apoiar, contribua via Pix. O valor arrecadado aparece na meta abaixo. Meta: R$0 até R$200.</p>
+        <div class="pix-box">
+          <div class="pix-label">Link Pix</div>
+          <div class="pix-key">
+            <a href="https://pixgg.com/FELIPEXX" target="_blank" style="color:#818cf8;text-decoration:none;">https://pixgg.com/FELIPEXX</a>
           </div>
         </div>
-
-        <div class="panel">
-          <h2>Simular contribuição</h2>
-          <p>Teste o funcionamento da meta com um valor entre R$0 e R$200.</p>
-          <div class="donate-inputs">
-            <input type="number" id="donationInput" min="0" max="200" step="0.01" placeholder="Digite um valor, ex: 25">
-            <button class="btn btn-primary" onclick="addDonation()">Enviar valor</button>
-            <button class="btn btn-secondary" onclick="enterMainPage()">Ir para página principal →</button>
+        <div class="progress-wrap">
+          <div class="progress-top">
+            <span>Arrecadado: <strong id="currentValue">R$ 0,00</strong></span>
+            <span>Meta: <strong>R$ 200,00</strong></span>
           </div>
-          <p class="donate-note">Quando me mandar o script real do Pix, eu integro o contador automático.</p>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Simular contribuição</h2>
+        <p>Insira um valor entre R$0 e R$200 para testar o contador da meta.</p>
+        <div class="donate-inputs">
+          <input type="number" id="donationInput" min="0" max="200" step="0.01" placeholder="Ex: 25">
+          <button class="btn btn-primary" onclick="addDonation()">Confirmar valor</button>
+          <button class="btn btn-secondary" onclick="enterMainPage()">Ir para os scripts →</button>
+        </div>
+        <p class="donate-note">A integração automática do Pix pode ser adicionada futuramente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TELA 3: LISTA DE SCRIPTS -->
+<main class="main-page hidden" id="mainPage">
+  <div class="container">
+    <section class="hero">
+      <div class="badge">🔥 FuturaOS_Tasks — Scripts Disponíveis</div>
+      <h2>Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
+      <p>Suite completa de automações do FuturaOS_Tasks para revolucionar sua experiência. Clique em qualquer card para ver os detalhes e acessar o script.</p>
+    </section>
+
+    <section class="grid" id="cardsGrid"></section>
+
+    <div class="footer-bottom" style="margin-top:56px">
+      <a class="ig-btn" href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Seguir no Instagram
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">🚀 FuturaOS_Tasks</div>
+        <p class="footer-brand-text">Ferramentas desenvolvidas para otimizar sua experiência de aprendizado.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Recursos</h5>
+          <a href="#" onclick="enterMainPage();return false">Scripts</a>
+          <a href="https://discord.gg/p2Zec38XfP" target="_blank">Suporte</a>
+        </div>
+        <div class="footer-col">
+          <h5>Comunidade</h5>
+          <a href="https://discord.gg/p2Zec38XfP" target="_blank">Discord</a>
+          <a href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr" target="_blank">Instagram</a>
         </div>
       </div>
     </div>
-  </section>
+  </footer>
+</main>
 
-  <!-- TELA 3: PÁGINA PRINCIPAL COM 19 CARDS -->
-  <main class="main-page hidden" id="mainPage">
-    <div class="container">
-      <section class="hero">
-        <div class="badge">🔥 SCRIPTS DISPONÍVEIS</div>
-        <h2>Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
-        <p>Suite completa de automações desenvolvidas com tecnologia de ponta para revolucionar sua experiência. Clique em qualquer card para acessar o conteúdo.</p>
-      </section>
-
-      <section class="grid">
-
-        <!-- CARD 1 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Taskitos</h3>
-          <p>Ferramenta para automatizar tarefas do Sala do Futuro.</p>
-          <div class="author">por flowings, cupiditys</div>
-          <a class="card-link" href="LINK_1_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 2 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Redação Eclipse</h3>
-          <p>Ferramenta para automatizar a criação de redações para o sistema Paulista.</p>
-          <div class="author">por crimsonstrauss</div>
-          <a class="card-link" href="LINK_2_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 3 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Khanto</h3>
-          <p>Conjunto de ferramentas para automatizar tarefas no Khan Academy.</p>
-          <div class="author">por cupiditys</div>
-          <a class="card-link" href="LINK_3_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 4 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Elefante Letrado</h3>
-          <p>Ferramenta para automatizar a leitura de livros no Elefante Letrado.</p>
-          <div class="author">por crimsonstrauss</div>
-          <a class="card-link" href="LINK_4_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 5 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Matific</h3>
-          <p>Ferramenta para automatizar tarefas na plataforma Matific.</p>
-          <div class="author">por flowings, cupiditys</div>
-          <a class="card-link" href="LINK_5_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 6 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Tarefas SP</h3>
-          <p>Ferramenta para automatizar tarefas do Sala do Futuro.</p>
-          <div class="author">por crimsonstrauss</div>
-          <a class="card-link" href="LINK_6_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 7 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Redação Neji</h3>
-          <p>Conjunto de ferramentas para automatizar Redações.</p>
-          <div class="author">por Nejizzuki</div>
-          <a class="card-link" href="LINK_7_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 8 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Educação Profissional</h3>
-          <p>Conjunto de ferramentas para automatizar tarefas no Educação Profissional.</p>
-          <div class="author">por Nejizzuki</div>
-          <a class="card-link" href="LINK_8_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 9 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Open English</h3>
-          <p>Conjunto de ferramentas para automatizar tarefas no Open English.</p>
-          <div class="author">por Nejizzuki</div>
-          <a class="card-link" href="LINK_9_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 10 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Apostilas Neji</h3>
-          <p>Livros do estudante.</p>
-          <div class="author">por Nejizzuki</div>
-          <a class="card-link" href="LINK_10_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 11 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Speak</h3>
-          <p>Ferramenta para automatizar tarefas no Speak.</p>
-          <div class="author">por flowings, cupiditys</div>
-          <a class="card-link" href="LINK_11_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 12 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Redação Paulista</h3>
-          <p>Ferramenta para automatizar a criação de redações para o sistema Paulista.</p>
-          <div class="author">por cupiditys</div>
-          <a class="card-link" href="LINK_12_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 13 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Khan Eclipse</h3>
-          <p>Conjunto de ferramentas para automatizar tarefas no Khan Academy.</p>
-          <div class="author">por crimsonstrauss</div>
-          <a class="card-link" href="LINK_13_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 14 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Expansão Noturna</h3>
-          <p>Ferramenta para automatizar tarefas no Expansão Noturna.</p>
-          <div class="author">por crimsonstraus</div>
-          <a class="card-link" href="LINK_14_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 15 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Livro do Estudante</h3>
-          <p>Apostilas do estudante.</p>
-          <div class="author">por crimsonstrauss</div>
-          <a class="card-link" href="LINK_15_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 16 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Apostilas</h3>
-          <p>Livros do estudante.</p>
-          <div class="author">por Who Asked & Tecniccomsono</div>
-          <a class="card-link" href="LINK_16_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 17 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Cmsp Bots</h3>
-          <p>Bots no discord para automatizar plataformas.</p>
-          <div class="author">por lsnouu</div>
-          <a class="card-link" href="LINK_17_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 18 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Alura Eclipse</h3>
-          <p>Script para automatizar tarefas na plataforma Alura.</p>
-          <div class="author">por crimsonstraus</div>
-          <a class="card-link" href="LINK_18_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-        <!-- CARD 19 -->
-        <article class="card">
-          <div class="card-top"><span class="mini-label">Script</span><span class="status">Online</span></div>
-          <h3>Khanware v3.0.9</h3>
-          <p>Conjunto de ferramentas para automatizar tarefas no Khan Academy.</p>
-          <div class="author">por Niximlkk</div>
-          <a class="card-link" href="LINK_19_AQUI" target="_blank">Acessar conteúdo →</a>
-        </article>
-
-      </section>
-
-      <!-- BOTÃO INSTAGRAM -->
-      <div class="footer-actions">
-        <a class="btn instagram-btn" href="https://instagram.com/SEU_INSTAGRAM_AQUI" target="_blank">
-          📷 Seguir no Instagram
-        </a>
+<!-- TELA 4: DETALHES DO SCRIPT -->
+<main class="detail-page hidden" id="detailPage">
+  <div class="detail-inner">
+    <div>
+      <button class="back-btn" onclick="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Voltar para Scripts
+      </button>
+      <div class="detail-breadcrumb">
+        <div class="breadcrumb-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span class="breadcrumb-text">SCRIPT — FuturaOS_Tasks</span>
       </div>
-
-      <p class="small-text">Me mande os 19 links e o seu @ do Instagram para eu atualizar tudo certinho.</p>
+      <h1 class="detail-title" id="detailTitle"></h1>
+      <p class="detail-desc" id="detailDesc"></p>
+      <div class="info-box">
+        <div class="info-box-label">URL do Script</div>
+        <a class="url-link" id="detailUrl" href="#" target="_blank"></a>
+      </div>
+      <div class="info-box" id="codeSection">
+        <div class="info-box-label">Código do Script</div>
+        <div class="code-block">
+          <pre class="code-text" id="detailCode"></pre>
+          <button class="copy-btn" onclick="copyCode()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar
+          </button>
+        </div>
+      </div>
     </div>
-  </main>
+    <div>
+      <div class="info-sidebar">
+        <h4>Informações do Script</h4>
+        <p class="info-updated" id="detailUpdated"></p>
+        <div class="info-item">
+          <div class="info-icon green">🟢</div>
+          <div><div class="info-value" id="detailStatus">online</div><div class="info-key">Status</div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon blue">⭐</div>
+          <div><div class="info-value" id="detailAuthor"></div><div class="info-key">Autor</div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon purple">🕐</div>
+          <div><div class="info-value" id="detailDate"></div><div class="info-key">Atualização</div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon red">🏠</div>
+          <div><div class="info-value" id="detailRoute"></div><div class="info-key">Rota</div></div>
+        </div>
+        <p class="info-id" id="detailId"></p>
+      </div>
+    </div>
+  </div>
+</main>
 
-  <script>
-    let currentAmount = 0;
-    const goal = 200;
+<script>
+  const scripts = [
+    { id:1,  title:"Taskitos",              desc:"Ferramenta para automatizar tarefas do Sala do Futuro.",                               author:"flowings, cupiditys",       date:"29/04/2026", route:"taskitos",               url:"https://taskitos.cupiditys.lol/?cmsphacks.xyz",                             code:"", uid:"" },
+    { id:2,  title:"Redação Eclipse",       desc:"Ferramenta para automatizar a criação de redações para o sistema Paulista.",           author:"crimsonstrauss",             date:"29/04/2026", route:"redacao-eclipse",         url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:3,  title:"Khanto",                desc:"Conjunto de ferramentas para automatizar tarefas no Khan Academy.",                    author:"cupiditys",                  date:"29/04/2026", route:"khanto",                  url:"https://khan.cupiditys.lol/pt-br/?cmsphacks.xyz",                           code:"", uid:"" },
+    { id:4,  title:"Elefante Letrado",      desc:"Ferramenta para automatizar a leitura de livros no Elefante Letrado.",                author:"crimsonstrauss",             date:"29/04/2026", route:"elefante-letrado",        url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:5,  title:"Matific",               desc:"Ferramenta para automatizar tarefas na plataforma Matific.",                          author:"flowings, cupiditys",        date:"29/04/2026", route:"matific",                 url:"https://matific.cupiditys.lol/dashboard?cmsphacks.xyz",                     code:"", uid:"" },
+    { id:6,  title:"Tarefas SP",            desc:"Ferramenta para automatizar tarefas do Sala do Futuro.",                              author:"crimsonstrauss",             date:"29/04/2026", route:"tarefas-sp",              url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:7,  title:"Redação Neji",          desc:"Conjunto de ferramentas para automatizar Redações.",                                  author:"Nejizzuki",                  date:"29/04/2026", route:"redacao-neji",            url:"https://kazereda.nejizzuki.xyz/?cmsphacks.xyz",                             code:"", uid:"" },
+    { id:8,  title:"Educação Profissional", desc:"Conjunto de ferramentas para automatizar tarefas no Educação Profissional.",          author:"Nejizzuki",                  date:"29/04/2026", route:"educacao-profissional",   url:"https://profissional.nejizzuki.xyz/?cmsphacks.xyz",                         code:"", uid:"" },
+    { id:9,  title:"Open English",          desc:"Conjunto de ferramentas para automatizar tarefas no Open English.",                   author:"Nejizzuki",                  date:"29/04/2026", route:"open-english",            url:"https://oe.nejizzuki.xyz/?cmsphacks.xyz",                                   code:"", uid:"" },
+    { id:10, title:"Apostilas Neji",        desc:"Livros do estudante.",                                                                author:"Nejizzuki",                  date:"29/04/2026", route:"apostilas-neji",          url:"https://apostilas.nejizzuki.xyz/?cmsphacks.xyz",                            code:"", uid:"" },
+    { id:11, title:"Speak",                 desc:"Ferramenta para automatizar tarefas no Speak.",                                       author:"flowings, cupiditys",        date:"29/04/2026", route:"speak",                   url:"https://speakify.cupiditys.lol/?cmsphacks.xyz",                             code:"", uid:"" },
+    { id:12, title:"Redação Paulista",      desc:"Ferramenta para automatizar a criação de redações para o sistema Paulista.",          author:"cupiditys",                  date:"29/04/2026", route:"redacao-paulista",        url:"https://redacao.cupiditys.lol/?cmsphacks.xyz",                              code:"", uid:"" },
+    { id:13, title:"Khan Eclipse",          desc:"Conjunto de ferramentas para automatizar tarefas no Khan Academy.",                   author:"crimsonstrauss",             date:"29/04/2026", route:"khan-eclipse",            url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:14, title:"Expansão Noturna",      desc:"Ferramenta para automatizar tarefas no Expansão Noturna.",                           author:"crimsonstraus",              date:"29/04/2026", route:"expansao-noturna",        url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:15, title:"Livro do Estudante",    desc:"Apostilas do estudante.",                                                             author:"crimsonstrauss",             date:"29/04/2026", route:"livro-estudante",         url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:16, title:"Apostilas",             desc:"Livros do estudante.",                                                                author:"Who Asked & Tecniccomsono", date:"29/04/2026", route:"apostilas",               url:"https://apostilas-cmsp.vercel.app/?cmsphacks.xyz",                          code:"", uid:"" },
+    { id:17, title:"Cmsp Bots",             desc:"Bots no discord para automatizar plataformas.",                                       author:"lsnouu",                     date:"29/04/2026", route:"cmsp-bots",               url:"https://discord.gg/p2Zec38XfP",                                            code:"", uid:"" },
+    { id:18, title:"Alura Eclipse",         desc:"Script para automatizar tarefas na plataforma Alura.",                                author:"crimsonstraus",              date:"29/04/2026", route:"alura-eclipse",           url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" },
+    { id:19, title:"Khanware v3.0.9",       desc:"Conjunto de ferramentas para automatizar tarefas no Khan Academy.",                   author:"Niximkk",                    date:"29/04/2026", route:"khanware",                url:"https://khanware.space/?cmsphacks.xyz",                                     code:'javascript:fetch("https://raw.githubusercontent.com/Niximkk/Khanware/refs/heads/main/Khanware.js").then(t=>t.text()).then(eval);', uid:"6713fcb69c4463c828b10610" },
+    { id:20, title:"LeiaSP",                desc:"Ferramenta para automatizar a leitura de livros no LeiaSP.",                         author:"Cupiditys",                  date:"29/04/2026", route:"leiasp",                  url:"https://leiasp.cupiditys.lol/?cmsphacks.xyz",                              code:"", uid:"" },
+    { id:21, title:"Redação Paraná",        desc:"Ferramenta para automatizar a criação de redações para o sistema Paranaense.",        author:"lsnouu",                     date:"29/04/2026", route:"redacao-parana",          url:"https://paranaplataformas.crimsonzerohub.xyz/redacao?cmsphacks.xyz",        code:"", uid:"" },
+    { id:22, title:"Prepara SP",            desc:"Ferramenta para automatizar a criação de redações para o sistema Paranaense.",        author:"crimsonstrauss",             date:"29/04/2026", route:"prepara-sp",              url:"https://crimsonzerohub.xyz/?cmsphacks.xyz",                                 code:"", uid:"" }
+  ];
 
-    function goToDonation() {
-      document.getElementById('welcomeScreen').classList.add('hidden');
-      document.getElementById('donationScreen').classList.remove('hidden');
+  function renderCards() {
+    document.getElementById('cardsGrid').innerHTML = scripts.map(s => `
+      <article class="card" onclick="openDetail(${s.id})">
+        <div class="card-top">
+          <span class="mini-label">Script</span>
+          <span class="status-badge">● online</span>
+        </div>
+        <h3>${s.title}</h3>
+        <p class="desc">${s.desc}</p>
+        <div class="author-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          por ${s.author}
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function openDetail(id) {
+    const s = scripts.find(x => x.id === id);
+    if (!s) return;
+    document.getElementById('detailTitle').textContent   = s.title;
+    document.getElementById('detailDesc').textContent    = s.desc;
+    document.getElementById('detailStatus').textContent  = 'online';
+    document.getElementById('detailAuthor').textContent  = s.author;
+    document.getElementById('detailDate').textContent    = s.date;
+    document.getElementById('detailRoute').textContent   = s.route;
+    document.getElementById('detailUrl').textContent     = s.url;
+    document.getElementById('detailUrl').href            = s.url;
+    document.getElementById('detailUpdated').textContent = 'Atualizado em ' + s.date;
+    document.getElementById('detailId').textContent      = s.uid ? 'ID: ' + s.uid : '';
+    const codeSection = document.getElementById('codeSection');
+    if (s.code) {
+      document.getElementById('detailCode').textContent = s.code;
+      codeSection.style.display = 'block';
+    } else {
+      codeSection.style.display = 'none';
     }
+    document.getElementById('mainPage').classList.add('hidden');
+    document.getElementById('detailPage').classList.remove('hidden');
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
 
-    function enterMainPage() {
-      document.getElementById('donationScreen').classList.add('hidden');
-      document.getElementById('mainPage').classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  function copyCode() {
+    const code = document.getElementById('detailCode').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.innerHTML = '✅ Copiado!';
+      setTimeout(() => {
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar';
+      }, 2000);
+    });
+  }
 
-    function updateProgress() {
-      const pct = Math.min((currentAmount / goal) * 100, 100);
-      document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('currentValue').innerText =
-        currentAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
+  function goBack() {
+    document.getElementById('detailPage').classList.add('hidden');
+    document.getElementById('mainPage').classList.remove('hidden');
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
 
-    function addDonation() {
-      const input = document.getElementById('donationInput');
-      const value = parseFloat(input.value);
-      if (isNaN(value) || value < 0) { alert('Digite um valor válido.'); return; }
-      currentAmount = Math.min(currentAmount + value, goal);
-      updateProgress();
-      input.value = '';
-      alert('✅ Valor adicionado com sucesso!');
-    }
+  let currentAmount = 0;
+  const goal = 200;
 
+  function updateProgress() {
+    const pct = Math.min((currentAmount / goal) * 100, 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('currentValue').innerText =
+      currentAmount.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+  }
+
+  function addDonation() {
+    const input = document.getElementById('donationInput');
+    const value = parseFloat(input.value);
+    if (isNaN(value) || value < 0) { alert('Digite um valor válido.'); return; }
+    currentAmount = Math.min(currentAmount + value, goal);
     updateProgress();
-  </script>
+    input.value = '';
+    alert('✅ Valor adicionado com sucesso!');
+  }
+
+  function goToDonation() {
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('donationScreen').classList.remove('hidden');
+  }
+
+  function enterMainPage() {
+    document.getElementById('donationScreen').classList.add('hidden');
+    document.getElementById('mainPage').classList.remove('hidden');
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  updateProgress();
+  renderCards();
+</script>
 </body>
 </html>
