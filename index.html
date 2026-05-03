@@ -373,16 +373,23 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         <div class="panel-title">Apoie o FuturaOS_Tasks</div>
         <p class="panel-desc">Escolha um valor, pague via Pix e o contador da meta atualiza automaticamente a cada 10 segundos.</p>
         <div class="valor-grid">
-          <button class="vbtn" onclick="setValor(5)">R$ 5</button>
-          <button class="vbtn" onclick="setValor(10)">R$ 10</button>
-          <button class="vbtn" onclick="setValor(20)">R$ 20</button>
-          <button class="vbtn" onclick="setValor(50)">R$ 50</button>
-          <button class="vbtn" onclick="setValor(100)">R$ 100</button>
-          <button class="vbtn" onclick="setValor(200)">R$ 200</button>
+          <button class="vbtn" onclick="setValor(this,1)">R$ 1</button>
+          <button class="vbtn" onclick="setValor(this,5)">R$ 5</button>
+          <button class="vbtn" onclick="setValor(this,10)">R$ 10</button>
+          <button class="vbtn" onclick="setValor(this,20)">R$ 20</button>
+          <button class="vbtn" onclick="setValor(this,50)">R$ 50</button>
+          <button class="vbtn" onclick="setValor(this,100)">R$ 100</button>
+          <button class="vbtn" onclick="setValor(this,200)">R$ 200</button>
         </div>
         <input class="valor-input" id="valorInput" type="number" min="1" max="9999" step="0.01"
           placeholder="Ou digite outro valor (R$)" oninput="onValorInput()"/>
-        <button class="btn btn-ghost" style="width:100%;margin-top:14px" onclick="enterMain()">
+        <div id="payBox" style="display:none;flex-direction:column;gap:10px;margin-top:16px">
+          <div style="font-size:11px;color:rgba(0,212,255,0.5);font-family:'JetBrains Mono',monospace;text-align:center;letter-spacing:.06em">ESCOLHA A FORMA DE PAGAMENTO</div>
+          <button class="btn btn-primary" style="width:100%;font-size:16px;padding:17px" onclick="abrirPagamento('pix')">⚡ Pagar com Pix</button>
+          <button onclick="abrirPagamento('cartao')" style="width:100%;font-size:15px;padding:15px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border:none;border-radius:14px;cursor:pointer;font-weight:700;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s">💳 Cartão de Crédito / Débito</button>
+          <button class="btn btn-ghost" style="width:100%;font-size:14px" onclick="abrirPagamento('boleto')">🧾 Pagar com Boleto</button>
+        </div>
+        <button class="btn btn-ghost" style="width:100%;margin-top:12px;font-size:13px;opacity:.7" onclick="enterMain()">
           Pular → Acessar scripts
         </button>
         <div class="progress-wrap">
@@ -417,7 +424,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
           🔑 Copiar chave Pix: felipe-wsihsko@jim.com
         </button>
         <div class="pix-valor-label" id="pixValorLabel"></div>
-        <div class="pix-tip">⚡ Atualização automática a cada 10s via API Pixgg</div>
+        <div class="pix-tip" id="pixTip">⚡ Barra atualiza automaticamente quando o pagamento for confirmado</div>
       </div>
     </div>
   </div>
@@ -621,13 +628,33 @@ function showNotify(icon, title, sub) {
   notifyTimer = setTimeout(() => el.classList.remove('show'), 4500);
 }
 
-/* ── API PIXGG ── */
-const API_KEY = '38c1eba1-3507-455b-a42f-99d9dbf26f66';
-const GOAL_ID = '26021';
-const API_URL = `https://api.pixgg.com/goals/?apikey=${API_KEY}&goal=${GOAL_ID}`;
-let lastAmount = -1;
-let goalMax = 200;
-let payHistory = [];
+/* ── INFINITEPAY + VERCEL/UPSTASH ── */
+const BACKEND_URL  = 'https://futura-os-tasks.vercel.app/api/webhook';
+const INFINITE_TAG = 'felipe-wsihsko';
+const META_VALOR   = 200;
+let selectedValor  = 0;
+let lastAmount     = -1;
+let goalMax        = META_VALOR;
+let payHistory     = [];
+
+const LINKS_PIX = {
+  1:   'https://loja.infinitepay.io/felipe-wsihsko/dkf5540-futuraos-tasks-a-inteligencia-artificial-d',
+  5:   'https://loja.infinitepay.io/felipe-wsihsko/yii3087-futuraos-tasks-a-inteligencia-artificial-d',
+  10:  'https://loja.infinitepay.io/felipe-wsihsko/kux3349-futuraos-tasks-a-inteligencia-artificial-d',
+  20:  'https://loja.infinitepay.io/felipe-wsihsko/bou4168-futuraos-tasks-a-inteligencia-artificial-d',
+  50:  'https://loja.infinitepay.io/felipe-wsihsko/ojo2464-futuraos-tasks-a-inteligencia-artificial-d',
+  100: 'https://loja.infinitepay.io/felipe-wsihsko/has5229-futuraos-tasks-a-inteligencia-artificial-d',
+  200: 'https://loja.infinitepay.io/felipe-wsihsko/fst9813-futuraos-tasks-a-inteligencia-artificial-d'
+};
+const METODOS = { pix:'?payment_method=pix', cartao:'?payment_method=credit_card', boleto:'?payment_method=boleto' };
+
+function abrirPagamento(metodo) {
+  if (!selectedValor) { showNotify('⚠️','Atenção','Selecione um valor primeiro!'); return; }
+  const base = LINKS_PIX[selectedValor] || `https://loja.infinitepay.io/${INFINITE_TAG}/oee7671-ajude-o-site-nao-cair`;
+  window.open(base + (METODOS[metodo] || ''), '_blank');
+  document.getElementById('pixTip').textContent = '⏳ Aguardando confirmação automática...';
+  showNotify('💳','Redirecionando...','Após pagar, a barra atualiza em até 10s!');
+}
 
 try { payHistory = JSON.parse(localStorage.getItem('ft_hist') || '[]'); } catch(e) {}
 
@@ -637,42 +664,30 @@ function fmtBRL(v) {
 
 async function fetchGoal() {
   try {
-    const res = await fetch(API_URL, { cache: 'no-store' });
+    const res = await fetch(BACKEND_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-
-    const received = parseFloat(
-      data.received ?? data.amount ?? data.current ?? data.total ?? data.value ?? 0
-    );
-    const goal = parseFloat(data.goal ?? data.target ?? data.meta ?? 200);
+    const received = parseFloat(data.current ?? 0);
+    const goal     = parseFloat(data.meta ?? META_VALOR);
     goalMax = goal;
-
     const pct = Math.min((received / goal) * 100, 100);
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('currentValue').textContent = fmtBRL(received);
-    document.getElementById('goalValue').textContent = fmtBRL(goal);
-    document.getElementById('pctText').textContent = pct.toFixed(1) + '%';
-
-    const dot = document.getElementById('apiDot');
-    dot.className = 'api-dot ok';
-    document.getElementById('apiStatus').textContent = 'API conectada ✓  — atualiza a cada 10s';
-
+    document.getElementById('goalValue').textContent    = fmtBRL(goal);
+    document.getElementById('pctText').textContent      = pct.toFixed(1) + '%';
+    document.getElementById('apiDot').className         = 'api-dot ok';
+    document.getElementById('apiStatus').textContent    = 'InfinitePay ✓ — atualiza a cada 10s';
     if (lastAmount >= 0 && received > lastAmount) {
       const diff = received - lastAmount;
-      showNotify('💚', 'Pix recebido!', '+ ' + fmtBRL(diff) + ' na meta!');
-      const now = new Date();
-      payHistory.unshift({
-        val: diff,
-        time: now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-      });
-      try { localStorage.setItem('ft_hist', JSON.stringify(payHistory.slice(0, 20))); } catch(e) {}
-      renderHistory();
+      showNotify('💚','Pagamento confirmado! 🎉','+ ' + fmtBRL(diff) + ' na meta!');
+      const el = document.getElementById('pixTip');
+      if (el) el.textContent = '✅ Pagamento confirmado! Obrigado!';
+      if (Array.isArray(data.history)) { payHistory = data.history; renderHistory(); }
     }
     lastAmount = received;
   } catch (err) {
-    const dot = document.getElementById('apiDot');
-    dot.className = 'api-dot err';
-    document.getElementById('apiStatus').textContent = 'Erro na API — tentando novamente...';
+    document.getElementById('apiDot').className      = 'api-dot err';
+    document.getElementById('apiStatus').textContent = 'Aguardando backend Vercel...';
   }
 }
 
@@ -733,11 +748,15 @@ function gerarQR(valor) {
   document.getElementById('pixValorLabel').textContent = 'Valor: ' + fmtBRL(v);
 }
 
-function setValor(v) {
+function setValor(btn, v) {
+  selectedValor = v;
   document.getElementById('valorInput').value = v;
-  document.querySelectorAll('.vbtn').forEach(b =>
-    b.classList.toggle('active', parseFloat(b.textContent.replace('R$ ', '')) === v)
-  );
+  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const pb = document.getElementById('payBox');
+  if (pb) pb.style.display = 'flex';
+  const pt = document.getElementById('pixTip');
+  if (pt) pt.textContent = '📱 QR Code gerado — escolha a forma de pagamento abaixo';
   gerarQR(v);
 }
 
