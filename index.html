@@ -28,7 +28,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .au{position:absolute;border-radius:50%}
 .au1{width:900px;height:900px;background:radial-gradient(circle,rgba(0,212,255,0.055),transparent 70%);top:-250px;left:-250px;animation:au1 14s ease-in-out infinite}
 .au2{width:750px;height:750px;background:radial-gradient(circle,rgba(124,58,237,0.065),transparent 70%);bottom:-200px;right:-150px;animation:au2 17s ease-in-out infinite}
-.au3{width:550px;height:550px;background:radial-gradient(circle,rgba(236,72,153,0.04),transparent 70%);top:35%;left:35%;animation:au3 11s ease-in-out infinite}
+/* CORRIGIDO: adicionado transform:translate(-50%,-50%) para coincidir com a keyframe au3 */
+.au3{width:550px;height:550px;background:radial-gradient(circle,rgba(236,72,153,0.04),transparent 70%);top:35%;left:35%;transform:translate(-50%,-50%);animation:au3 11s ease-in-out infinite}
 @keyframes au1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,90px) scale(1.12)}}
 @keyframes au2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-90px,-70px) scale(1.18)}}
 @keyframes au3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.25)}}
@@ -570,8 +571,8 @@ window.addEventListener('resize', resizeCanvas);
 
 for (let i = 0; i < 95; i++) {
   pts.push({
-    x: Math.random() * innerWidth,
-    y: Math.random() * innerHeight,
+    x: Math.random() * W,
+    y: Math.random() * H,
     r: Math.random() * 1.8 + 0.3,
     dx: (Math.random() - 0.5) * 0.45,
     dy: (Math.random() - 0.5) * 0.45,
@@ -718,11 +719,12 @@ function gerarPixPayload(valor) {
     tlv('54', amount) + tlv('58', 'BR') +
     tlv('59', 'FuturaOS Tasks') + tlv('60', 'OSASCO') + cpi;
 
+  /* CORRIGIDO: mascaramento (& 0xFFFF) para evitar overflow de 32 bits no CRC16 */
   function crc16(str) {
     let crc = 0xFFFF;
     for (let i = 0; i < str.length; i++) {
       crc ^= str.charCodeAt(i) << 8;
-      for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : (crc << 1);
+      for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? ((crc << 1) & 0xFFFF) ^ 0x1021 : (crc << 1) & 0xFFFF;
     }
     return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
   }
@@ -760,10 +762,20 @@ function setValor(btn, v) {
   gerarQR(v);
 }
 
+/* CORRIGIDO: selectedValor agora é atualizado ao digitar; payBox aparece corretamente */
 function onValorInput() {
   const v = parseFloat(document.getElementById('valorInput').value);
   document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
-  if (v > 0) gerarQR(v);
+  if (v > 0) {
+    selectedValor = v;
+    const pb = document.getElementById('payBox');
+    if (pb) pb.style.display = 'flex';
+    gerarQR(v);
+  } else {
+    selectedValor = 0;
+    const pb = document.getElementById('payBox');
+    if (pb) pb.style.display = 'none';
+  }
 }
 
 function copyPixKey() {
