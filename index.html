@@ -3,186 +3,279 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Doação via Pix</title>
+  <title>Erro 000551</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      margin: 0;
-      padding: 20px;
-      color: #1f2937;
+    :root{
+      --bg:#020408;
+      --cyan:#00d4ff;
+      --purple:#7c3aed;
+      --pink:#ec4899;
+      --text:#e8f4ff;
+      --muted:#94a6a8;
+      --border:rgba(0,212,255,.12);
+      --border-hi:rgba(0,212,255,.26);
+      --danger:#ff4d6d;
     }
-    .card {
-      max-width: 720px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      overflow: hidden;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%}
+    body{
+      font-family:Inter,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0,212,255,.10), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(124,58,237,.12), transparent 35%),
+        linear-gradient(180deg, #020408 0%, #050915 100%);
+      color:var(--text);
+      overflow:hidden;
     }
-    .header {
-      background: #ef4444;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
+    .bg-grid{
+      position:fixed;inset:0;pointer-events:none;opacity:.35;
+      background-image:
+        linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
+      background-size:48px 48px;
+      mask-image:radial-gradient(circle at center, black 40%, transparent 100%);
     }
-    .content {
-      padding: 24px;
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      position:relative;
+      z-index:2;
     }
-    .notice {
-      background: #fff7ed;
-      border: 1px solid #fdba74;
-      padding: 14px;
-      border-radius: 12px;
-      margin-bottom: 20px;
+    .glass{
+      width:100%;
+      max-width:920px;
+      background:rgba(6,10,20,.84);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:44px;
+      box-shadow:0 30px 100px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.04);
+      backdrop-filter:blur(24px);
+      position:relative;
+      overflow:hidden;
     }
-    .row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+    .glass:before{
+      content:"";
+      position:absolute;
+      top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg, transparent, var(--cyan), var(--purple), var(--pink), transparent);
     }
-    .btn {
-      border: 0;
-      background: #2563eb;
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
+    .corner{
+      position:absolute;width:18px;height:18px;border:2px solid var(--cyan);opacity:.7;
+      animation:pulse 2.8s ease-in-out infinite;
     }
-    .btn.secondary {
-      background: #e5e7eb;
-      color: #111827;
+    .tl{top:14px;left:14px;border-right:none;border-bottom:none;border-radius:10px 0 0 0}
+    .tr{top:14px;right:14px;border-left:none;border-bottom:none;border-radius:0 10px 0 0}
+    .bl{bottom:14px;left:14px;border-right:none;border-top:none;border-radius:0 0 0 10px}
+    .br{bottom:14px;right:14px;border-left:none;border-top:none;border-radius:0 0 10px 0}
+    @keyframes pulse{0%,100%{opacity:.25}50%{opacity:.9}}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 16px;border-radius:999px;
+      background:rgba(255,77,109,.08);
+      border:1px solid rgba(255,77,109,.20);
+      color:#ff8aa0;
+      font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+      margin-bottom:22px;
     }
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      font-size: 16px;
-      box-sizing: border-box;
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--danger);
+      box-shadow:0 0 12px var(--danger);
+      animation:blink 1.6s ease-in-out infinite;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.75)}}
+    h1{
+      font-size:clamp(2rem, 5vw, 4rem);
+      line-height:1.05;
+      font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(135deg, #ffffff 0%, #ffd7df 35%, var(--pink) 70%, var(--danger) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
     }
-    .box {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 16px;
-      word-break: break-all;
+    .sub{
+      max-width:720px;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.9;
+      margin-bottom:30px;
     }
-    #qrcode {
-      display: flex;
-      justify-content: center;
-      margin-top: 16px;
-      padding: 16px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
+    .grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
     }
-    .small {
-      font-size: 14px;
-      color: #6b7280;
+    .panel{
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:24px;
+      position:relative;
+      overflow:hidden;
     }
-    @media (max-width: 640px) {
-      .grid { grid-template-columns: 1fr; }
+    .panel:before{
+      content:"";
+      position:absolute;left:0;top:0;right:0;height:1px;
+      background:linear-gradient(90deg, transparent, rgba(0,212,255,.25), transparent);
+    }
+    .panel-title{
+      font-size:1.15rem;
+      font-weight:800;
+      margin-bottom:12px;
+      color:#fff;
+    }
+    .panel-desc{
+      color:var(--muted);
+      line-height:1.75;
+      font-size:.95rem;
+      margin-bottom:18px;
+    }
+    .info{
+      display:grid;
+      gap:12px;
+    }
+    .row{
+      display:flex;justify-content:space-between;gap:18px;
+      padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .row:last-child{border-bottom:none}
+    .k{
+      color:#86a3b2;
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .v{
+      font-weight:700;
+      text-align:right;
+    }
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:26px;
+    }
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:14px 18px;
+      cursor:pointer;
+      font-weight:800;
+      font-family:inherit;
+      transition:.25s;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .primary{
+      background:linear-gradient(135deg, var(--cyan), var(--purple));
+      color:#fff;
+      box-shadow:0 10px 30px rgba(0,212,255,.12);
+    }
+    .ghost{
+      background:rgba(0,212,255,.06);
+      color:var(--text);
+      border:1px solid rgba(0,212,255,.16);
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .error-code{
+      font-family:monospace;
+      color:#ffb4c2;
+      font-size:.95rem;
+      letter-spacing:.08em;
+      margin-bottom:10px;
+    }
+    .footer-note{
+      margin-top:18px;
+      color:#8aa0ab;
+      font-size:.86rem;
+      line-height:1.7;
+    }
+    @media (max-width: 860px){
+      .glass{padding:28px;border-radius:22px}
+      .grid{grid-template-columns:1fr}
+      .row{flex-direction:column;align-items:flex-start}
+      .v{text-align:left}
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="header">
-      <h1>Erro código 445</h1>
-      <p>O site está em manutenção para atualização do sistema.</p>
-    </div>
+  <div class="bg-grid"></div>
 
-    <div class="content">
-      <div class="notice">
-        O site caiu por falta de pagamento e atualização do script. O script está em manutenção. Por favor, aguarde.
-      </div>
+  <div class="wrap">
+    <div class="glass">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+
+      <div class="badge"><span class="dot"></span> Sistema em manutenção</div>
+
+      <div class="error-code">Erro 000551</div>
+      <h1>Instabilidade temporária na atualização do script.</h1>
+      <p class="sub">
+        Por conta de uma instabilidade momentânea, a atualização do sistema foi interrompida.
+        Estamos ajustando os serviços para restabelecer a operação com segurança e estabilidade.
+        Tente novamente em alguns instantes.
+      </p>
 
       <div class="grid">
-        <div>
-          <label>Chave Pix</label>
-          <input id="pixKey" type="text" placeholder="Cole sua chave Pix aqui" />
+        <div class="panel">
+          <div class="panel-title">Status do sistema</div>
+          <div class="panel-desc">
+            Este espaço pode ser usado para exibir avisos, tempo estimado de retorno, ou instruções
+            adicionais para o usuário enquanto a manutenção está em andamento.
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="location.reload()">Tentar novamente</button>
+            <a class="btn ghost" href="#" onclick="alert('Página demonstrativa sem integração.'); return false;">Saiba mais</a>
+          </div>
+
+          <p class="footer-note">
+            Se o erro persistir, recomendamos aguardar e recarregar a página mais tarde.
+          </p>
         </div>
-        <div>
-          <label>Nome do recebedor</label>
-          <input id="merchantName" type="text" placeholder="Seu nome ou empresa" />
-        </div>
-        <div>
-          <label>Cidade</label>
-          <input id="merchantCity" type="text" placeholder="São Paulo" />
-        </div>
-        <div>
-          <label>Valor</label>
-          <select id="amount">
-            <option value="1.00">R$ 1,00</option>
-            <option value="5.00">R$ 5,00</option>
-            <option value="10.00">R$ 10,00</option>
-            <option value="20.00">R$ 20,00</option>
-            <option value="50.00">R$ 50,00</option>
-            <option value="100.00">R$ 100,00</option>
-            <option value="200.00">R$ 200,00</option>
-          </select>
+
+        <div class="panel">
+          <div class="panel-title">Informações rápidas</div>
+          <div class="info">
+            <div class="row">
+              <div class="k">Código</div>
+              <div class="v">000551</div>
+            </div>
+            <div class="row">
+              <div class="k">Estado</div>
+              <div class="v">Instável</div>
+            </div>
+            <div class="row">
+              <div class="k">Ação</div>
+              <div class="v">Aguardar atualização</div>
+            </div>
+            <div class="row">
+              <div class="k">Última verificação</div>
+              <div class="v" id="clock">--:--:--</div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="row" style="margin-top:16px;">
-        <button class="btn" onclick="gerarPix()">Gerar Pix</button>
-        <button class="btn secondary" onclick="copiarCodigo()">Copiar código</button>
-      </div>
-
-      <div class="box">
-        <strong>Chave Pix:</strong>
-        <div id="showKey">—</div>
-      </div>
-
-      <div class="box">
-        <strong>Copia e cola:</strong>
-        <div id="pixCode">—</div>
-      </div>
-
-      <div id="qrcode"></div>
-      <p class="small">O QR Code e o código Pix serão gerados com base na chave, nome, cidade e valor selecionado.</p>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script>
-    function gerarPayloadSimples(key, name, city, amount) {
-      return `00020126330014BR.GOV.BCB.PIX01${String(key.length).padStart(2,'0')}${key}52040000530398654${String(amount).length.toString().padStart(2,'0')}${amount}5802BR59${String(name.length).padStart(2,'0')}${name}60${String(city.length).padStart(2,'0')}${city}62070503***6304`;
+    function tick(){
+      const d = new Date();
+      document.getElementById('clock').textContent = d.toLocaleTimeString('pt-BR');
     }
-
-    function gerarPix() {
-      const key = document.getElementById('pixKey').value.trim();
-      const name = document.getElementById('merchantName').value.trim() || 'Recebedor';
-      const city = document.getElementById('merchantCity').value.trim() || 'Sao Paulo';
-      const amount = document.getElementById('amount').value;
-
-      document.getElementById('showKey').textContent = key || '—';
-
-      const payload = gerarPayloadSimples(key, name, city, amount);
-      document.getElementById('pixCode').textContent = payload;
-
-      const qrcodeEl = document.getElementById('qrcode');
-      qrcodeEl.innerHTML = '';
-      new QRCode(qrcodeEl, {
-        text: payload,
-        width: 220,
-        height: 220
-      });
-    }
-
-    function copiarCodigo() {
-      const txt = document.getElementById('pixCode').textContent;
-      if (txt && txt !== '—') navigator.clipboard.writeText(txt);
-    }
+    tick();
+    setInterval(tick, 1000);
   </script>
 </body>
 </html>
