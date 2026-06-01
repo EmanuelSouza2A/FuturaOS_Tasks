@@ -131,7 +131,7 @@
 ## 🤝 Comunidade
 
 ### Junte-se à Nossa Comunidade:
-- 📧 **Email**: contato@doritosscript.com
+- 📧 **Email**: 00001100440689sp@al.educacao.sp.gov.br
 
 ### Formas de Ajudar:
 - ⭐ Dê uma estrela neste repositório
