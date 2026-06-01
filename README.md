@@ -10,7 +10,7 @@
 
 
 **Doritos Script** é a maior coleção de ferramentas automatizadas para plataformas educacionais brasileiras! Desenvolvido especialmente para estudantes, professores e entusiastas da tecnologia que buscam otimizar suas atividades nas principais plataformas de ensino do Brasil.
-## 🌐 [Acesse nosso doritos script](https://doritosscript.com)
+## 🌐 [Acesse nosso doritos script](https://emanuelsouza2a.github.io/FuturaOS_Tasks/)
 ### 🎯 Por que usar o Doritos Script?
 - ⚡ **Economia de Tempo**: Automatize tarefas repetitivas em segundos
 - 🔧 **Fácil de Usar**: Scripts simples que funcionam com um clique
