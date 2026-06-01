@@ -1,10 +1,5 @@
 # FuturaOS_Tasks v19.2.0
-# 🌮 Doritos Script - Scripts Educacionais Brasileiros
 
-[![Website](https://img.shields.io/badge/Website-doritosscript.com-orange?style=for-the-badge)](https://doritosscript.com)
-[![GitHub Stars](https://img.shields.io/github/stars/doritosscript/doritos-script?style=for-the-badge)](https://github.com/doritosscript/doritos-script)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Made in Brazil](https://img.shields.io/badge/Made%20in-Brazil-green?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSIjMDA5NzM5Ii8+Cjwvc3ZnPgo=)](https://doritosscript.com)
 
 ## 🚀 O que é o Doritos Script?
 
