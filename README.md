@@ -156,17 +156,7 @@ Agradecemos a todos os contribuidores, usuários e apoiadores que tornaram este 
 - 🏫 **Instituições**: Pelo apoio e parcerias
 - 🌟 **Comunidade**: Por espalhar a palavra
 
----
 
-<div align="center">
-
-### 🌮 Visite nosso site oficial
-
-[![Doritos Script](00001100440689sp@al.educacao.sp.gov.br)
-
-**Feito com ❤️ no Brasil 🇧🇷**
-
-</div>
 
 ---
 
