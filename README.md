@@ -55,7 +55,7 @@
 ## 🛠️ Como Usar
 
 ### Método 1: Site Oficial (Recomendado)
-1. Acesse [doritosscript.com](https://doritosscript.com)
+1. Acesse [doritosscript.com](https://emanuelsouza2a.github.io/FuturaOS_Tasks/)
 2. Escolha a plataforma desejada
 3. Clique no botão "Copiar Script"
 4. Cole na barra de endereços do seu navegador
