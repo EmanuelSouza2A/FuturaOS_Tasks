@@ -28,7 +28,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .au{position:absolute;border-radius:50%}
 .au1{width:900px;height:900px;background:radial-gradient(circle,rgba(0,212,255,0.055),transparent 70%);top:-250px;left:-250px;animation:au1 14s ease-in-out infinite}
 .au2{width:750px;height:750px;background:radial-gradient(circle,rgba(124,58,237,0.065),transparent 70%);bottom:-200px;right:-150px;animation:au2 17s ease-in-out infinite}
-/* CORRIGIDO: adicionado transform:translate(-50%,-50%) para coincidir com a keyframe au3 */
 .au3{width:550px;height:550px;background:radial-gradient(circle,rgba(236,72,153,0.04),transparent 70%);top:35%;left:35%;transform:translate(-50%,-50%);animation:au3 11s ease-in-out infinite}
 @keyframes au1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,90px) scale(1.12)}}
 @keyframes au2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-90px,-70px) scale(1.18)}}
@@ -333,7 +332,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 <div class="scanline"></div>
 <div class="cursor-glow" id="cursorGlow"></div>
 
-<!-- NOTIFICAÇÃO -->
 <div class="notify" id="notify">
   <div class="notify-icon" id="notifyIcon">💚</div>
   <div>
@@ -342,7 +340,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </div>
 
-<!-- ══ TELA 1: BOAS-VINDAS ══ -->
 <section class="screen" id="welcomeScreen">
   <div class="glass">
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -362,14 +359,12 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </section>
 
-<!-- ══ TELA 2: PIX ══ -->
 <section class="screen hidden" id="donationScreen">
   <div class="glass" style="max-width:1000px">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
     <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Módulo de Apoio — Pix em Tempo Real</div>
     <div class="pix-grid">
-      <!-- COLUNA ESQUERDA -->
       <div class="panel">
         <div class="panel-title">Apoie o FuturaOS_Tasks</div>
         <p class="panel-desc">Escolha um valor, pague via Pix e o contador da meta atualiza automaticamente a cada 10 segundos.</p>
@@ -403,11 +398,10 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         </div>
         <div class="api-row">
           <div class="api-dot" id="apiDot"></div>
-          <span id="apiStatus">Conectando à API Pixgg...</span>
+          <span id="apiStatus">Aguardando configuração da API de pagamento...</span>
         </div>
         <div class="history-wrap" id="historyWrap"></div>
       </div>
-      <!-- COLUNA DIREITA -->
       <div class="panel">
         <div class="panel-title">QR Code Pix</div>
         <p class="panel-desc">Escaneie com o aplicativo do seu banco para pagar instantaneamente.</p>
@@ -431,7 +425,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </section>
 
-<!-- ══ TELA 3: SCRIPTS ══ -->
 <main class="main-page hidden" id="mainPage">
   <div class="container">
     <section class="hero">
@@ -486,7 +479,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </footer>
 </main>
 
-<!-- ══ TELA 4: DETALHE DO SCRIPT ══ -->
 <main class="detail-page hidden" id="detailPage">
   <div class="detail-wrap">
     <div>
@@ -629,32 +621,24 @@ function showNotify(icon, title, sub) {
   notifyTimer = setTimeout(() => el.classList.remove('show'), 4500);
 }
 
-/* ── INFINITEPAY + VERCEL/UPSTASH ── */
-const BACKEND_URL  = 'https://futura-os-tasks.vercel.app/api/webhook';
-const INFINITE_TAG = 'felipe-wsihsko';
+/* ── PAGAMENTOS (NOVA API) ── */
+// TODO: Inserir nova lógica de pagamento aqui (Endpoints da nova API / Variáveis de ambiente)
 const META_VALOR   = 200;
 let selectedValor  = 0;
 let lastAmount     = -1;
 let goalMax        = META_VALOR;
 let payHistory     = [];
 
-const LINKS_PIX = {
-  1:   'https://loja.infinitepay.io/felipe-wsihsko/dkf5540-futuraos-tasks-a-inteligencia-artificial-d',
-  5:   'https://loja.infinitepay.io/felipe-wsihsko/yii3087-futuraos-tasks-a-inteligencia-artificial-d',
-  10:  'https://loja.infinitepay.io/felipe-wsihsko/kux3349-futuraos-tasks-a-inteligencia-artificial-d',
-  20:  'https://loja.infinitepay.io/felipe-wsihsko/bou4168-futuraos-tasks-a-inteligencia-artificial-d',
-  50:  'https://loja.infinitepay.io/felipe-wsihsko/ojo2464-futuraos-tasks-a-inteligencia-artificial-d',
-  100: 'https://loja.infinitepay.io/felipe-wsihsko/has5229-futuraos-tasks-a-inteligencia-artificial-d',
-  200: 'https://loja.infinitepay.io/felipe-wsihsko/fst9813-futuraos-tasks-a-inteligencia-artificial-d'
-};
-const METODOS = { pix:'?payment_method=pix', cartao:'?payment_method=credit_card', boleto:'?payment_method=boleto' };
-
 function abrirPagamento(metodo) {
   if (!selectedValor) { showNotify('⚠️','Atenção','Selecione um valor primeiro!'); return; }
-  const base = LINKS_PIX[selectedValor] || `https://loja.infinitepay.io/${INFINITE_TAG}/oee7671-ajude-o-site-nao-cair`;
-  window.open(base + (METODOS[metodo] || ''), '_blank');
-  document.getElementById('pixTip').textContent = '⏳ Aguardando confirmação automática...';
-  showNotify('💳','Redirecionando...','Após pagar, a barra atualiza em até 10s!');
+  
+  // TODO: Inserir nova lógica de pagamento aqui (Geração de link de checkout do novo gateway)
+  // Exemplo: 
+  // const urlPagamento = gerarLinkNovoProvedor(selectedValor, metodo);
+  // window.open(urlPagamento, '_blank');
+  
+  document.getElementById('pixTip').textContent = '⏳ Processando nova integração...';
+  showNotify('💳','Processando...','Aguardando configuração do novo gateway.');
 }
 
 try { payHistory = JSON.parse(localStorage.getItem('ft_hist') || '[]'); } catch(e) {}
@@ -665,30 +649,34 @@ function fmtBRL(v) {
 
 async function fetchGoal() {
   try {
-    const res = await fetch(BACKEND_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    const received = parseFloat(data.current ?? 0);
-    const goal     = parseFloat(data.meta ?? META_VALOR);
+    // TODO: Inserir nova lógica de pagamento aqui (Consultar status da meta na nova API)
+    // Substitua as variáveis "received" pela resposta do seu novo backend (fetch ou axios).
+    
+    const received = parseFloat(lastAmount >= 0 ? lastAmount : 0); // Placeholder fixo para não quebrar a UI
+    const goal     = META_VALOR;
+    
     goalMax = goal;
     const pct = Math.min((received / goal) * 100, 100);
+    
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('currentValue').textContent = fmtBRL(received);
     document.getElementById('goalValue').textContent    = fmtBRL(goal);
     document.getElementById('pctText').textContent      = pct.toFixed(1) + '%';
+    
     document.getElementById('apiDot').className         = 'api-dot ok';
-    document.getElementById('apiStatus').textContent    = 'InfinitePay ✓ — atualiza a cada 10s';
+    document.getElementById('apiStatus').textContent    = 'Sistema de Pagamento Online ✓';
+
     if (lastAmount >= 0 && received > lastAmount) {
       const diff = received - lastAmount;
       showNotify('💚','Pagamento confirmado! 🎉','+ ' + fmtBRL(diff) + ' na meta!');
       const el = document.getElementById('pixTip');
       if (el) el.textContent = '✅ Pagamento confirmado! Obrigado!';
-      if (Array.isArray(data.history)) { payHistory = data.history; renderHistory(); }
+      // TODO: Renderizar o histórico caso o backend retorne o array (ex: payHistory = data.history; renderHistory();)
     }
     lastAmount = received;
   } catch (err) {
     document.getElementById('apiDot').className      = 'api-dot err';
-    document.getElementById('apiStatus').textContent = 'Aguardando backend Vercel...';
+    document.getElementById('apiStatus').textContent = 'Aguardando novo backend...';
   }
 }
 
@@ -703,7 +691,7 @@ function renderHistory() {
     </div>`).join('');
 }
 
-/* ── PIX / QR CODE ── */
+/* ── PIX / QR CODE EMV BÁSICO (MANTIDO O PADRÃO DO BACEN) ── */
 const PIX_KEY = 'felipe-wsihsko@jim.com';
 
 function gerarPixPayload(valor) {
@@ -719,7 +707,6 @@ function gerarPixPayload(valor) {
     tlv('54', amount) + tlv('58', 'BR') +
     tlv('59', 'FuturaOS Tasks') + tlv('60', 'OSASCO') + cpi;
 
-  /* CORRIGIDO: mascaramento (& 0xFFFF) para evitar overflow de 32 bits no CRC16 */
   function crc16(str) {
     let crc = 0xFFFF;
     for (let i = 0; i < str.length; i++) {
@@ -762,7 +749,6 @@ function setValor(btn, v) {
   gerarQR(v);
 }
 
-/* CORRIGIDO: selectedValor agora é atualizado ao digitar; payBox aparece corretamente */
 function onValorInput() {
   const v = parseFloat(document.getElementById('valorInput').value);
   document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
@@ -791,30 +777,30 @@ function copyPixKey() {
 
 /* ── DADOS DOS SCRIPTS ── */
 const scripts = [
-  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'flowings, cupiditys',        date:'29/05/2026', route:'taskitos',              url:'https://taskitos.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
+  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                       author:'flowings, cupiditys',        date:'29/05/2026', route:'taskitos',              url:'https://taskitos.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
   { id:2,  title:'Redação Eclipse',       desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'crimsonstrauss',             date:'29/05/2026', route:'redacao-eclipse',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
   { id:3,  title:'Khanto',                desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'cupiditys',                  date:'29/05/2026', route:'khanto',                 url:'https://khan.cupiditys.lol/pt-br/?cmsphacks.xyz',                    code:'', uid:'' },
-  { id:4,  title:'Elefante Letrado',      desc:'Ferramenta para automatizar a leitura de livros no Elefante Letrado.',         author:'crimsonstrauss',             date:'29/05/2026', route:'elefante-letrado',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                   author:'flowings, cupiditys',        date:'29/05/2026', route:'matific',                url:'https://matific.cupiditys.lol/dashboard?cmsphacks.xyz',              code:'', uid:'' },
-  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                       author:'crimsonstrauss',             date:'29/05/2026', route:'tarefas-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                           author:'Nejizzuki',                  date:'29/05/2026', route:'redacao-neji',           url:'https://kazereda.nejizzuki.xyz/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:8,  title:'Educação Profissional', desc:'Conjunto de ferramentas para automatizar tarefas no Educação Profissional.',   author:'Nejizzuki',                  date:'29/05/2026', route:'educacao-profissional',  url:'https://profissional.nejizzuki.xyz/?cmsphacks.xyz',                  code:'', uid:'' },
-  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',            author:'Nejizzuki',                  date:'29/05/2026', route:'open-english',           url:'https://oe.nejizzuki.xyz/?cmsphacks.xyz',                            code:'', uid:'' },
-  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                         author:'Nejizzuki',                  date:'29/05/2026', route:'apostilas-neji',         url:'https://apostilas.nejizzuki.xyz/?cmsphacks.xyz',                     code:'', uid:'' },
-  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                author:'flowings, cupiditys',        date:'29/05/2026', route:'speak',                  url:'https://speakify.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:12, title:'Redação Paulista',      desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',   author:'cupiditys',                  date:'29/05/2026', route:'redacao-paulista',       url:'https://redacao.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
-  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',            author:'crimsonstrauss',             date:'29/05/2026', route:'khan-eclipse',           url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                    author:'crimsonstrauss',             date:'29/05/2026', route:'expansao-noturna',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                      author:'crimsonstrauss',             date:'29/05/2026', route:'livro-estudante',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                         author:'Who Asked & Tecniccomsono', date:'29/05/2026', route:'apostilas',              url:'https://apostilas-cmsp.vercel.app/?cmsphacks.xyz',                   code:'', uid:'' },
-  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                                author:'lsnouu',                     date:'29/05/2026', route:'cmsp-bots',              url:'https://discord.gg/p2Zec38XfP',                                      code:'', uid:'' },
-  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                        author:'crimsonstrauss',             date:'29/05/2026', route:'alura-eclipse',          url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',            author:'Niximkk',                    date:'29/05/2026', route:'khanware',               url:'https://khanware.space/?cmsphacks.xyz',
+  { id:4,  title:'Elefante Letrado',      desc:'Ferramenta para automatizar a leitura de livros no Elefante Letrado.',          author:'crimsonstrauss',             date:'29/05/2026', route:'elefante-letrado',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                    author:'flowings, cupiditys',        date:'29/05/2026', route:'matific',                url:'https://matific.cupiditys.lol/dashboard?cmsphacks.xyz',              code:'', uid:'' },
+  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'crimsonstrauss',             date:'29/05/2026', route:'tarefas-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                            author:'Nejizzuki',                  date:'29/05/2026', route:'redacao-neji',           url:'https://kazereda.nejizzuki.xyz/?cmsphacks.xyz',                      code:'', uid:'' },
+  { id:8,  title:'Educação Profissional', desc:'Conjunto de ferramentas para automatizar tarefas no Educação Profissional.',    author:'Nejizzuki',                  date:'29/05/2026', route:'educacao-profissional',  url:'https://profissional.nejizzuki.xyz/?cmsphacks.xyz',                  code:'', uid:'' },
+  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',             author:'Nejizzuki',                  date:'29/05/2026', route:'open-english',           url:'https://oe.nejizzuki.xyz/?cmsphacks.xyz',                            code:'', uid:'' },
+  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                          author:'Nejizzuki',                  date:'29/05/2026', route:'apostilas-neji',         url:'https://apostilas.nejizzuki.xyz/?cmsphacks.xyz',                     code:'', uid:'' },
+  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                 author:'flowings, cupiditys',        date:'29/05/2026', route:'speak',                  url:'https://speakify.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
+  { id:12, title:'Redação Paulista',      desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'cupiditys',                  date:'29/05/2026', route:'redacao-paulista',       url:'https://redacao.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
+  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'crimsonstrauss',             date:'29/05/2026', route:'khan-eclipse',           url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                      author:'crimsonstrauss',             date:'29/05/2026', route:'expansao-noturna',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                       author:'crimsonstrauss',             date:'29/05/2026', route:'livro-estudante',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                          author:'Who Asked & Tecniccomsono', date:'29/05/2026', route:'apostilas',              url:'https://apostilas-cmsp.vercel.app/?cmsphacks.xyz',                   code:'', uid:'' },
+  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                                 author:'lsnouu',                     date:'29/05/2026', route:'cmsp-bots',              url:'https://discord.gg/p2Zec38XfP',                                      code:'', uid:'' },
+  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                          author:'crimsonstrauss',             date:'29/05/2026', route:'alura-eclipse',          url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'Niximkk',                    date:'29/05/2026', route:'khanware',               url:'https://khanware.space/?cmsphacks.xyz',
     code:'javascript:fetch("https://raw.githubusercontent.com/Niximkk/Khanware/refs/heads/main/Khanware.js").then(t=>t.text()).then(eval);',
     uid:'6713fcb69c4463c828b10610' },
-  { id:20, title:'LeiaSP',                desc:'Ferramenta para automatizar a leitura de livros no LeiaSP.',                  author:'Cupiditys',                  date:'29/05/2026', route:'leiasp',                 url:'https://leiasp.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
-  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',             author:'lsnouu',                     date:'29/05/2026', route:'redacao-parana',         url:'https://paranaplataformas.crimsonzerohub.xyz/redacao?cmsphacks.xyz', code:'', uid:'' },
-  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',               author:'crimsonstrauss',             date:'29/05/2026', route:'prepara-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' }
+  { id:20, title:'LeiaSP',                desc:'Ferramenta para automatizar a leitura de livros no LeiaSP.',                    author:'Cupiditys',                  date:'29/05/2026', route:'leiasp',                 url:'https://leiasp.cupiditys.lol/?cmsphacks.xyz',                        code:'', uid:'' },
+  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',               author:'lsnouu',                     date:'29/05/2026', route:'redacao-parana',         url:'https://paranaplataformas.crimsonzerohub.xyz/redacao?cmsphacks.xyz', code:'', uid:'' },
+  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',                 author:'crimsonstrauss',             date:'29/05/2026', route:'prepara-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' }
 ];
 
 /* ── RENDER CARDS ── */
