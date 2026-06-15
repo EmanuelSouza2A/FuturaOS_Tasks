@@ -147,191 +147,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .stat::after{content:"";position:absolute;right:-26px;top:50%;transform:translateY(-50%);width:1px;height:38px;background:var(--border)}
 .stat:last-child::after{display:none}
 .stat-num{font-size:2.3rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1}
-.stat-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
-.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:32px}
-.card{background:rgba(6,10,20,0.88);border:1px solid var(--border);border-radius:22px;
-  padding:26px;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);
-  display:flex;flex-direction:column;min-height:215px;position:relative;overflow:hidden;
-  animation:fadeUp .55s cubic-bezier(.16,1,.3,1) both}
-.card-topline{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0),transparent);transition:.35s}
-.card:hover .card-topline{background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
-.card-sweep{position:absolute;left:0;width:100%;height:55%;top:-110%;background:linear-gradient(180deg,transparent,rgba(0,212,255,0.02),transparent);pointer-events:none;transition:top 0s}
-.card:hover .card-sweep{top:160%;transition:top .55s ease}
-.card-glow{position:absolute;inset:0;opacity:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,212,255,0.055),transparent);transition:.35s}
-.card:hover{border-color:rgba(0,212,255,0.26);transform:translateY(-8px) scale(1.01);box-shadow:0 0 50px rgba(0,212,255,0.07),0 28px 60px rgba(0,0,0,0.65)}
-.card:hover .card-glow{opacity:1}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;position:relative;z-index:1}
-.card-code{font-size:10px;color:rgba(0,212,255,0.38);letter-spacing:.1em;text-transform:uppercase;font-weight:700;font-family:'JetBrains Mono',monospace}
-.status-pill{padding:5px 12px;border-radius:999px;background:rgba(0,255,136,0.06);color:var(--green);font-size:10px;font-weight:800;text-transform:uppercase;border:1px solid rgba(0,255,136,0.14);display:flex;align-items:center;gap:5px;flex-shrink:0}
-.s-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
-.card-title{font-size:1.32rem;font-weight:800;letter-spacing:-.03em;margin-bottom:9px;line-height:1.15;position:relative;z-index:1;transition:.3s}
-.card:hover .card-title{background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.card-desc{color:var(--muted);line-height:1.68;font-size:13.5px;flex:1;margin-bottom:15px;position:relative;z-index:1;transition:.3s}
-.card:hover .card-desc{color:#6a98bc}
-.card-author{color:rgba(0,212,255,0.32);font-size:12px;font-family:'JetBrains Mono',monospace;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-num{position:absolute;bottom:18px;right:20px;font-size:11px;color:rgba(0,212,255,0.09);font-family:'JetBrains Mono',monospace;font-weight:700}
-
-/* ── DETAIL PAGE ── */
-.detail-page{padding:54px 20px 90px;min-height:100vh;position:relative;z-index:10}
-.detail-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 370px;gap:36px;align-items:start}
-.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:36px;border:1px solid var(--border);background:rgba(0,212,255,0.03);border-radius:12px;padding:10px 20px;transition:all .3s;font-family:'Inter',sans-serif;outline:none}
-.back-btn:hover{color:var(--cyan);border-color:rgba(0,212,255,0.28);background:rgba(0,212,255,0.07);transform:translateX(-4px)}
-.crumb{display:flex;align-items:center;gap:10px;margin-bottom:20px}
-.crumb-icon{width:36px;height:36px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.14);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.crumb-label{font-size:11px;font-weight:800;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
-.detail-title{font-size:clamp(1.8rem,4vw,3.5rem);font-weight:900;letter-spacing:-.04em;margin-bottom:14px;line-height:1.08;background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp .5s cubic-bezier(.16,1,.3,1) both}
-.detail-desc{color:var(--muted);font-size:1rem;line-height:1.8;margin-bottom:26px;animation:fadeUp .5s cubic-bezier(.16,1,.3,1) .08s both}
-.info-box{background:rgba(6,10,20,0.92);border:1px solid var(--border);border-radius:18px;padding:22px 26px;margin-bottom:18px;position:relative;overflow:hidden;animation:fadeUp .5s cubic-bezier(.16,1,.3,1) .14s both}
-.info-box::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.28),transparent)}
-.info-label{font-size:10px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
-.code-block{background:#010409;border:1px solid rgba(0,212,255,0.08);border-radius:14px;padding:20px;margin-top:12px;position:relative}
-.code-text{font-family:'JetBrains Mono',monospace;font-size:12px;color:#7dd3fc;line-height:1.7;word-break:break-all;white-space:pre-wrap}
-.copy-code-btn{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#0ea5e9,var(--purple));color:#fff;border:none;border-radius:10px;padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.25s;box-shadow:0 4px 15px rgba(0,212,255,0.18)}
-.copy-code-btn:hover{transform:scale(1.06);box-shadow:0 6px 25px rgba(0,212,255,0.3)}
-.loading-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:13px}
-.spinner{width:36px;height:36px;border:3px solid rgba(0,212,255,0.15);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.sidebar{background:rgba(6,10,20,0.92);border:1px solid var(--border);border-radius:22px;padding:26px;position:relative;overflow:hidden;animation:fadeUp .5s cubic-bezier(.16,1,.3,1) .12s both}
-.sidebar::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.4),var(--purple),transparent)}
-.sidebar-title{font-size:16px;font-weight:800;margin-bottom:4px;background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sidebar-updated{font-size:11px;color:var(--muted);margin-bottom:22px;font-family:'JetBrains Mono',monospace}
-.info-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);transition:.3s}
-.info-row:hover{border-bottom-color:rgba(0,212,255,0.12)}
-.info-row:last-of-type{border-bottom:none}
-.info-icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:17px;border:1px solid rgba(255,255,255,0.04)}
-.ig{background:rgba(0,255,136,0.07)}.ib{background:rgba(0,212,255,0.07)}.ip{background:rgba(124,58,237,0.09)}.ir{background:rgba(239,68,68,0.07)}
-.info-val{font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1.2}
-.info-key{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-top:3px}
-.sidebar-id{font-size:11px;color:rgba(0,212,255,0.22);margin-top:18px;padding-top:16px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;word-break:break-all}
-.footer{background:rgba(2,4,8,0.98);border-top:1px solid var(--border);padding:48px 20px;margin-top:80px;position:relative;z-index:10}
-.footer::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent)}
-.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap}
-.footer-brand{font-size:20px;font-weight:900;font-family:'JetBrains Mono',monospace;margin-bottom:10px;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.footer-sub{color:var(--muted);font-size:13px;max-width:280px;line-height:1.75}
-.footer-links{display:flex;gap:52px;flex-wrap:wrap}
-.footer-col h5{font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:14px;text-transform:uppercase;letter-spacing:.1em}
-.footer-col a{display:block;font-size:14px;color:var(--muted);text-decoration:none;margin-bottom:10px;transition:.3s}
-.footer-col a:hover{color:var(--text);transform:translateX(5px)}
-.ig-btn{background:linear-gradient(135deg,var(--pink),var(--purple),#3b82f6);color:#fff;border-radius:999px;padding:17px 34px;font-size:15px;font-weight:800;box-shadow:0 0 50px rgba(236,72,153,0.14),0 8px 30px rgba(0,0,0,0.4);text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .35s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
-.ig-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.12) 50%,transparent 70%);transform:translateX(-100%);transition:.5s}
-.ig-btn:hover::before{transform:translateX(100%)}
-.ig-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 0 70px rgba(236,72,153,0.28),0 24px 60px rgba(0,0,0,0.55)}
-@media(max-width:900px){.paywall-grid{grid-template-columns:1fr}.cards-grid{grid-template-columns:repeat(2,1fr)}.detail-wrap{grid-template-columns:1fr}}
-@media(max-width:580px){.cards-grid{grid-template-columns:1fr}.glass{padding:26px;border-radius:22px}.stats-bar{gap:28px}}
-</style>
-</head>
-<body>
-
-<canvas id="particles"></canvas>
-<div class="grid-bg"></div>
-<div class="aurora"><div class="au au1"></div><div class="au au2"></div><div class="au au3"></div></div>
-<div class="scanline"></div>
-<div class="cursor-glow" id="cursorGlow"></div>
-
-<div class="notify" id="notify">
-  <div class="notify-icon" id="notifyIcon">💚</div>
-  <div>
-    <div class="notify-title" id="notifyTitle"></div>
-    <div class="notify-sub" id="notifySub"></div>
-  </div>
-</div>
-
-<!-- ══ TELA 1: BOAS-VINDAS ══ -->
-<section class="screen" id="welcomeScreen">
-  <div class="glass">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="sys-tag" style="top:18px;right:24px">SYS_v4.0 ■ ONLINE</div>
-    <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
-    <h1 class="welcome-title">Olá, seja muito bem‑vindo ao FuturaOS_Tasks.</h1>
-    <p class="welcome-sub">A suíte de automações educacionais mais avançada do Brasil. Acesse todos os 22 scripts com segurança e tecnologia de ponta.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="goToPaywall()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Acessar o sistema
-      </button>
-    </div>
-    <div class="sys-tag" style="bottom:20px;left:24px">SESSION: FT-2026 // ZERO TRUST</div>
-  </div>
-</section>
-
-<!-- ══ TELA 2: PAYWALL / ADWALL ══ -->
-<section class="screen hidden" id="paywallScreen">
-  <div class="glass" style="max-width:1020px">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="sys-tag" style="top:18px;right:24px">MÓDULO DE ACESSO // SECURE</div>
-    <div class="badge" style="margin-bottom:24px"><span class="live-dot"></span>Escolha seu método de acesso</div>
-    <div class="paywall-grid">
-
-      <!-- PAINEL PREMIUM -->
-      <div class="pw-panel premium">
-        <div class="pw-title">⚡ Acesso Premium</div>
-        <p class="pw-desc">Chega de esperar. Com o Premium você acessa <strong style="color:var(--cyan)">todos os 22 scripts instantaneamente</strong>, sem cronômetro, sem restrições. Cada minuto que você economiza vale mais do que qualquer assinatura.</p>
-        <a class="plan-card" href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=dfbb590c7f8d4e7e931889420b6a00db" target="_blank" rel="noopener" onclick="onPremiumClick()">
-          <div class="plan-name">🗓 Plano Semanal</div>
-          <div class="plan-price">R$ 1,50</div>
-          <div class="plan-period">7 dias de acesso total</div>
-          <ul class="plan-perks">
-            <li>Acesso imediato a todos os 22 scripts</li>
-            <li>Sem tempo de espera</li>
-            <li>Cancelamento a qualquer momento</li>
-          </ul>
-        </a>
-        <a class="plan-card gold" href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=58d53f9eb7a54cab9e53a2c862615ddf" target="_blank" rel="noopener" onclick="onPremiumClick()">
-          <div class="plan-name">👑 Plano Mensal <span style="background:linear-gradient(135deg,var(--orange),var(--pink));color:#fff;font-size:10px;padding:2px 8px;border-radius:999px;margin-left:6px">MELHOR OPÇÃO</span></div>
-          <div class="plan-price gold-price">R$ 9,99</div>
-          <div class="plan-period">30 dias de acesso total</div>
-          <ul class="plan-perks">
-            <li>Acesso imediato a todos os 22 scripts</li>
-            <li>Custo de apenas R$ 0,33/dia</li>
-            <li>Prioridade em novos scripts</li>
-            <li>Cancelamento a qualquer momento</li>
-          </ul>
-        </a>
-        <div class="divider"></div>
-        <button class="btn btn-green" style="width:100%" onclick="validarPremium()">
-          ✅ Já efetuei o pagamento / Entrar como Premium
-        </button>
-        <div class="security-badge">
-          🔒 Pagamento processado com segurança pelo Mercado Pago
-        </div>
-      </div>
-
-      <!-- PAINEL GRATUITO -->
-      <div class="pw-panel free">
-        <div class="pw-title green">⏱ Acesso Gratuito</div>
-        <p class="pw-desc">Prefere não pagar? Sem problema. Fique <strong style="color:var(--green)">10 minutos contínuos</strong> nesta aba — sem fechar, sem minimizar, sem trocar de aba — e o servidor irá liberar o acesso automaticamente.</p>
-        <div class="timer-display" id="timerDisplay">10:00</div>
-        <div class="timer-label" id="timerLabel">AGUARDANDO INÍCIO</div>
-        <div class="timer-bar-wrap"><div class="timer-bar-fill" id="timerBarFill"></div></div>
-        <button class="btn btn-ghost" id="timerBtn" style="width:100%;margin-top:8px" onclick="iniciarTimer()">
-          ▶ Iniciar contagem gratuita
-        </button>
-        <div class="divider"></div>
-        <div class="security-badge" style="border-color:rgba(0,255,136,0.12);color:rgba(0,255,136,0.4)">
-          🛡 Cronômetro validado pelo servidor — não pode ser burlado
-        </div>
-        <p style="font-size:11px;color:rgba(255,255,255,0.15);font-family:'JetBrains Mono',monospace;line-height:1.6;margin-top:4px">
-          ⚠ Se você fechar a aba, recarregar a página ou trocar de guia, o cronômetro visual será reiniciado e uma nova sessão deverá ser iniciada no servidor.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ TELA 3: SCRIPTS ══ -->
-<main class="main-page hidden" id="mainPage">
-  <div class="container">
-    <section class="hero">
-      <div class="hero-glow"></div>
-      <div class="badge" style="margin-bottom:22px"><span class="live-dot"></span>FuturaOS_Tasks — 22 Scripts Ativos</div>
-      <h2 class="hero-title">Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
-      <p class="hero-desc">Suite completa de automações prontas para usar. Clique em qualquer card para acessar o script.</p>
-      <div class="stats-bar">
-        <div class="stat">
-          <div class="stat-num" style="background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">22</div>
-          <div class="stat-lbl">Scripts</div>
+.stat-lbl">Scripts</div>
         </div>
         <div class="stat">
           <div class="stat-num" style="background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">100%</div>
@@ -373,7 +189,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </footer>
 </main>
 
-<!-- ══ TELA 4: DETALHE DO SCRIPT ══ -->
 <main class="detail-page hidden" id="detailPage">
   <div class="detail-wrap">
     <div>
@@ -489,7 +304,7 @@ function showNotify(icon, title, sub) {
 }
 
 // ── CONFIG ──
-const WORKER_URL = 'https://SEU-WORKER.SEU-SUBDOMINIO.workers.dev'; // ← troque pela URL real do seu Worker
+const WORKER_URL = 'https://fancy-sunset-fd9e.souzacarisemanuelfelipe4.workers.dev'; // ← URL de produção definitiva configurada
 const TEMPO_LIVRE_SEG = 600;
 
 // ── USER ID PERSISTENTE ──
@@ -607,20 +422,68 @@ async function iniciarTimer() {
 
 // ── PREMIUM ──
 function onPremiumClick() {
-  showNotify('💳','Redirecionando...','Após o pagamento, clique em "Já efetuei o pagamento".');
+  showNotify('💳','Redirecionando...','Após o pagamento, o botão abaixo será desbloqueado automaticamente.');
 }
 
 async function validarPremium() {
-  showNotify('🔄','Verificando...','Validando seu acesso premium...');
-  // Em produção: verificar assinatura ativa via Worker antes de liberar
-  // Por ora, marca localmente e entra
-  modoAcesso = 'premium';
-  localStorage.setItem('ft_modo', 'premium');
-  setTimeout(() => {
-    showNotify('👑','Acesso Premium!','Bem-vindo. Todos os scripts estão liberados.');
-    enterMain();
-  }, 800);
+  showNotify('🔄','Verificando...','Consultando banco de dados na nuvem...');
+  
+  try {
+    const res = await fetch(`${WORKER_URL}/api/get-script`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: getUserId(), scriptId: 1 })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.status === 'liberado') {
+      modoAcesso = 'premium';
+      localStorage.setItem('ft_modo', 'premium');
+      showNotify('👑', 'Acesso Premium!', 'Confirmado! Todos os 22 scripts estão liberados.');
+      enterMain(); 
+    } else {
+      showNotify('❌', 'Não Liberado', 'Nenhum pagamento aprovado foi encontrado no servidor.');
+      const btn = document.getElementById('btnPremium');
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = "0.6";
+        btn.style.cursor = "not-allowed";
+        btn.innerHTML = "🔒 Aguardando Confirmação do Pagamento...";
+      }
+    }
+  } catch (error) {
+    showNotify('❌', 'Erro', 'Não foi possível conectar ao servidor Cloudflare.');
+  }
 }
+
+// Polling: Verifica o status no KV da Cloudflare a cada 5 segundos em segundo plano
+async function checarPixAutomatico() {
+  if (localStorage.getItem('ft_modo') === 'premium') return;
+  
+  try {
+    const res = await fetch(`${WORKER_URL}/api/get-script`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: getUserId(), scriptId: 1 })
+    });
+    const data = await res.json();
+    
+    if (res.ok && data.status === 'liberado') {
+      const btn = document.getElementById('btnPremium');
+      if (btn) {
+        btn.disabled = false; 
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+        btn.style.background = "linear-gradient(135deg, #00ff88, #0ea5e9)";
+        btn.innerHTML = "🚀 Pix Confirmado! Clique para Entrar como Premium";
+      }
+      modoAcesso = 'premium';
+      localStorage.setItem('ft_modo', 'premium');
+    }
+  } catch (e) { /* Abafa logs de conexão em background */ }
+}
+setInterval(checarPixAutomatico, 5000);
 
 // ── NAVEGAÇÃO ──
 function goToPaywall() {
@@ -641,28 +504,28 @@ function goBack() {
 
 // ── DADOS DOS SCRIPTS (sem campo code — reside apenas no servidor) ──
 const scripts = [
-  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'flowings, cupiditys',        date:'29/04/2026', route:'taskitos' },
+  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                               author:'flowings, cupiditys',        date:'29/04/2026', route:'taskitos' },
   { id:2,  title:'Redação Eclipse',       desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'crimsonstrauss',             date:'29/04/2026', route:'redacao-eclipse' },
-  { id:3,  title:'Khanto',                desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'cupiditys',                  date:'29/04/2026', route:'khanto' },
+  { id:3,  title:'Khanto',                desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',              author:'cupiditys',                  date:'29/04/2026', route:'khanto' },
   { id:4,  title:'Elefante Letrado',      desc:'Ferramenta para automatizar a leitura de livros no Elefante Letrado.',         author:'crimsonstrauss',             date:'29/04/2026', route:'elefante-letrado' },
-  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                   author:'flowings, cupiditys',        date:'29/04/2026', route:'matific' },
-  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                       author:'crimsonstrauss',             date:'29/04/2026', route:'tarefas-sp' },
-  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                           author:'Nejizzuki',                  date:'29/04/2026', route:'redacao-neji' },
+  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                       author:'flowings, cupiditys',        date:'29/04/2026', route:'matific' },
+  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                               author:'crimsonstrauss',             date:'29/04/2026', route:'tarefas-sp' },
+  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                                  author:'Nejizzuki',                  date:'29/04/2026', route:'redacao-neji' },
   { id:8,  title:'Educação Profissional', desc:'Conjunto de ferramentas para automatizar tarefas no Educação Profissional.',   author:'Nejizzuki',                  date:'29/04/2026', route:'educacao-profissional' },
-  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',            author:'Nejizzuki',                  date:'29/04/2026', route:'open-english' },
-  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                         author:'Nejizzuki',                  date:'29/04/2026', route:'apostilas-neji' },
-  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                author:'flowings, cupiditys',        date:'29/04/2026', route:'speak' },
+  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',             author:'Nejizzuki',                  date:'29/04/2026', route:'open-english' },
+  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                                     author:'Nejizzuki',                  date:'29/04/2026', route:'apostilas-neji' },
+  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                texttext:'flowings, cupiditys',        date:'29/04/2026', route:'speak' },
   { id:12, title:'Redação Paulista',      desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',   author:'cupiditys',                  date:'29/04/2026', route:'redacao-paulista' },
-  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',            author:'crimsonstrauss',             date:'29/04/2026', route:'khan-eclipse' },
-  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                    author:'crimsonstrauss',             date:'29/04/2026', route:'expansao-noturna' },
-  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                      author:'crimsonstrauss',             date:'29/04/2026', route:'livro-estudante' },
-  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                         author:'Who Asked & Tecniccomsono', date:'29/04/2026', route:'apostilas' },
-  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                                author:'lsnouu',                     date:'29/04/2026', route:'cmsp-bots' },
-  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                        author:'crimsonstrauss',             date:'29/04/2026', route:'alura-eclipse' },
-  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',            author:'Niximkk',                    date:'29/04/2026', route:'khanware' },
+  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'crimsonstrauss',             date:'29/04/2026', route:'khan-eclipse' },
+  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                     author:'crimsonstrauss',             date:'29/04/2026', route:'expansao-noturna' },
+  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                              author:'crimsonstrauss',             date:'29/04/2026', route:'livro-estudante' },
+  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                                     author:'Who Asked & Tecniccomsono', date:'29/04/2026', route:'apostilas' },
+  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                               author:'lsnouu',                     date:'29/04/2026', route:'cmsp-bots' },
+  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                                author:'crimsonstrauss',             date:'29/04/2026', route:'alura-eclipse' },
+  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'Niximkk',                    date:'29/04/2026', route:'khanware' },
   { id:20, title:'LeiaSP',                desc:'Ferramenta para automatizar a leitura de livros no LeiaSP.',                  author:'Cupiditys',                  date:'29/04/2026', route:'leiasp' },
-  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',             author:'lsnouu',                     date:'29/04/2026', route:'redacao-parana' },
-  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',               author:'crimsonstrauss',             date:'29/04/2026', route:'prepara-sp' }
+  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',              author:'lsnouu',                     date:'29/04/2026', route:'redacao-parana' },
+  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',                author:'crimsonstrauss',             date:'29/04/2026', route:'prepara-sp' }
 ];
 
 // ── RENDER CARDS ──
