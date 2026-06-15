@@ -1,23 +1,12 @@
 // ============================================================
-// FuturaOS_Tasks — Cloudflare Worker v4.1 (Zero Trust + KV)
+// FuturaOS_Tasks — Cloudflare Worker (Zero Trust + KV)
 // ============================================================
-// VARIÁVEIS DE AMBIENTE — configure no painel da Cloudflare:
-//   Workers & Pages → Seu Worker → Settings → Variables
-//
-//   MP_ACCESS_TOKEN  = APP_USR-520505663956170-061508-ca22aae90b7bffe048f76dfe0455be83-2380191603
-//   MP_PUBLIC_KEY    = APP_USR-03c8841f-1280-4e5e-9afe-7cf49654dff3
-//   MP_CLIENT_ID     = 520505663956170
-//   MP_CLIENT_SECRET = JF7o1nNTVsWpUkmEgsVhVxIJCGHkckst
-//   MP_WEBHOOK_SECRET= c4393a31d736ee5fc70081559f6833d76cbe88135f6f58d0df8be64984e6e89c
-//
-// KV NAMESPACE — vincule no painel da Cloudflare:
-//   Workers & Pages → Seu Worker → Settings → Variables → KV Namespace Bindings
-//   Variable name: FT_KV  →  Namespace: (selecione ou crie "futura_os_kv")
-//
-// NUNCA exponha credenciais em texto plano no código de produção.
+// Configure no painel da Cloudflare:
+//   MP_ACCESS_TOKEN  = [seu token]
+//   MP_WEBHOOK_SECRET= [seu webhook secret]
+//   FT_KV            = [KV Namespace binding]
 // ============================================================
 
-// ── COFRE DE SCRIPTS (nunca enviado por completo ao cliente) ──
 const BANCO_DE_SCRIPTS = {
   1:  { title: 'Taskitos',              code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
   2:  { title: 'Redação Eclipse',       code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
@@ -37,21 +26,15 @@ const BANCO_DE_SCRIPTS = {
   16: { title: 'Apostilas',             code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
   17: { title: 'Cmsp Bots',             code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
   18: { title: 'Alura Eclipse',         code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
-  19: { title: 'Khanware v3.0.9',       code: 'javascript:fetch("https://raw.githubusercontent.com/Niximkk/Khanware/refs/heads/main/Khanware.js").then(t=>t.text()).then(eval);' },
+  19: { title: 'Khanware v3.0.9',       code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
   20: { title: 'LeiaSP',                code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
   21: { title: 'Redação Paraná',        code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
   22: { title: 'Prepara SP',            code: '// PAYLOAD_REAL_DO_SCRIPT_AQUI' },
 };
 
-// ── ESTADO DE SESSÕES GRATUITAS (in-memory por instância) ──
 const sessoesGratuitas = new Map();
-const TEMPO_LIVRE_MS   = 10 * 60 * 1000;
+const TEMPO_LIVRE_MS = 10 * 60 * 1000;
 
-// TTL de acesso por plano (em segundos)
-const TTL_SEMANAL = 604800;  // 7 dias
-const TTL_MENSAL  = 2592000; // 30 dias
-
-// ── HELPERS ──
 function jsonResp(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -82,38 +65,34 @@ function sanitizeUserId(uid) {
   return clean.length >= 8 ? clean : null;
 }
 
-// ── VERIFICAÇÃO DE ASSINATURA HMAC DO WEBHOOK ──
-async function verificarAssinaturaWebhook(request, body, secret) {
-  const assinaturaHeader = request.headers.get('x-signature') || '';
-  const xRequestId       = request.headers.get('x-request-id') || '';
-  const dataId           = body?.data?.id || '';
-  const ts               = body?.ts ?? '';
+async function webhookAssinado(request, body, secret) {
+  const sig = request.headers.get('x-signature') || '';
+  const xRequestId = request.headers.get('x-request-id') || '';
+  const dataId = body?.data?.id || '';
+  const ts = body?.ts ?? '';
+  const raw = `id:${dataId};request-id:${xRequestId};ts:${ts}`;
 
-  const stringParaValidar = `id:${dataId};request-id:${xRequestId};ts:${ts}`;
-  const encoder    = new TextEncoder();
-  const cryptoKey  = await crypto.subtle.importKey(
-    'raw', encoder.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
   );
-  const signBuffer = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(stringParaValidar));
-  const signHex    = Array.from(new Uint8Array(signBuffer))
-    .map(b => b.toString(16).padStart(2, '0')).join('');
-
-  const v1Match = assinaturaHeader.match(/v1=([a-f0-9]+)/);
-  return v1Match ? v1Match[1] === signHex : false;
+  const out = await crypto.subtle.sign('HMAC', key, enc.encode(raw));
+  const hex = Array.from(new Uint8Array(out)).map(b => b.toString(16).padStart(2, '0')).join('');
+  const m = sig.match(/v1=([a-f0-9]+)/);
+  return !!m && m[1] === hex;
 }
 
-// ── HANDLER PRINCIPAL ──
 export default {
   async fetch(request, env) {
-    const url    = new URL(request.url);
+    const url = new URL(request.url);
     const method = request.method.toUpperCase();
 
     if (method === 'OPTIONS') return corsPreFlight();
 
-    // ──────────────────────────────────────────────────────────────
-    // POST /api/start-free
-    // Inicia e valida o cronômetro de 10 minutos (relógio do servidor)
-    // ──────────────────────────────────────────────────────────────
     if (method === 'POST' && url.pathname === '/api/start-free') {
       let body;
       try { body = await request.json(); } catch { return jsonResp({ error: 'JSON inválido' }, 400); }
@@ -121,189 +100,109 @@ export default {
       const userId = sanitizeUserId(body.userId);
       if (!userId) return jsonResp({ error: 'userId inválido ou ausente' }, 400);
 
-      const agora           = Date.now();
-      const sessaoExistente = sessoesGratuitas.get(userId);
+      const agora = Date.now();
+      const sessao = sessoesGratuitas.get(userId);
 
-      if (sessaoExistente && agora < sessaoExistente.liberadoEm) {
-        const restanteSeg = Math.ceil((sessaoExistente.liberadoEm - agora) / 1000);
+      if (sessao && agora < sessao.liberadoEm) {
         return jsonResp({
           status: 'em_andamento',
-          restanteSeg,
-          liberadoEm: sessaoExistente.liberadoEm,
-          mensagem: `Cronômetro ativo. Aguarde mais ${restanteSeg} segundos.`,
+          restanteSeg: Math.ceil((sessao.liberadoEm - agora) / 1000),
+          liberadoEm: sessao.liberadoEm,
         });
       }
 
-      const liberadoEm = agora + TEMPO_LIVRE_MS;
-      sessoesGratuitas.set(userId, { iniciadoEm: agora, liberadoEm });
+      sessoesGratuitas.set(userId, {
+        iniciadoEm: agora,
+        liberadoEm: agora + TEMPO_LIVRE_MS,
+      });
 
       return jsonResp({
         status: 'iniciado',
         iniciadoEm: agora,
-        liberadoEm,
-        duracaoSeg: TEMPO_LIVRE_MS / 1000,
-        mensagem: 'Cronômetro iniciado. Script liberado em 10 minutos.',
+        liberadoEm: agora + TEMPO_LIVRE_MS,
       });
     }
 
-    // ──────────────────────────────────────────────────────────────
-    // POST /api/get-script
-    // Verificação Zero-Trust: ignora qualquer flag do cliente.
-    // Consulta o KV do servidor como única fonte de verdade.
-    // ──────────────────────────────────────────────────────────────
     if (method === 'POST' && url.pathname === '/api/get-script') {
       let body;
       try { body = await request.json(); } catch { return jsonResp({ error: 'JSON inválido' }, 400); }
 
-      const userId   = sanitizeUserId(body.userId || request.headers.get('X-User-Id'));
+      const userId = sanitizeUserId(body.userId || request.headers.get('X-User-Id'));
       const scriptId = parseInt(body.scriptId, 10);
 
-      if (!userId)                          return jsonResp({ error: 'userId inválido ou ausente' }, 400);
+      if (!userId) return jsonResp({ error: 'userId inválido ou ausente' }, 400);
       if (!scriptId || scriptId < 1 || scriptId > 22) return jsonResp({ error: 'scriptId inválido' }, 400);
 
       const script = BANCO_DE_SCRIPTS[scriptId];
-      if (!script)                          return jsonResp({ error: 'Script não encontrado' }, 404);
+      if (!script) return jsonResp({ error: 'Script não encontrado' }, 404);
 
-      // ── VERIFICAÇÃO 1: Status premium no KV (fonte única de verdade) ──
-      // O cliente NUNCA envia jaPagou — o servidor decide sozinho.
       const statusKV = await env.FT_KV.get(`premium:${userId}`);
-      const isPremium = statusKV === 'ativo';
 
-      if (isPremium) {
+      if (statusKV === 'ativo') {
         return jsonResp({
-          status:   'liberado',
-          origem:   'premium',
+          status: 'liberado',
+          origem: 'premium',
           scriptId,
-          title:    script.title,
-          code:     script.code,
+          title: script.title,
+          code: script.code,
         });
       }
 
-      // ── VERIFICAÇÃO 2: Cronômetro gratuito (fallback, sem flags do cliente) ──
-      const agora  = Date.now();
+      const agora = Date.now();
       const sessao = sessoesGratuitas.get(userId);
 
       if (!sessao) {
         return jsonResp({
-          status:   'bloqueado',
-          codigo:   'SEM_SESSAO',
+          status: 'bloqueado',
+          codigo: 'SEM_SESSAO',
           mensagem: 'Inicie o cronômetro gratuito antes de acessar o script.',
         }, 403);
       }
 
       if (agora < sessao.liberadoEm) {
-        const restanteSeg = Math.ceil((sessao.liberadoEm - agora) / 1000);
         return jsonResp({
-          status:     'bloqueado',
-          codigo:     'TEMPO_INSUFICIENTE',
-          restanteSeg,
-          mensagem:   `⛔ Acesso negado. Aguarde mais ${restanteSeg} segundos.`,
+          status: 'bloqueado',
+          codigo: 'TEMPO_INSUFICIENTE',
+          restanteSeg: Math.ceil((sessao.liberadoEm - agora) / 1000),
+          mensagem: '⛔ Acesso negado. Aguarde o tempo do servidor.',
         }, 403);
       }
 
-      // Cronômetro expirou — libera e limpa a sessão
       sessoesGratuitas.delete(userId);
       return jsonResp({
-        status:   'liberado',
-        origem:   'gratuito',
+        status: 'liberado',
+        origem: 'gratuito',
         scriptId,
-        title:    script.title,
-        code:     script.code,
+        title: script.title,
+        code: script.code,
       });
     }
 
-    // ──────────────────────────────────────────────────────────────
-    // POST /api/verify-premium
-    // Endpoint chamado pelo botão "Já efetuei o pagamento".
-    // Consulta o KV — não confia em nada que venha do cliente.
-    // ──────────────────────────────────────────────────────────────
-    if (method === 'POST' && url.pathname === '/api/verify-premium') {
-      let body;
-      try { body = await request.json(); } catch { return jsonResp({ error: 'JSON inválido' }, 400); }
-
-      const userId = sanitizeUserId(body.userId || request.headers.get('X-User-Id'));
-      if (!userId) return jsonResp({ error: 'userId inválido ou ausente' }, 400);
-
-      const statusKV = await env.FT_KV.get(`premium:${userId}`);
-
-      if (statusKV === 'ativo') {
-        return jsonResp({ isPremium: true,  mensagem: 'Assinatura ativa confirmada.' });
-      } else {
-        return jsonResp({ isPremium: false, mensagem: 'Nenhuma assinatura ativa encontrada para este usuário.' }, 403);
-      }
-    }
-
-    // ──────────────────────────────────────────────────────────────
-    // POST /api/webhook-mp
-    // Recebe notificações do Mercado Pago e persiste no KV.
-    // ──────────────────────────────────────────────────────────────
     if (method === 'POST' && url.pathname === '/api/webhook-mp') {
       let body;
       try { body = await request.json(); } catch { return jsonResp({ error: 'JSON inválido' }, 400); }
 
-      // Valida assinatura HMAC antes de processar qualquer dado
-      const assinaturaValida = await verificarAssinaturaWebhook(request, body, env.MP_WEBHOOK_SECRET);
-      if (!assinaturaValida) {
-        return jsonResp({ error: 'Assinatura do webhook inválida.' }, 401);
-      }
+      const ok = await webhookAssinado(request, body, env.MP_WEBHOOK_SECRET);
+      if (!ok) return jsonResp({ error: 'Assinatura do webhook inválida' }, 401);
 
       const tipo = body?.type || body?.action || '';
+      const paymentId = body?.data?.id;
 
-      // ── Evento de pagamento aprovado ──
-      if (tipo === 'payment' || tipo === 'payment.updated') {
-        const paymentId = body?.data?.id;
-        if (!paymentId) return jsonResp({ received: true });
-
+      if (tipo === 'payment' && paymentId) {
         try {
-          const mpRes = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
-            headers: { 'Authorization': `Bearer ${env.MP_ACCESS_TOKEN}` }
+          const res = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+            headers: { Authorization: `Bearer ${env.MP_ACCESS_TOKEN}` },
           });
-          const pagamento = await mpRes.json();
+          const pagamento = await res.json();
 
           if (pagamento.status === 'approved') {
-            // Extrai o userId do metadata do pagamento (deve ser enviado na criação da preferência)
             const userId = sanitizeUserId(pagamento?.metadata?.user_id || pagamento?.external_reference);
-
             if (userId) {
-              // Detecta o plano pelo valor ou pelo preapproval_plan_id para definir o TTL correto
-              const valor    = pagamento?.transaction_amount || 0;
-              const ttl      = valor <= 2 ? TTL_SEMANAL : TTL_MENSAL;
-
-              await env.FT_KV.put(`premium:${userId}`, 'ativo', { expirationTtl: ttl });
+              await env.FT_KV.put(`premium:${userId}`, 'ativo', { expirationTtl: 604800 });
             }
           }
-        } catch (err) {
-          console.error('Erro ao consultar pagamento no MP:', err);
-        }
-      }
-
-      // ── Evento de assinatura (preapproval) aprovada ──
-      if (tipo === 'subscription_preapproval' || tipo === 'preapproval') {
-        const preapprovalId = body?.data?.id;
-        if (!preapprovalId) return jsonResp({ received: true });
-
-        try {
-          const mpRes = await fetch(`https://api.mercadopago.com/preapproval/${preapprovalId}`, {
-            headers: { 'Authorization': `Bearer ${env.MP_ACCESS_TOKEN}` }
-          });
-          const assinatura = await mpRes.json();
-
-          if (assinatura.status === 'authorized') {
-            const userId = sanitizeUserId(assinatura?.external_reference);
-            if (userId) {
-              // Plano mensal: 30 dias; outros: 7 dias
-              const ttl = assinatura?.auto_recurring?.transaction_amount > 2 ? TTL_MENSAL : TTL_SEMANAL;
-              await env.FT_KV.put(`premium:${userId}`, 'ativo', { expirationTtl: ttl });
-            }
-          }
-
-          // Cancela o acesso se a assinatura for suspensa ou cancelada
-          if (['cancelled', 'paused'].includes(assinatura.status)) {
-            const userId = sanitizeUserId(assinatura?.external_reference);
-            if (userId) await env.FT_KV.delete(`premium:${userId}`);
-          }
-        } catch (err) {
-          console.error('Erro ao consultar assinatura no MP:', err);
+        } catch (e) {
+          console.error(e);
         }
       }
 
