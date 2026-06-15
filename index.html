@@ -80,11 +80,11 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-/* BOTÕES */
+/* BOTÕES GERAIS */
 .btn{border:none;cursor:pointer;border-radius:14px;padding:15px 28px;font-size:15px;font-weight:700;
   font-family:'Inter',sans-serif;display:inline-flex;align-items:center;justify-content:center;
   gap:10px;text-decoration:none;position:relative;overflow:hidden;
-  transition:all .3s cubic-bezier(.16,1,.3,1)}
+  transition:all .3s cubic-bezier(.16,1,.3,1); width: 100%;}
 .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);transform:translateX(-100%);transition:.55s}
 .btn:hover::after{transform:translateX(100%)}
 .btn-primary{background:linear-gradient(135deg,#0ea5e9,var(--purple),var(--pink));color:#fff;
@@ -95,7 +95,13 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .btn-ghost:hover{background:rgba(0,212,255,0.1);border-color:var(--cyan);
   transform:translateY(-2px);box-shadow:0 0 30px rgba(0,212,255,0.1)}
 
-/* ── TELA BOAS-VINDAS ── */
+/* BOTÃO VIP PREMIUM */
+.btn-vip{background:linear-gradient(135deg,#eab308,#d97706);color:#fff;
+  box-shadow:0 0 40px rgba(234,179,8,0.2),0 8px 28px rgba(0,0,0,0.4); border: 1px solid #fde047;}
+.btn-vip:hover{transform:translateY(-3px) scale(1.02);
+  box-shadow:0 0 60px rgba(234,179,8,0.4),0 20px 50px rgba(0,0,0,0.5)}
+
+/* ── TELAS GERAIS ── */
 .welcome-title{
   font-size:clamp(1.8rem,4.5vw,3.4rem);
   line-height:1.15;font-weight:900;letter-spacing:-.03em;margin-bottom:20px;
@@ -106,69 +112,12 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   margin-bottom:38px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .3s both}
 .sys-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,212,255,0.2);letter-spacing:.04em}
 
-/* ── TELA PIX ── */
-.pix-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
-.panel{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:26px;position:relative;overflow:hidden}
-.panel::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),rgba(124,58,237,0.25),transparent)}
-.panel-title{font-size:1.3rem;font-weight:800;margin-bottom:10px;
-  background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.panel-desc{color:var(--muted);font-size:13.5px;line-height:1.75}
-.valor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}
-.vbtn{background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:12px;
-  padding:13px 8px;color:var(--text);font-size:14px;font-weight:800;cursor:pointer;
-  font-family:'JetBrains Mono',monospace;transition:all .22s;text-align:center}
-.vbtn:hover,.vbtn.active{background:rgba(0,212,255,0.13);border-color:var(--cyan);
-  color:var(--cyan);box-shadow:0 0 18px rgba(0,212,255,0.1);transform:translateY(-2px)}
-.valor-input{background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.12);border-radius:12px;
-  padding:13px 16px;color:#fff;font-size:15px;font-weight:700;width:100%;
-  font-family:'JetBrains Mono',monospace;outline:none;transition:.3s;margin-top:4px}
-.valor-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.07)}
-.valor-input::placeholder{color:rgba(255,255,255,0.2);font-weight:400}
-.progress-wrap{margin-top:20px}
-.progress-labels{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:10px}
-.progress-labels strong{color:var(--cyan);font-family:'JetBrains Mono',monospace}
-.progress-track{width:100%;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:visible;position:relative}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
-  border-radius:999px;transition:width .9s cubic-bezier(.16,1,.3,1);position:relative;
-  box-shadow:0 0 14px rgba(0,212,255,0.3);min-width:0%}
-.progress-fill::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
-  width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 14px var(--cyan);transition:right .9s}
-.pct-text{text-align:right;font-size:11px;color:rgba(0,212,255,0.4);
-  font-family:'JetBrains Mono',monospace;margin-top:8px}
-.api-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);
-  font-family:'JetBrains Mono',monospace;margin-top:14px}
-.api-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);transition:.4s;flex-shrink:0}
-.api-dot.ok{background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s infinite}
-.api-dot.err{background:#ef4444;box-shadow:0 0 10px #ef4444}
-.history-wrap{margin-top:14px;display:flex;flex-direction:column;gap:7px;max-height:150px;overflow-y:auto}
-.history-wrap::-webkit-scrollbar{width:4px}
-.history-wrap::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:4px}
-.h-item{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:10px;
-  padding:9px 14px;display:flex;justify-content:space-between;align-items:center;
-  animation:fadeUp .3s cubic-bezier(.16,1,.3,1)}
-.h-val{color:var(--green);font-weight:800;font-family:'JetBrains Mono',monospace;font-size:13px}
-.h-time{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace}
-.qr-area{margin-top:16px;background:rgba(0,212,255,0.03);border:1px solid rgba(0,212,255,0.1);
-  border-radius:16px;padding:20px;text-align:center;min-height:195px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-.qr-hint{color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace;line-height:1.6}
-#qrcode canvas,#qrcode img{border-radius:10px;margin: 0 auto;}
-.copy-key-btn{margin-top:12px;width:100%;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);
-  border-radius:12px;padding:12px 16px;color:var(--cyan);font-size:12px;font-weight:700;
-  font-family:'JetBrains Mono',monospace;cursor:pointer;transition:.25s;text-align:center;
-  word-break:break-all;display:none}
-.copy-key-btn:hover{background:rgba(0,212,255,0.12);border-color:var(--cyan);box-shadow:0 0 20px rgba(0,212,255,0.1)}
-.pix-valor-label{margin-top:10px;font-size:13px;color:var(--muted);
-  font-family:'JetBrains Mono',monospace;text-align:center;min-height:18px}
-.pix-tip{margin-top:12px;font-size:11px;color:rgba(0,212,255,0.28);
-  font-family:'JetBrains Mono',monospace;text-align:center}
-.pix-key-info{background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
-  border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:var(--muted);
-  font-family:'JetBrains Mono',monospace;line-height:1.6}
-.pix-key-info span{color:var(--cyan);font-weight:700}
+/* ACESSO GRID */
+.access-box{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:36px;position:relative;overflow:hidden; text-align: center; margin-bottom: 20px;}
+.access-title{font-size:1.5rem;font-weight:800;margin-bottom:15px; color: #fff;}
+.access-desc{color:var(--muted);font-size:14px;line-height:1.6; margin-bottom: 24px;}
 
-/* ── MAIN PAGE ── */
+/* MAIN PAGE */
 .main-page{padding:72px 20px 100px;position:relative;z-index:10}
 .container{width:100%;max-width:1300px;margin:0 auto}
 .hero{text-align:center;margin-bottom:64px;position:relative}
@@ -189,7 +138,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .stat-num{font-size:2.3rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1}
 .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
 
-/* ── CARDS ── */
+/* CARDS */
 .cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:32px}
 .card{background:rgba(6,10,20,0.88);border:1px solid var(--border);border-radius:22px;
   padding:26px;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);
@@ -224,10 +173,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .card:hover .card-desc{color:#6a98bc}
 .card-author{color:rgba(0,212,255,0.32);font-size:12px;font-family:'JetBrains Mono',monospace;
   position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-num{position:absolute;bottom:18px;right:20px;font-size:11px;
-  color:rgba(0,212,255,0.09);font-family:'JetBrains Mono',monospace;font-weight:700}
 
-/* ── DETAIL PAGE ── */
+/* DETAIL PAGE */
 .detail-page{padding:54px 20px 90px;min-height:100vh;position:relative;z-index:10}
 .detail-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 370px;gap:36px;align-items:start}
 .back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;
@@ -287,10 +234,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .ip{background:rgba(124,58,237,0.09)}.ir{background:rgba(239,68,68,0.07)}
 .info-val{font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1.2}
 .info-key{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-top:3px}
-.sidebar-id{font-size:11px;color:rgba(0,212,255,0.22);margin-top:18px;
-  padding-top:16px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;word-break:break-all}
 
-/* ── FOOTER ── */
+/* FOOTER */
 .footer{background:rgba(2,4,8,0.98);border-top:1px solid var(--border);
   padding:48px 20px;margin-top:80px;position:relative;z-index:10}
 .footer::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;
@@ -320,7 +265,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   box-shadow:0 0 70px rgba(236,72,153,0.28),0 24px 60px rgba(0,0,0,0.55)}
 
 /* RESPONSIVE */
-@media(max-width:960px){.pix-grid{grid-template-columns:1fr}.cards-grid{grid-template-columns:repeat(2,1fr)}.detail-wrap{grid-template-columns:1fr}}
+@media(max-width:960px){.cards-grid{grid-template-columns:repeat(2,1fr)}.detail-wrap{grid-template-columns:1fr}}
 @media(max-width:580px){.cards-grid{grid-template-columns:1fr}.glass{padding:26px;border-radius:22px}.stats-bar{gap:28px}}
 </style>
 </head>
@@ -348,72 +293,62 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
     <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
     <h1 class="welcome-title">Olá, seja muito bem‑vindo ao FuturaOS_Tasks.</h1>
     <p class="welcome-sub">Uma vitrine profissional e futurística para apresentar scripts, ferramentas e conteúdos. Tecnologia de ponta ao seu alcance.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="goToDonation()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    <div style="display:flex;gap:14px;flex-wrap:wrap; justify-content:center; margin-top:20px;">
+      <button class="btn btn-primary" style="width: auto; padding: 15px 40px;" onclick="goToAccess()">
         Entrar no sistema
       </button>
-      <button class="btn btn-ghost" onclick="enterMain()">Ver scripts →</button>
     </div>
     <div class="sys-tag" style="bottom:20px;left:24px">SESSION: FT-2026 // SECURE</div>
   </div>
 </section>
 
-<section class="screen hidden" id="donationScreen">
-  <div class="glass" style="max-width:1000px">
+<section class="screen hidden" id="accessScreen">
+  <div class="glass" style="max-width:500px; text-align: center;">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
-    <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Módulo de Apoio — Pix Automático GG</div>
-    <div class="pix-grid">
-      <div class="panel">
-        <div class="panel-title">Apoie o FuturaOS_Tasks</div>
-        <p class="panel-desc">Escolha um valor. O QR Code será gerado automaticamente pela nossa nova integração.</p>
-        <div class="valor-grid">
-          <button class="vbtn" onclick="setValor(this,1)">R$ 1</button>
-          <button class="vbtn" onclick="setValor(this,5)">R$ 5</button>
-          <button class="vbtn" onclick="setValor(this,10)">R$ 10</button>
-          <button class="vbtn" onclick="setValor(this,20)">R$ 20</button>
-          <button class="vbtn" onclick="setValor(this,50)">R$ 50</button>
-          <button class="vbtn" onclick="setValor(this,100)">R$ 100</button>
-          <button class="vbtn" onclick="setValor(this,200)">R$ 200</button>
-        </div>
-        <input class="valor-input" id="valorInput" type="number" min="1" max="9999" step="0.01"
-          placeholder="Ou digite outro valor (R$)" oninput="onValorInput()"/>
-        
-        <button class="btn btn-ghost" style="width:100%;margin-top:20px;font-size:13px;opacity:.7" onclick="enterMain()">
-          Pular → Acessar scripts
-        </button>
-        <div class="progress-wrap">
-          <div class="progress-labels">
-            <span>Arrecadado: <strong id="currentValue">R$ 0,00</strong></span>
-            <span>Meta: <strong id="goalValue">R$ 200,00</strong></span>
-          </div>
-          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-          <div class="pct-text" id="pctText">0.0%</div>
-        </div>
-        <div class="api-row">
-          <div class="api-dot" id="apiDot"></div>
-          <span id="apiStatus">Pronto para gerar pagamentos</span>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">QR Code Pix</div>
-        <p class="panel-desc">Escaneie com o aplicativo do seu banco para pagar instantaneamente.</p>
-        
-        <div class="qr-area" id="qrArea">
-          <div class="qr-hint" id="qrHint">
-            <div style="font-size:44px;margin-bottom:12px">📱</div>
-            Selecione um valor à esquerda<br>para gerar o QR Code Dinâmico
-          </div>
-          <div id="qrcode"></div>
-        </div>
-        <button class="copy-key-btn" id="copyKeyBtn" onclick="copyPixKey()">
-          🔑 Copiar código Pix gerado
-        </button>
-        <div class="pix-valor-label" id="pixValorLabel"></div>
-        <div class="pix-tip" id="pixTip">⚡ Sistema atualizado com a API Pix GG</div>
-      </div>
+    
+    <h2 class="welcome-title" style="font-size: 2rem; margin-bottom: 10px;">Libere seu Acesso</h2>
+    <p class="welcome-sub" style="margin: 0 auto 30px;">Escolha como você deseja acessar os scripts hoje.</p>
+
+    <div class="access-box" style="border-color: rgba(234,179,8,0.3);">
+      <h3 class="access-title" style="color: #fde047;">💎 Acesso VIP Diário</h3>
+      <p class="access-desc">Sem tempo de espera. Acesse todos os scripts instantaneamente durante todo o dia.</p>
+      
+      <button class="btn btn-vip" style="margin-bottom: 15px;" onclick="window.open('https://pixgg.com/FELIPEXX', '_blank')">
+        Comprar VIP Agora
+      </button>
+      
+      <button class="btn btn-ghost" onclick="askForVipPassword()">
+        🔑 Já comprei (Inserir Senha)
+      </button>
     </div>
+
+    <div class="access-box">
+      <h3 class="access-title">🆓 Acesso Grátis</h3>
+      <p class="access-desc">Acesse os scripts gratuitamente aguardando nosso anúncio obrigatório de 10 minutos.</p>
+      <button class="btn btn-ghost" onclick="startAdCountdown()">
+        Avançar (Aguardar Liberação)
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="screen hidden" id="adScreen">
+  <div class="glass" style="max-width:600px; text-align: center;">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    
+    <div style="font-size: 60px; margin-bottom: 20px;">⏱️</div>
+    <h2 class="welcome-title" style="font-size: 1.8rem; margin-bottom: 15px;">Simulação de Anúncio</h2>
+    <p class="welcome-sub" style="margin: 0 auto 20px;">Para liberar o acesso gratuito, por favor aguarde o tempo acabar nesta página. Não feche a aba.</p>
+    
+    <div style="font-size: 4rem; font-weight: 900; font-family: 'JetBrains Mono', monospace; color: var(--cyan); margin: 30px 0; text-shadow: 0 0 20px rgba(0,212,255,0.4);" id="countdownDisplay">
+      10:00
+    </div>
+
+    <button class="btn btn-ghost" style="opacity: 0.5; cursor: not-allowed;" id="btnAdLiberar" disabled>
+      Aguarde o tempo acabar...
+    </button>
   </div>
 </section>
 
@@ -434,16 +369,14 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
           <div class="stat-lbl">Online</div>
         </div>
         <div class="stat">
-          <div class="stat-num" style="background:linear-gradient(135deg,var(--pink),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">29/05</div>
+          <div class="stat-num" style="background:linear-gradient(135deg,var(--pink),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">HOJE</div>
           <div class="stat-lbl">Atualizado</div>
         </div>
       </div>
     </section>
     <section class="cards-grid" id="cardsGrid"></section>
     <div style="display:flex;justify-content:center;margin-top:68px">
-      <a class="ig-btn"
-        href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr"
-        target="_blank" rel="noopener">
+      <a class="ig-btn" href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr" target="_blank" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         Seguir no Instagram
       </a>
@@ -487,7 +420,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
       <h1 class="detail-title" id="detailTitle"></h1>
       <p class="detail-desc" id="detailDesc"></p>
       <div class="info-box">
-        <div class="info-label">↗ URL do Script</div>
+        <div class="info-label">↗️ URL do Script</div>
         <a class="url-link" id="detailUrl" href="#" target="_blank" rel="noopener"></a>
       </div>
       <div class="info-box" id="codeSection" style="display:none">
@@ -515,11 +448,15 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 'use strict';
 
-/* ── ANTI-DEVTOOLS ORIGINAL ── */
+/* ── CONFIGURAÇÕES DA AUTOMAÇÃO VIP ── */
+// IMPORTANTE: Mude esta senha diariamente para evitar vazamentos!
+// Dê essa senha apenas para quem comprovar o pagamento via WhatsApp/Insta.
+const SENHA_VIP_DIARIA = "futura2026"; 
+
+/* ── ANTI-DEVTOOLS ATIVADO ── */
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => {
   if (
@@ -555,50 +492,28 @@ window.addEventListener('resize', resizeCanvas);
 
 for (let i = 0; i < 95; i++) {
   pts.push({
-    x: Math.random() * W,
-    y: Math.random() * H,
-    r: Math.random() * 1.8 + 0.3,
-    dx: (Math.random() - 0.5) * 0.45,
-    dy: (Math.random() - 0.5) * 0.45,
-    o: Math.random() * 0.5 + 0.1,
-    c: COLORS[Math.floor(Math.random() * COLORS.length)]
+    x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + 0.3,
+    dx: (Math.random() - 0.5) * 0.45, dy: (Math.random() - 0.5) * 0.45,
+    o: Math.random() * 0.5 + 0.1, c: COLORS[Math.floor(Math.random() * COLORS.length)]
   });
 }
 
 function drawParticles() {
   ctx.clearRect(0, 0, W, H);
   pts.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.c},${p.o})`;
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.c},${p.o})`; ctx.fill();
     p.x += p.dx; p.y += p.dy;
     if (p.x < 0 || p.x > W) p.dx *= -1;
     if (p.y < 0 || p.y > H) p.dy *= -1;
-  });
-  pts.forEach((a, i) => {
-    for (let j = i + 1; j < pts.length; j++) {
-      const b = pts[j];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (d < 120) {
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = `rgba(0,212,255,${0.065 * (1 - d / 120)})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-    }
   });
   requestAnimationFrame(drawParticles);
 }
 drawParticles();
 
-/* ── CURSOR GLOW ── */
 const cursorGlow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', e => {
-  cursorGlow.style.left = e.clientX + 'px';
-  cursorGlow.style.top = e.clientY + 'px';
+  cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px';
 });
 
 /* ── NOTIFY ── */
@@ -613,117 +528,110 @@ function showNotify(icon, title, sub) {
   notifyTimer = setTimeout(() => el.classList.remove('show'), 4500);
 }
 
-/* ── INTEGRAÇÃO PIX GG COM PROXY ANTI-CORS ── */
-const PIX_GG_URL = 'https://api.pixgg.com/?apikey=38c1eba1-3507-455b-a42f-99d9dbf26f66';
-let currentCopiaECola = '';
+/* ── SISTEMA DE NAVEGAÇÃO E AUTOMAÇÃO VIP/ANÚNCIO ── */
 
-async function gerarQR(valor) {
-  const v = parseFloat(valor);
-  if (!v || v <= 0) return;
+// Checa se a pessoa já tem acesso válido para hoje gravado no navegador
+function hasValidAccessToday() {
+    const accessDate = localStorage.getItem('futura_access_date');
+    const today = new Date().toDateString();
+    return accessDate === today;
+}
 
-  const qrDiv = document.getElementById('qrcode');
-  const hint = document.getElementById('qrHint');
-  const btnCopy = document.getElementById('copyKeyBtn');
-  
-  qrDiv.innerHTML = '';
-  btnCopy.style.display = 'none';
-  hint.style.display = 'block';
-  hint.innerHTML = '<div style="font-size:30px; margin-bottom:10px;">⏳</div>Gerando código dinâmico...';
-  
-  try {
-    // Usando um serviço de Proxy gratuito (allorigins) para burlar o bloqueio de CORS do navegador
-    const targetUrl = `${PIX_GG_URL}&amount=${v}`;
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
+// Salva o acesso de hoje no navegador
+function grantAccessForToday() {
+    localStorage.setItem('futura_access_date', new Date().toDateString());
+    enterMain();
+}
 
-    const response = await fetch(proxyUrl);
-    const data = await response.json();
-    
-    // Varre o JSON para pegar o código Pix (tentando os padrões mais comuns de APIs de pagamento)
-    const codigoPix = data.payload || data.pixCopiaECola || data.qrcode || data.brcode || data.qr_code || (data.data && data.data.qrcode);
+function goToAccess() {
+  // Se a pessoa já validou a senha VIP hoje ou já esperou os 10 min, pula direto pros scripts
+  if(hasValidAccessToday()) {
+      enterMain();
+      return;
+  }
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('accessScreen').classList.remove('hidden');
+}
 
-    if(codigoPix) {
-      currentCopiaECola = codigoPix;
-      hint.style.display = 'none';
-      new QRCode(qrDiv, {
-        text: currentCopiaECola,
-        width: 196, height: 196,
-        colorDark: '#00d4ff', colorLight: '#010409',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-      btnCopy.style.display = 'block';
-      document.getElementById('pixValorLabel').textContent = 'Valor gerado: R$ ' + v.toFixed(2).replace('.', ',');
-      document.getElementById('apiDot').className = 'api-dot ok';
-      document.getElementById('apiStatus').textContent = 'Pix gerado via Pix GG ✓';
-    } else {
-      throw new Error("A API não enviou o código Pix na resposta.");
-    }
-  } catch (err) {
-    hint.innerHTML = '<div style="font-size:30px; margin-bottom:10px; color:#ef4444;">⚠️</div>Erro de Conexão com o Pix GG.<br>Tente novamente.';
-    document.getElementById('apiDot').className = 'api-dot err';
-    document.getElementById('apiStatus').textContent = 'Falha de comunicação';
+function askForVipPassword() {
+  const password = prompt("Insira a senha VIP do dia (enviada após o pagamento no WhatsApp):");
+  if (password === SENHA_VIP_DIARIA) {
+      showNotify('💎', 'Acesso VIP Liberado!', 'Aproveite seus scripts sem anúncios hoje.');
+      grantAccessForToday();
+  } else if (password !== null) {
+      showNotify('❌', 'Senha Incorreta', 'Senha inválida ou vencida.');
   }
 }
 
-function setValor(btn, v) {
-  document.getElementById('valorInput').value = v;
-  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  gerarQR(v);
+// Lógica da trava de anúncio (10 minutos)
+let adTimerInterval = null;
+let timeRemaining = 600; // 600 segundos = 10 minutos
+
+function startAdCountdown() {
+  document.getElementById('accessScreen').classList.add('hidden');
+  document.getElementById('adScreen').classList.remove('hidden');
+  
+  const display = document.getElementById('countdownDisplay');
+  const btn = document.getElementById('btnAdLiberar');
+  
+  adTimerInterval = setInterval(() => {
+      timeRemaining--;
+      
+      let m = Math.floor(timeRemaining / 60);
+      let s = timeRemaining % 60;
+      display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      
+      if (timeRemaining <= 0) {
+          clearInterval(adTimerInterval);
+          display.textContent = "00:00";
+          btn.textContent = "🔓 Liberar Acesso";
+          btn.style.opacity = "1";
+          btn.style.cursor = "pointer";
+          btn.style.background = "linear-gradient(135deg, var(--green), var(--cyan))";
+          btn.disabled = false;
+          btn.onclick = grantAccessForToday;
+          showNotify('✅', 'Tempo Esgotado!', 'Você já pode acessar os scripts.');
+      }
+  }, 1000);
 }
 
-function onValorInput() {
-  const v = parseFloat(document.getElementById('valorInput').value);
-  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
-  if (v > 0) gerarQR(v);
+function enterMain() {
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('accessScreen').classList.add('hidden');
+  document.getElementById('adScreen').classList.add('hidden');
+  document.getElementById('mainPage').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function copyPixKey() {
-  if(!currentCopiaECola) return;
-  const btn = document.getElementById('copyKeyBtn');
-  navigator.clipboard.writeText(currentCopiaECola).then(() => {
-    btn.textContent = '✅ Código copiado com sucesso!';
-    showNotify('📋', 'Pix Copiado!', 'Cole no app do seu banco para pagar.');
-    setTimeout(() => { btn.textContent = '🔑 Copiar código Pix gerado'; }, 2500);
-  });
-}
-
-function fmtBRL(v) { return parseFloat(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-
-/* ── META E BARRA (Fixos temporariamente) ── */
-const META_VALOR = 200;
-document.getElementById('goalValue').textContent = fmtBRL(META_VALOR);
-document.getElementById('currentValue').textContent = fmtBRL(0);
-document.getElementById('progressFill').style.width = '0%';
-
-/* ── OS 22 SCRIPTS ORIGINAIS E COMPLETOS ── */
+/* ── OS 22 SCRIPTS COMPLETOS ── */
 const scripts = [
-  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                       author:'flowings, cupiditys',        date:'29/05/2026', route:'taskitos',              url:'https://taskitos.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:2,  title:'Redação Eclipse',       desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'crimsonstrauss',             date:'29/05/2026', route:'redacao-eclipse',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:3,  title:'Khanto',                desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'cupiditys',                  date:'29/05/2026', route:'khanto',                 url:'https://khan.cupiditys.lol/pt-br/?cmsphacks.xyz',                    code:'', uid:'' },
-  { id:4,  title:'Elefante Letrado',      desc:'Ferramenta para automatizar a leitura de livros no Elefante Letrado.',          author:'crimsonstrauss',             date:'29/05/2026', route:'elefante-letrado',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                    author:'flowings, cupiditys',        date:'29/05/2026', route:'matific',                url:'https://matific.cupiditys.lol/dashboard?cmsphacks.xyz',              code:'', uid:'' },
-  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'crimsonstrauss',             date:'29/05/2026', route:'tarefas-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                            author:'Nejizzuki',                  date:'29/05/2026', route:'redacao-neji',           url:'https://kazereda.nejizzuki.xyz/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:8,  title:'Educação Profissional', desc:'Conjunto de ferramentas para automatizar tarefas no Educação Profissional.',    author:'Nejizzuki',                  date:'29/05/2026', route:'educacao-profissional',  url:'https://profissional.nejizzuki.xyz/?cmsphacks.xyz',                  code:'', uid:'' },
-  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',             author:'Nejizzuki',                  date:'29/05/2026', route:'open-english',           url:'https://oe.nejizzuki.xyz/?cmsphacks.xyz',                            code:'', uid:'' },
-  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                          author:'Nejizzuki',                  date:'29/05/2026', route:'apostilas-neji',         url:'https://apostilas.nejizzuki.xyz/?cmsphacks.xyz',                     code:'', uid:'' },
-  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                 author:'flowings, cupiditys',        date:'29/05/2026', route:'speak',                  url:'https://speakify.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:12, title:'Redação Paulista',      desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'cupiditys',                  date:'29/05/2026', route:'redacao-paulista',       url:'https://redacao.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
-  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'crimsonstrauss',             date:'29/05/2026', route:'khan-eclipse',           url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                      author:'crimsonstrauss',             date:'29/05/2026', route:'expansao-noturna',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                       author:'crimsonstrauss',             date:'29/05/2026', route:'livro-estudante',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                          author:'Who Asked & Tecniccomsono', date:'29/05/2026', route:'apostilas',              url:'https://apostilas-cmsp.vercel.app/?cmsphacks.xyz',                   code:'', uid:'' },
-  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                                 author:'lsnouu',                     date:'29/05/2026', route:'cmsp-bots',              url:'https://discord.gg/p2Zec38XfP',                                      code:'', uid:'' },
-  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                          author:'crimsonstrauss',             date:'29/05/2026', route:'alura-eclipse',          url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'Niximkk',                    date:'29/05/2026', route:'khanware',               url:'https://khanware.space/?cmsphacks.xyz',
+  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'flowings, cupiditys',        date:'29/04/2026', route:'taskitos',              url:'https://taskitos.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
+  { id:2,  title:'Redação Eclipse',       desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'crimsonstrauss',             date:'29/04/2026', route:'redacao-eclipse',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:3,  title:'Khanto',                desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'cupiditys',                  date:'29/04/2026', route:'khanto',                 url:'https://khan.cupiditys.lol/pt-br/?cmsphacks.xyz',                    code:'', uid:'' },
+  { id:4,  title:'Elefante Letrado',      desc:'Ferramenta para automatizar a leitura de livros no Elefante Letrado.',         author:'crimsonstrauss',             date:'29/04/2026', route:'elefante-letrado',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                   author:'flowings, cupiditys',        date:'29/04/2026', route:'matific',                url:'https://matific.cupiditys.lol/dashboard?cmsphacks.xyz',              code:'', uid:'' },
+  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                       author:'crimsonstrauss',             date:'29/04/2026', route:'tarefas-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                           author:'Nejizzuki',                  date:'29/04/2026', route:'redacao-neji',           url:'https://kazereda.nejizzuki.xyz/?cmsphacks.xyz',                      code:'', uid:'' },
+  { id:8,  title:'Educação Profissional', desc:'Conjunto de ferramentas para automatizar tarefas no Educação Profissional.',   author:'Nejizzuki',                  date:'29/04/2026', route:'educacao-profissional',  url:'https://profissional.nejizzuki.xyz/?cmsphacks.xyz',                  code:'', uid:'' },
+  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',            author:'Nejizzuki',                  date:'29/04/2026', route:'open-english',           url:'https://oe.nejizzuki.xyz/?cmsphacks.xyz',                            code:'', uid:'' },
+  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                         author:'Nejizzuki',                  date:'29/04/2026', route:'apostilas-neji',         url:'https://apostilas.nejizzuki.xyz/?cmsphacks.xyz',                     code:'', uid:'' },
+  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                author:'flowings, cupiditys',        date:'29/04/2026', route:'speak',                  url:'https://speakify.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
+  { id:12, title:'Redação Paulista',      desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',   author:'cupiditys',                  date:'29/04/2026', route:'redacao-paulista',       url:'https://redacao.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
+  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',            author:'crimsonstrauss',             date:'29/04/2026', route:'khan-eclipse',           url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                    author:'crimsonstrauss',             date:'29/04/2026', route:'expansao-noturna',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                      author:'crimsonstrauss',             date:'29/04/2026', route:'livro-estudante',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                         author:'Who Asked & Tecniccomsono', date:'29/04/2026', route:'apostilas',              url:'https://apostilas-cmsp.vercel.app/?cmsphacks.xyz',                   code:'', uid:'' },
+  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                                author:'lsnouu',                     date:'29/04/2026', route:'cmsp-bots',              url:'https://discord.gg/p2Zec38XfP',                                      code:'', uid:'' },
+  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                        author:'crimsonstrauss',             date:'29/04/2026', route:'alura-eclipse',          url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
+  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',            author:'Niximkk',                    date:'29/04/2026', route:'khanware',               url:'https://khanware.space/?cmsphacks.xyz',
     code:'javascript:fetch("https://raw.githubusercontent.com/Niximkk/Khanware/refs/heads/main/Khanware.js").then(t=>t.text()).then(eval);',
     uid:'6713fcb69c4463c828b10610' },
-  { id:20, title:'LeiaSP',                desc:'Ferramenta para automatizar a leitura de livros no LeiaSP.',                    author:'Cupiditys',                  date:'29/05/2026', route:'leiasp',                 url:'https://leiasp.cupiditys.lol/?cmsphacks.xyz',                        code:'', uid:'' },
-  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',               author:'lsnouu',                     date:'29/05/2026', route:'redacao-parana',         url:'https://paranaplataformas.crimsonzerohub.xyz/redacao?cmsphacks.xyz', code:'', uid:'' },
-  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',                 author:'crimsonstrauss',             date:'29/05/2026', route:'prepara-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' }
+  { id:20, title:'LeiaSP',                desc:'Ferramenta para automatizar a leitura de livros no LeiaSP.',                  author:'Cupiditys',                  date:'29/04/2026', route:'leiasp',                 url:'https://leiasp.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
+  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',             author:'lsnouu',                     date:'29/04/2026', route:'redacao-parana',         url:'https://paranaplataformas.crimsonzerohub.xyz/redacao?cmsphacks.xyz', code:'', uid:'' },
+  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',               author:'crimsonstrauss',             date:'29/04/2026', route:'prepara-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' }
 ];
 
-/* ── RENDER CARDS E NAVEGAÇÃO ── */
+/* ── RENDER CARDS ── */
 function renderCards() {
   document.getElementById('cardsGrid').innerHTML = scripts.map((s, i) => `
     <article class="card" onclick="openDetail(${s.id})" style="animation-delay:${(i * 0.04).toFixed(2)}s">
@@ -741,6 +649,7 @@ function renderCards() {
     </article>`).join('');
 }
 
+/* ── ABRIR DETALHE ── */
 function openDetail(id) {
   const s = scripts.find(x => x.id === id);
   if (!s) return;
@@ -766,6 +675,7 @@ function openDetail(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+/* ── COPIAR CÓDIGO ── */
 function copyCode() {
   const btn = document.querySelector('.copy-code-btn');
   const orig = btn.innerHTML;
@@ -782,16 +692,6 @@ function copyCode() {
 
 function goBack() {
   document.getElementById('detailPage').classList.add('hidden');
-  document.getElementById('mainPage').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function goToDonation() {
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('donationScreen').classList.remove('hidden');
-}
-function enterMain() {
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('donationScreen').classList.add('hidden');
   document.getElementById('mainPage').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
