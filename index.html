@@ -15,8 +15,6 @@
 }
 html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-family:'Inter',sans-serif}
 .hidden{display:none!important}
-
-/* FUNDO */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),
@@ -39,8 +37,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;
   background:radial-gradient(circle,rgba(0,212,255,0.03),transparent 70%);
   pointer-events:none;transform:translate(-50%,-50%);z-index:1;will-change:left,top}
-
-/* NOTIFICAÇÃO */
 .notify{position:fixed;bottom:28px;right:28px;z-index:9999;
   background:rgba(6,10,20,0.95);border:1px solid rgba(0,255,136,0.3);border-radius:16px;
   padding:16px 22px;display:flex;align-items:center;gap:14px;
@@ -51,8 +47,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .notify-icon{font-size:22px;flex-shrink:0}
 .notify-title{font-size:14px;font-weight:700;color:var(--text)}
 .notify-sub{font-size:12px;color:var(--muted);margin-top:3px;font-family:'JetBrains Mono',monospace}
-
-/* COMPONENTES BASE */
 .screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 20px;position:relative;z-index:10}
 .glass{width:100%;max-width:960px;background:rgba(6,10,20,0.88);
   border:1px solid var(--border-hi);
@@ -79,12 +73,10 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.6s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-
-/* BOTÕES GERAIS */
 .btn{border:none;cursor:pointer;border-radius:14px;padding:15px 28px;font-size:15px;font-weight:700;
   font-family:'Inter',sans-serif;display:inline-flex;align-items:center;justify-content:center;
   gap:10px;text-decoration:none;position:relative;overflow:hidden;
-  transition:all .3s cubic-bezier(.16,1,.3,1); width: 100%;}
+  transition:all .3s cubic-bezier(.16,1,.3,1)}
 .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);transform:translateX(-100%);transition:.55s}
 .btn:hover::after{transform:translateX(100%)}
 .btn-primary{background:linear-gradient(135deg,#0ea5e9,var(--purple),var(--pink));color:#fff;
@@ -94,14 +86,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .btn-ghost{background:rgba(0,212,255,0.05);color:var(--text);border:1px solid var(--border-hi)}
 .btn-ghost:hover{background:rgba(0,212,255,0.1);border-color:var(--cyan);
   transform:translateY(-2px);box-shadow:0 0 30px rgba(0,212,255,0.1)}
-
-/* BOTÃO VIP PREMIUM */
-.btn-vip{background:linear-gradient(135deg,#eab308,#d97706);color:#fff;
-  box-shadow:0 0 40px rgba(234,179,8,0.2),0 8px 28px rgba(0,0,0,0.4); border: 1px solid #fde047;}
-.btn-vip:hover{transform:translateY(-3px) scale(1.02);
-  box-shadow:0 0 60px rgba(234,179,8,0.4),0 20px 50px rgba(0,0,0,0.5)}
-
-/* ── TELAS GERAIS ── */
 .welcome-title{
   font-size:clamp(1.8rem,4.5vw,3.4rem);
   line-height:1.15;font-weight:900;letter-spacing:-.03em;margin-bottom:20px;
@@ -111,13 +95,66 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .welcome-sub{color:var(--muted);font-size:1rem;line-height:1.85;max-width:560px;
   margin-bottom:38px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .3s both}
 .sys-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,212,255,0.2);letter-spacing:.04em}
-
-/* ACESSO GRID */
-.access-box{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:36px;position:relative;overflow:hidden; text-align: center; margin-bottom: 20px;}
-.access-title{font-size:1.5rem;font-weight:800;margin-bottom:15px; color: #fff;}
-.access-desc{color:var(--muted);font-size:14px;line-height:1.6; margin-bottom: 24px;}
-
-/* MAIN PAGE */
+.pix-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
+.panel{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:26px;position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),rgba(124,58,237,0.25),transparent)}
+.panel-title{font-size:1.3rem;font-weight:800;margin-bottom:10px;
+  background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.panel-desc{color:var(--muted);font-size:13.5px;line-height:1.75}
+.valor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}
+.vbtn{background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:12px;
+  padding:13px 8px;color:var(--text);font-size:14px;font-weight:800;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;transition:all .22s;text-align:center}
+.vbtn:hover,.vbtn.active{background:rgba(0,212,255,0.13);border-color:var(--cyan);
+  color:var(--cyan);box-shadow:0 0 18px rgba(0,212,255,0.1);transform:translateY(-2px)}
+.valor-input{background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.12);border-radius:12px;
+  padding:13px 16px;color:#fff;font-size:15px;font-weight:700;width:100%;
+  font-family:'JetBrains Mono',monospace;outline:none;transition:.3s;margin-top:4px}
+.valor-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.07)}
+.valor-input::placeholder{color:rgba(255,255,255,0.2);font-weight:400}
+.progress-wrap{margin-top:20px}
+.progress-labels{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:10px}
+.progress-labels strong{color:var(--cyan);font-family:'JetBrains Mono',monospace}
+.progress-track{width:100%;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:visible;position:relative}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
+  border-radius:999px;transition:width .9s cubic-bezier(.16,1,.3,1);position:relative;
+  box-shadow:0 0 14px rgba(0,212,255,0.3);min-width:0%}
+.progress-fill::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
+  width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 14px var(--cyan);transition:right .9s}
+.pct-text{text-align:right;font-size:11px;color:rgba(0,212,255,0.4);
+  font-family:'JetBrains Mono',monospace;margin-top:8px}
+.api-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;margin-top:14px}
+.api-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);transition:.4s;flex-shrink:0}
+.api-dot.ok{background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s infinite}
+.api-dot.err{background:#ef4444;box-shadow:0 0 10px #ef4444}
+.history-wrap{margin-top:14px;display:flex;flex-direction:column;gap:7px;max-height:150px;overflow-y:auto}
+.history-wrap::-webkit-scrollbar{width:4px}
+.history-wrap::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:4px}
+.h-item{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:10px;
+  padding:9px 14px;display:flex;justify-content:space-between;align-items:center;
+  animation:fadeUp .3s cubic-bezier(.16,1,.3,1)}
+.h-val{color:var(--green);font-weight:800;font-family:'JetBrains Mono',monospace;font-size:13px}
+.h-time{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace}
+.qr-area{margin-top:16px;background:rgba(0,212,255,0.03);border:1px solid rgba(0,212,255,0.1);
+  border-radius:16px;padding:20px;text-align:center;min-height:195px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.qr-hint{color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace;line-height:1.6}
+#qrcode canvas,#qrcode img{border-radius:10px}
+.copy-key-btn{margin-top:12px;width:100%;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);
+  border-radius:12px;padding:12px 16px;color:var(--cyan);font-size:12px;font-weight:700;
+  font-family:'JetBrains Mono',monospace;cursor:pointer;transition:.25s;text-align:center;
+  word-break:break-all;display:none}
+.copy-key-btn:hover{background:rgba(0,212,255,0.12);border-color:var(--cyan);box-shadow:0 0 20px rgba(0,212,255,0.1)}
+.pix-valor-label{margin-top:10px;font-size:13px;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;text-align:center;min-height:18px}
+.pix-tip{margin-top:12px;font-size:11px;color:rgba(0,212,255,0.28);
+  font-family:'JetBrains Mono',monospace;text-align:center}
+.pix-key-info{background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
+  border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;line-height:1.6}
+.pix-key-info span{color:var(--cyan);font-weight:700}
 .main-page{padding:72px 20px 100px;position:relative;z-index:10}
 .container{width:100%;max-width:1300px;margin:0 auto}
 .hero{text-align:center;margin-bottom:64px;position:relative}
@@ -137,8 +174,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .stat:last-child::after{display:none}
 .stat-num{font-size:2.3rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1}
 .stat-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
-
-/* CARDS */
 .cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:32px}
 .card{background:rgba(6,10,20,0.88);border:1px solid var(--border);border-radius:22px;
   padding:26px;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);
@@ -173,8 +208,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .card:hover .card-desc{color:#6a98bc}
 .card-author{color:rgba(0,212,255,0.32);font-size:12px;font-family:'JetBrains Mono',monospace;
   position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-/* DETAIL PAGE */
+.card-num{position:absolute;bottom:18px;right:20px;font-size:11px;
+  color:rgba(0,212,255,0.09);font-family:'JetBrains Mono',monospace;font-weight:700}
 .detail-page{padding:54px 20px 90px;min-height:100vh;position:relative;z-index:10}
 .detail-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 370px;gap:36px;align-items:start}
 .back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;
@@ -207,7 +242,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   text-decoration:none;font-family:'JetBrains Mono',monospace;transition:.3s;line-height:1.6}
 .url-link:hover{color:var(--cyan);text-shadow:0 0 20px rgba(0,212,255,0.35)}
 .code-block{background:#010409;border:1px solid rgba(0,212,255,0.08);border-radius:14px;
-  padding:20px 20px 20px 20px;margin-top:12px;position:relative}
+  padding:20px;margin-top:12px;position:relative}
 .code-text{font-family:'JetBrains Mono',monospace;font-size:12px;color:#7dd3fc;
   line-height:1.7;word-break:break-all;white-space:pre-wrap}
 .copy-code-btn{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#0ea5e9,var(--purple));
@@ -234,8 +269,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .ip{background:rgba(124,58,237,0.09)}.ir{background:rgba(239,68,68,0.07)}
 .info-val{font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1.2}
 .info-key{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-top:3px}
-
-/* FOOTER */
+.sidebar-id{font-size:11px;color:rgba(0,212,255,0.22);margin-top:18px;
+  padding-top:16px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;word-break:break-all}
 .footer{background:rgba(2,4,8,0.98);border-top:1px solid var(--border);
   padding:48px 20px;margin-top:80px;position:relative;z-index:10}
 .footer::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;
@@ -263,9 +298,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .ig-btn:hover::before{transform:translateX(100%)}
 .ig-btn:hover{transform:translateY(-4px) scale(1.03);
   box-shadow:0 0 70px rgba(236,72,153,0.28),0 24px 60px rgba(0,0,0,0.55)}
-
-/* RESPONSIVE */
-@media(max-width:960px){.cards-grid{grid-template-columns:repeat(2,1fr)}.detail-wrap{grid-template-columns:1fr}}
+@media(max-width:960px){.pix-grid{grid-template-columns:1fr}.cards-grid{grid-template-columns:repeat(2,1fr)}.detail-wrap{grid-template-columns:1fr}}
 @media(max-width:580px){.cards-grid{grid-template-columns:1fr}.glass{padding:26px;border-radius:22px}.stats-bar{gap:28px}}
 </style>
 </head>
@@ -293,62 +326,80 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
     <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
     <h1 class="welcome-title">Olá, seja muito bem‑vindo ao FuturaOS_Tasks.</h1>
     <p class="welcome-sub">Uma vitrine profissional e futurística para apresentar scripts, ferramentas e conteúdos. Tecnologia de ponta ao seu alcance.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap; justify-content:center; margin-top:20px;">
-      <button class="btn btn-primary" style="width: auto; padding: 15px 40px;" onclick="goToAccess()">
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="goToDonation()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         Entrar no sistema
       </button>
+      <button class="btn btn-ghost" onclick="enterMain()">Ver scripts →</button>
     </div>
     <div class="sys-tag" style="bottom:20px;left:24px">SESSION: FT-2026 // SECURE</div>
   </div>
 </section>
 
-<section class="screen hidden" id="accessScreen">
-  <div class="glass" style="max-width:500px; text-align: center;">
+<section class="screen hidden" id="donationScreen">
+  <div class="glass" style="max-width:1000px">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
-    
-    <h2 class="welcome-title" style="font-size: 2rem; margin-bottom: 10px;">Libere seu Acesso</h2>
-    <p class="welcome-sub" style="margin: 0 auto 30px;">Escolha como você deseja acessar os scripts hoje.</p>
-
-    <div class="access-box" style="border-color: rgba(234,179,8,0.3);">
-      <h3 class="access-title" style="color: #fde047;">💎 Acesso VIP Diário</h3>
-      <p class="access-desc">Sem tempo de espera. Acesse todos os scripts instantaneamente durante todo o dia.</p>
-      
-      <button class="btn btn-vip" style="margin-bottom: 15px;" onclick="window.open('https://pixgg.com/FELIPEXX', '_blank')">
-        Comprar VIP Agora
-      </button>
-      
-      <button class="btn btn-ghost" onclick="askForVipPassword()">
-        🔑 Já comprei (Inserir Senha)
-      </button>
+    <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Módulo de Apoio — Pix em Tempo Real</div>
+    <div class="pix-grid">
+      <div class="panel">
+        <div class="panel-title">Apoie o FuturaOS_Tasks</div>
+        <p class="panel-desc">Escolha um valor, pague via Pix e o contador da meta atualiza automaticamente a cada 10 segundos.</p>
+        <div class="valor-grid">
+          <button class="vbtn" onclick="setValor(this,1)">R$ 1</button>
+          <button class="vbtn" onclick="setValor(this,5)">R$ 5</button>
+          <button class="vbtn" onclick="setValor(this,10)">R$ 10</button>
+          <button class="vbtn" onclick="setValor(this,20)">R$ 20</button>
+          <button class="vbtn" onclick="setValor(this,50)">R$ 50</button>
+          <button class="vbtn" onclick="setValor(this,100)">R$ 100</button>
+          <button class="vbtn" onclick="setValor(this,200)">R$ 200</button>
+        </div>
+        <input class="valor-input" id="valorInput" type="number" min="1" max="9999" step="0.01"
+          placeholder="Ou digite outro valor (R$)" oninput="onValorInput()"/>
+        <div id="payBox" style="display:none;flex-direction:column;gap:10px;margin-top:16px">
+          <div style="font-size:11px;color:rgba(0,212,255,0.5);font-family:'JetBrains Mono',monospace;text-align:center;letter-spacing:.06em">ESCOLHA A FORMA DE PAGAMENTO</div>
+          <button class="btn btn-primary" style="width:100%;font-size:16px;padding:17px" onclick="abrirPagamento('pix')">⚡ Pagar com Pix</button>
+          <button onclick="abrirPagamento('cartao')" style="width:100%;font-size:15px;padding:15px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border:none;border-radius:14px;cursor:pointer;font-weight:700;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s">💳 Cartão de Crédito / Débito</button>
+          <button class="btn btn-ghost" style="width:100%;font-size:14px" onclick="abrirPagamento('boleto')">🧾 Pagar com Boleto</button>
+        </div>
+        <button class="btn btn-ghost" style="width:100%;margin-top:12px;font-size:13px;opacity:.7" onclick="enterMain()">
+          Pular → Acessar scripts
+        </button>
+        <div class="progress-wrap">
+          <div class="progress-labels">
+            <span>Arrecadado: <strong id="currentValue">R$ 0,00</strong></span>
+            <span>Meta: <strong id="goalValue">R$ 200,00</strong></span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+          <div class="pct-text" id="pctText">0.0%</div>
+        </div>
+        <div class="api-row">
+          <div class="api-dot" id="apiDot"></div>
+          <span id="apiStatus">Conectando à API Pixgg...</span>
+        </div>
+        <div class="history-wrap" id="historyWrap"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">QR Code Pix</div>
+        <p class="panel-desc">Escaneie com o aplicativo do seu banco para pagar instantaneamente.</p>
+        <div class="pix-key-info">
+          🔑 Chave Pix: <span>felipe-wsihsko@jim.com</span>
+        </div>
+        <div class="qr-area" id="qrArea">
+          <div class="qr-hint" id="qrHint">
+            <div style="font-size:44px;margin-bottom:12px">📱</div>
+            Selecione um valor à esquerda<br>para gerar o QR Code
+          </div>
+          <div id="qrcode"></div>
+        </div>
+        <button class="copy-key-btn" id="copyKeyBtn" onclick="copyPixKey()">
+          🔑 Copiar chave Pix: felipe-wsihsko@jim.com
+        </button>
+        <div class="pix-valor-label" id="pixValorLabel"></div>
+        <div class="pix-tip" id="pixTip">⚡ Barra atualiza automaticamente quando o pagamento for confirmado</div>
+      </div>
     </div>
-
-    <div class="access-box">
-      <h3 class="access-title">🆓 Acesso Grátis</h3>
-      <p class="access-desc">Acesse os scripts gratuitamente aguardando nosso anúncio obrigatório de 10 minutos.</p>
-      <button class="btn btn-ghost" onclick="startAdCountdown()">
-        Avançar (Aguardar Liberação)
-      </button>
-    </div>
-  </div>
-</section>
-
-<section class="screen hidden" id="adScreen">
-  <div class="glass" style="max-width:600px; text-align: center;">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    
-    <div style="font-size: 60px; margin-bottom: 20px;">⏱️</div>
-    <h2 class="welcome-title" style="font-size: 1.8rem; margin-bottom: 15px;">Simulação de Anúncio</h2>
-    <p class="welcome-sub" style="margin: 0 auto 20px;">Para liberar o acesso gratuito, por favor aguarde o tempo acabar nesta página. Não feche a aba.</p>
-    
-    <div style="font-size: 4rem; font-weight: 900; font-family: 'JetBrains Mono', monospace; color: var(--cyan); margin: 30px 0; text-shadow: 0 0 20px rgba(0,212,255,0.4);" id="countdownDisplay">
-      10:00
-    </div>
-
-    <button class="btn btn-ghost" style="opacity: 0.5; cursor: not-allowed;" id="btnAdLiberar" disabled>
-      Aguarde o tempo acabar...
-    </button>
   </div>
 </section>
 
@@ -369,14 +420,16 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
           <div class="stat-lbl">Online</div>
         </div>
         <div class="stat">
-          <div class="stat-num" style="background:linear-gradient(135deg,var(--pink),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">HOJE</div>
+          <div class="stat-num" style="background:linear-gradient(135deg,var(--pink),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">29/04</div>
           <div class="stat-lbl">Atualizado</div>
         </div>
       </div>
     </section>
     <section class="cards-grid" id="cardsGrid"></section>
     <div style="display:flex;justify-content:center;margin-top:68px">
-      <a class="ig-btn" href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr" target="_blank" rel="noopener">
+      <a class="ig-btn"
+        href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr"
+        target="_blank" rel="noopener">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         Seguir no Instagram
       </a>
@@ -420,7 +473,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
       <h1 class="detail-title" id="detailTitle"></h1>
       <p class="detail-desc" id="detailDesc"></p>
       <div class="info-box">
-        <div class="info-label">↗️ URL do Script</div>
+        <div class="info-label">↗ URL do Script</div>
         <a class="url-link" id="detailUrl" href="#" target="_blank" rel="noopener"></a>
       </div>
       <div class="info-box" id="codeSection" style="display:none">
@@ -448,15 +501,10 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 'use strict';
 
-/* ── CONFIGURAÇÕES DA AUTOMAÇÃO VIP ── */
-// IMPORTANTE: Mude esta senha diariamente para evitar vazamentos!
-// Dê essa senha apenas para quem comprovar o pagamento via WhatsApp/Insta.
-const SENHA_VIP_DIARIA = "futura2026"; 
-
-/* ── ANTI-DEVTOOLS ATIVADO ── */
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => {
   if (
@@ -476,7 +524,6 @@ const devBlock = () => {
 };
 setInterval(devBlock, 1000);
 
-/* ── PARTÍCULAS ── */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H;
@@ -492,20 +539,40 @@ window.addEventListener('resize', resizeCanvas);
 
 for (let i = 0; i < 95; i++) {
   pts.push({
-    x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + 0.3,
-    dx: (Math.random() - 0.5) * 0.45, dy: (Math.random() - 0.5) * 0.45,
-    o: Math.random() * 0.5 + 0.1, c: COLORS[Math.floor(Math.random() * COLORS.length)]
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.8 + 0.3,
+    dx: (Math.random() - 0.5) * 0.45,
+    dy: (Math.random() - 0.5) * 0.45,
+    o: Math.random() * 0.5 + 0.1,
+    c: COLORS[Math.floor(Math.random() * COLORS.length)]
   });
 }
 
 function drawParticles() {
   ctx.clearRect(0, 0, W, H);
   pts.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.c},${p.o})`; ctx.fill();
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.c},${p.o})`;
+    ctx.fill();
     p.x += p.dx; p.y += p.dy;
     if (p.x < 0 || p.x > W) p.dx *= -1;
     if (p.y < 0 || p.y > H) p.dy *= -1;
+  });
+  pts.forEach((a, i) => {
+    for (let j = i + 1; j < pts.length; j++) {
+      const b = pts[j];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < 120) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(0,212,255,${0.065 * (1 - d / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
   });
   requestAnimationFrame(drawParticles);
 }
@@ -513,10 +580,10 @@ drawParticles();
 
 const cursorGlow = document.getElementById('cursorGlow');
 document.addEventListener('mousemove', e => {
-  cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px';
+  cursorGlow.style.left = e.clientX + 'px';
+  cursorGlow.style.top = e.clientY + 'px';
 });
 
-/* ── NOTIFY ── */
 let notifyTimer = null;
 function showNotify(icon, title, sub) {
   document.getElementById('notifyIcon').textContent = icon;
@@ -528,82 +595,162 @@ function showNotify(icon, title, sub) {
   notifyTimer = setTimeout(() => el.classList.remove('show'), 4500);
 }
 
-/* ── SISTEMA DE NAVEGAÇÃO E AUTOMAÇÃO VIP/ANÚNCIO ── */
+const BACKEND_URL  = 'https://futura-os-tasks.vercel.app/api/webhook';
+const INFINITE_TAG = 'felipe-wsihsko';
+const META_VALOR   = 200;
+let selectedValor  = 0;
+let lastAmount     = -1;
+let goalMax        = META_VALOR;
+let payHistory     = [];
 
-// Checa se a pessoa já tem acesso válido para hoje gravado no navegador
-function hasValidAccessToday() {
-    const accessDate = localStorage.getItem('futura_access_date');
-    const today = new Date().toDateString();
-    return accessDate === today;
+const LINKS_PIX = {
+  1:   'https://loja.infinitepay.io/felipe-wsihsko/dkf5540-futuraos-tasks-a-inteligencia-artificial-d',
+  5:   'https://loja.infinitepay.io/felipe-wsihsko/yii3087-futuraos-tasks-a-inteligencia-artificial-d',
+  10:  'https://loja.infinitepay.io/felipe-wsihsko/kux3349-futuraos-tasks-a-inteligencia-artificial-d',
+  20:  'https://loja.infinitepay.io/felipe-wsihsko/bou4168-futuraos-tasks-a-inteligencia-artificial-d',
+  50:  'https://loja.infinitepay.io/felipe-wsihsko/ojo2464-futuraos-tasks-a-inteligencia-artificial-d',
+  100: 'https://loja.infinitepay.io/felipe-wsihsko/has5229-futuraos-tasks-a-inteligencia-artificial-d',
+  200: 'https://loja.infinitepay.io/felipe-wsihsko/fst9813-futuraos-tasks-a-inteligencia-artificial-d'
+};
+const METODOS = { pix:'?payment_method=pix', cartao:'?payment_method=credit_card', boleto:'?payment_method=boleto' };
+
+function abrirPagamento(metodo) {
+  if (!selectedValor) { showNotify('⚠️','Atenção','Selecione um valor primeiro!'); return; }
+  const base = LINKS_PIX[selectedValor] || `https://loja.infinitepay.io/${INFINITE_TAG}/oee7671-ajude-o-site-nao-cair`;
+  window.open(base + (METODOS[metodo] || ''), '_blank');
+  document.getElementById('pixTip').textContent = '⏳ Aguardando confirmação automática...';
+  showNotify('💳','Redirecionando...','Após pagar, a barra atualiza em até 10s!');
 }
 
-// Salva o acesso de hoje no navegador
-function grantAccessForToday() {
-    localStorage.setItem('futura_access_date', new Date().toDateString());
-    enterMain();
+try { payHistory = JSON.parse(localStorage.getItem('ft_hist') || '[]'); } catch(e) {}
+
+function fmtBRL(v) {
+  return parseFloat(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function goToAccess() {
-  // Se a pessoa já validou a senha VIP hoje ou já esperou os 10 min, pula direto pros scripts
-  if(hasValidAccessToday()) {
-      enterMain();
-      return;
+async function fetchGoal() {
+  try {
+    const res = await fetch(BACKEND_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const received = parseFloat(data.current ?? 0);
+    const goal     = parseFloat(data.meta ?? META_VALOR);
+    goalMax = goal;
+    const pct = Math.min((received / goal) * 100, 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('currentValue').textContent = fmtBRL(received);
+    document.getElementById('goalValue').textContent    = fmtBRL(goal);
+    document.getElementById('pctText').textContent      = pct.toFixed(1) + '%';
+    document.getElementById('apiDot').className         = 'api-dot ok';
+    document.getElementById('apiStatus').textContent    = 'InfinitePay ✓ — atualiza a cada 10s';
+    if (lastAmount >= 0 && received > lastAmount) {
+      const diff = received - lastAmount;
+      showNotify('💚','Pagamento confirmado! 🎉','+ ' + fmtBRL(diff) + ' na meta!');
+      const el = document.getElementById('pixTip');
+      if (el) el.textContent = '✅ Pagamento confirmado! Obrigado!';
+      if (Array.isArray(data.history)) { payHistory = data.history; renderHistory(); }
+    }
+    lastAmount = received;
+  } catch (err) {
+    document.getElementById('apiDot').className      = 'api-dot err';
+    document.getElementById('apiStatus').textContent = 'Aguardando backend Vercel...';
   }
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('accessScreen').classList.remove('hidden');
 }
 
-function askForVipPassword() {
-  const password = prompt("Insira a senha VIP do dia (enviada após o pagamento no WhatsApp):");
-  if (password === SENHA_VIP_DIARIA) {
-      showNotify('💎', 'Acesso VIP Liberado!', 'Aproveite seus scripts sem anúncios hoje.');
-      grantAccessForToday();
-  } else if (password !== null) {
-      showNotify('❌', 'Senha Incorreta', 'Senha inválida ou vencida.');
+function renderHistory() {
+  const wrap = document.getElementById('historyWrap');
+  if (!wrap) return;
+  if (payHistory.length === 0) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = payHistory.slice(0, 8).map(h => `
+    <div class="h-item">
+      <span class="h-val">+ ${fmtBRL(h.val)}</span>
+      <span class="h-time">${h.time}</span>
+    </div>`).join('');
+}
+
+const PIX_KEY = 'felipe-wsihsko@jim.com';
+
+function gerarPixPayload(valor) {
+  const amount = parseFloat(valor).toFixed(2);
+  const tlv = (id, val) => id + String(val.length).padStart(2, '0') + val;
+  const gui = tlv('00', 'BR.GOV.BCB.PIX') + tlv('01', PIX_KEY);
+  const mAI = tlv('26', gui);
+  const addInfo = tlv('05', '***');
+  const cpi = tlv('62', addInfo);
+  const payload =
+    tlv('00', '01') + mAI +
+    tlv('52', '0000') + tlv('53', '986') +
+    tlv('54', amount) + tlv('58', 'BR') +
+    tlv('59', 'FuturaOS Tasks') + tlv('60', 'OSASCO') + cpi;
+
+  function crc16(str) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < str.length; i++) {
+      crc ^= str.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? ((crc << 1) & 0xFFFF) ^ 0x1021 : (crc << 1) & 0xFFFF;
+    }
+    return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+  }
+
+  const base = payload + '6304';
+  return base + crc16(base);
+}
+
+let qrInstance = null;
+function gerarQR(valor) {
+  const v = parseFloat(valor);
+  if (!v || v <= 0) return;
+  const qrDiv = document.getElementById('qrcode');
+  qrDiv.innerHTML = '';
+  document.getElementById('qrHint').style.display = 'none';
+  qrInstance = new QRCode(qrDiv, {
+    text: gerarPixPayload(v),
+    width: 196, height: 196,
+    colorDark: '#00d4ff', colorLight: '#010409',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+  document.getElementById('copyKeyBtn').style.display = 'block';
+  document.getElementById('pixValorLabel').textContent = 'Valor: ' + fmtBRL(v);
+}
+
+function setValor(btn, v) {
+  selectedValor = v;
+  document.getElementById('valorInput').value = v;
+  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const pb = document.getElementById('payBox');
+  if (pb) pb.style.display = 'flex';
+  const pt = document.getElementById('pixTip');
+  if (pt) pt.textContent = '📱 QR Code gerado — escolha a forma de pagamento abaixo';
+  gerarQR(v);
+}
+
+function onValorInput() {
+  const v = parseFloat(document.getElementById('valorInput').value);
+  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
+  if (v > 0) {
+    selectedValor = v;
+    const pb = document.getElementById('payBox');
+    if (pb) pb.style.display = 'flex';
+    gerarQR(v);
+  } else {
+    selectedValor = 0;
+    const pb = document.getElementById('payBox');
+    if (pb) pb.style.display = 'none';
   }
 }
 
-// Lógica da trava de anúncio (10 minutos)
-let adTimerInterval = null;
-let timeRemaining = 600; // 600 segundos = 10 minutos
-
-function startAdCountdown() {
-  document.getElementById('accessScreen').classList.add('hidden');
-  document.getElementById('adScreen').classList.remove('hidden');
-  
-  const display = document.getElementById('countdownDisplay');
-  const btn = document.getElementById('btnAdLiberar');
-  
-  adTimerInterval = setInterval(() => {
-      timeRemaining--;
-      
-      let m = Math.floor(timeRemaining / 60);
-      let s = timeRemaining % 60;
-      display.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      
-      if (timeRemaining <= 0) {
-          clearInterval(adTimerInterval);
-          display.textContent = "00:00";
-          btn.textContent = "🔓 Liberar Acesso";
-          btn.style.opacity = "1";
-          btn.style.cursor = "pointer";
-          btn.style.background = "linear-gradient(135deg, var(--green), var(--cyan))";
-          btn.disabled = false;
-          btn.onclick = grantAccessForToday;
-          showNotify('✅', 'Tempo Esgotado!', 'Você já pode acessar os scripts.');
-      }
-  }, 1000);
+function copyPixKey() {
+  const btn = document.getElementById('copyKeyBtn');
+  navigator.clipboard.writeText(PIX_KEY).then(() => {
+    btn.textContent = '✅ Chave copiada com sucesso!';
+    showNotify('📋', 'Chave copiada!', PIX_KEY);
+    setTimeout(() => { btn.textContent = '🔑 Copiar chave Pix: ' + PIX_KEY; }, 2500);
+  }).catch(() => {
+    btn.textContent = '⚠️ Copie manualmente: ' + PIX_KEY;
+  });
 }
 
-function enterMain() {
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('accessScreen').classList.add('hidden');
-  document.getElementById('adScreen').classList.add('hidden');
-  document.getElementById('mainPage').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/* ── OS 22 SCRIPTS COMPLETOS ── */
 const scripts = [
   { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'flowings, cupiditys',        date:'29/04/2026', route:'taskitos',              url:'https://taskitos.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
   { id:2,  title:'Redação Eclipse',       desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'crimsonstrauss',             date:'29/04/2026', route:'redacao-eclipse',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
@@ -631,7 +778,6 @@ const scripts = [
   { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',               author:'crimsonstrauss',             date:'29/04/2026', route:'prepara-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' }
 ];
 
-/* ── RENDER CARDS ── */
 function renderCards() {
   document.getElementById('cardsGrid').innerHTML = scripts.map((s, i) => `
     <article class="card" onclick="openDetail(${s.id})" style="animation-delay:${(i * 0.04).toFixed(2)}s">
@@ -649,7 +795,6 @@ function renderCards() {
     </article>`).join('');
 }
 
-/* ── ABRIR DETALHE ── */
 function openDetail(id) {
   const s = scripts.find(x => x.id === id);
   if (!s) return;
@@ -675,7 +820,6 @@ function openDetail(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ── COPIAR CÓDIGO ── */
 function copyCode() {
   const btn = document.querySelector('.copy-code-btn');
   const orig = btn.innerHTML;
@@ -695,8 +839,20 @@ function goBack() {
   document.getElementById('mainPage').classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+function goToDonation() {
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('donationScreen').classList.remove('hidden');
+}
+function enterMain() {
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('donationScreen').classList.add('hidden');
+  document.getElementById('mainPage').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-/* ── INIT ── */
+fetchGoal();
+setInterval(fetchGoal, 10000);
+renderHistory();
 renderCards();
 </script>
 </body>
