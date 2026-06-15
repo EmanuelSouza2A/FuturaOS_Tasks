@@ -1,4 +1,4 @@
-# FuturaOS_Tasks v19.2.0
+# FuturaOS_Tasks v19.3.1
 
 
 ## 🚀 O que é o Doritos Script?
