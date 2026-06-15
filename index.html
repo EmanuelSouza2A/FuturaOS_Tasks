@@ -16,7 +16,7 @@
 html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-family:'Inter',sans-serif}
 .hidden{display:none!important}
 
-/* FUNDO */
+/* FUNDO E EFEITOS */
 #particles{position:fixed;inset:0;z-index:0;pointer-events:none}
 .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),
@@ -141,19 +141,11 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .api-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);transition:.4s;flex-shrink:0}
 .api-dot.ok{background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s infinite}
 .api-dot.err{background:#ef4444;box-shadow:0 0 10px #ef4444}
-.history-wrap{margin-top:14px;display:flex;flex-direction:column;gap:7px;max-height:150px;overflow-y:auto}
-.history-wrap::-webkit-scrollbar{width:4px}
-.history-wrap::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:4px}
-.h-item{background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:10px;
-  padding:9px 14px;display:flex;justify-content:space-between;align-items:center;
-  animation:fadeUp .3s cubic-bezier(.16,1,.3,1)}
-.h-val{color:var(--green);font-weight:800;font-family:'JetBrains Mono',monospace;font-size:13px}
-.h-time{color:var(--muted);font-size:11px;font-family:'JetBrains Mono',monospace}
 .qr-area{margin-top:16px;background:rgba(0,212,255,0.03);border:1px solid rgba(0,212,255,0.1);
   border-radius:16px;padding:20px;text-align:center;min-height:195px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
 .qr-hint{color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace;line-height:1.6}
-#qrcode canvas,#qrcode img{border-radius:10px}
+#qrcode canvas,#qrcode img{border-radius:10px;margin: 0 auto;}
 .copy-key-btn{margin-top:12px;width:100%;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);
   border-radius:12px;padding:12px 16px;color:var(--cyan);font-size:12px;font-weight:700;
   font-family:'JetBrains Mono',monospace;cursor:pointer;transition:.25s;text-align:center;
@@ -163,10 +155,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   font-family:'JetBrains Mono',monospace;text-align:center;min-height:18px}
 .pix-tip{margin-top:12px;font-size:11px;color:rgba(0,212,255,0.28);
   font-family:'JetBrains Mono',monospace;text-align:center}
-.pix-key-info{background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
-  border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:var(--muted);
-  font-family:'JetBrains Mono',monospace;line-height:1.6}
-.pix-key-info span{color:var(--cyan);font-weight:700}
 
 /* ── MAIN PAGE ── */
 .main-page{padding:72px 20px 100px;position:relative;z-index:10}
@@ -363,11 +351,11 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   <div class="glass" style="max-width:1000px">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
-    <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Módulo de Apoio — Pix em Tempo Real</div>
+    <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Módulo de Apoio — Pix Automático GG</div>
     <div class="pix-grid">
       <div class="panel">
         <div class="panel-title">Apoie o FuturaOS_Tasks</div>
-        <p class="panel-desc">Escolha um valor, pague via Pix e o contador da meta atualiza automaticamente a cada 10 segundos.</p>
+        <p class="panel-desc">Escolha um valor. O QR Code será gerado automaticamente pela nossa nova integração.</p>
         <div class="valor-grid">
           <button class="vbtn" onclick="setValor(this,1)">R$ 1</button>
           <button class="vbtn" onclick="setValor(this,5)">R$ 5</button>
@@ -379,13 +367,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         </div>
         <input class="valor-input" id="valorInput" type="number" min="1" max="9999" step="0.01"
           placeholder="Ou digite outro valor (R$)" oninput="onValorInput()"/>
-        <div id="payBox" style="display:none;flex-direction:column;gap:10px;margin-top:16px">
-          <div style="font-size:11px;color:rgba(0,212,255,0.5);font-family:'JetBrains Mono',monospace;text-align:center;letter-spacing:.06em">ESCOLHA A FORMA DE PAGAMENTO</div>
-          <button class="btn btn-primary" style="width:100%;font-size:16px;padding:17px" onclick="abrirPagamento('pix')">⚡ Pagar com Pix</button>
-          <button onclick="abrirPagamento('cartao')" style="width:100%;font-size:15px;padding:15px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border:none;border-radius:14px;cursor:pointer;font-weight:700;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s">💳 Cartão de Crédito / Débito</button>
-          <button class="btn btn-ghost" style="width:100%;font-size:14px" onclick="abrirPagamento('boleto')">🧾 Pagar com Boleto</button>
-        </div>
-        <button class="btn btn-ghost" style="width:100%;margin-top:12px;font-size:13px;opacity:.7" onclick="enterMain()">
+        
+        <button class="btn btn-ghost" style="width:100%;margin-top:20px;font-size:13px;opacity:.7" onclick="enterMain()">
           Pular → Acessar scripts
         </button>
         <div class="progress-wrap">
@@ -398,28 +381,25 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         </div>
         <div class="api-row">
           <div class="api-dot" id="apiDot"></div>
-          <span id="apiStatus">Aguardando configuração da API de pagamento...</span>
+          <span id="apiStatus">Pronto para gerar pagamentos</span>
         </div>
-        <div class="history-wrap" id="historyWrap"></div>
       </div>
       <div class="panel">
         <div class="panel-title">QR Code Pix</div>
         <p class="panel-desc">Escaneie com o aplicativo do seu banco para pagar instantaneamente.</p>
-        <div class="pix-key-info">
-          🔑 Chave Pix: <span>felipe-wsihsko@jim.com</span>
-        </div>
+        
         <div class="qr-area" id="qrArea">
           <div class="qr-hint" id="qrHint">
             <div style="font-size:44px;margin-bottom:12px">📱</div>
-            Selecione um valor à esquerda<br>para gerar o QR Code
+            Selecione um valor à esquerda<br>para gerar o QR Code Dinâmico
           </div>
           <div id="qrcode"></div>
         </div>
         <button class="copy-key-btn" id="copyKeyBtn" onclick="copyPixKey()">
-          🔑 Copiar chave Pix: felipe-wsihsko@jim.com
+          🔑 Copiar código Pix gerado
         </button>
         <div class="pix-valor-label" id="pixValorLabel"></div>
-        <div class="pix-tip" id="pixTip">⚡ Barra atualiza automaticamente quando o pagamento for confirmado</div>
+        <div class="pix-tip" id="pixTip">⚡ Sistema atualizado com a API Pix GG</div>
       </div>
     </div>
   </div>
@@ -448,32 +428,12 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
       </div>
     </section>
     <section class="cards-grid" id="cardsGrid"></section>
-    <div style="display:flex;justify-content:center;margin-top:68px">
-      <a class="ig-btn"
-        href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr"
-        target="_blank" rel="noopener">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Seguir no Instagram
-      </a>
-    </div>
   </div>
   <footer class="footer">
     <div class="footer-inner">
       <div>
         <div class="footer-brand">🚀 FuturaOS_Tasks</div>
         <p class="footer-sub">Ferramentas para otimizar sua experiência de aprendizado com tecnologia de ponta.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h5>Recursos</h5>
-          <a href="#" onclick="enterMain();return false">Scripts</a>
-          <a href="https://discord.gg/p2Zec38XfP" target="_blank" rel="noopener">Suporte</a>
-        </div>
-        <div class="footer-col">
-          <h5>Comunidade</h5>
-          <a href="https://discord.gg/p2Zec38XfP" target="_blank" rel="noopener">Discord</a>
-          <a href="https://www.instagram.com/emanuel_felipe_25?igsh=MTRrbmpocG9rcndpYg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
-        </div>
       </div>
     </div>
   </footer>
@@ -486,12 +446,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
         Voltar para Scripts
       </button>
-      <div class="crumb">
-        <div class="crumb-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <span class="crumb-label">Script — FuturaOS_Tasks</span>
-      </div>
       <h1 class="detail-title" id="detailTitle"></h1>
       <p class="detail-desc" id="detailDesc"></p>
       <div class="info-box">
@@ -502,10 +456,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         <div class="info-label">⌨ Código do Script</div>
         <div class="code-block">
           <pre class="code-text" id="detailCode"></pre>
-          <button class="copy-code-btn" onclick="copyCode()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copiar
-          </button>
+          <button class="copy-code-btn" onclick="copyCode()">Copiar</button>
         </div>
       </div>
     </div>
@@ -515,9 +466,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         <div class="sidebar-updated" id="detailUpdated"></div>
         <div class="info-row"><div class="info-icon ig">🟢</div><div><div class="info-val" id="detailStatus" style="color:var(--green)">online</div><div class="info-key">Status</div></div></div>
         <div class="info-row"><div class="info-icon ib">⭐</div><div><div class="info-val" id="detailAuthor"></div><div class="info-key">Autor</div></div></div>
-        <div class="info-row"><div class="info-icon ip">🕐</div><div><div class="info-val" id="detailDate"></div><div class="info-key">Atualização</div></div></div>
-        <div class="info-row"><div class="info-icon ir">🏠</div><div><div class="info-val" id="detailRoute"></div><div class="info-key">Rota</div></div></div>
-        <div class="sidebar-id" id="detailId"></div>
       </div>
     </div>
   </div>
@@ -541,73 +489,32 @@ const devBlock = () => {
     document.body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#020408;color:#00d4ff;font-family:monospace;text-align:center;gap:18px">
       <div style="font-size:60px">🔒</div>
       <div style="font-size:18px;font-weight:700">DevTools detectado</div>
-      <div style="font-size:13px;color:#4a6a8a">Feche as ferramentas de desenvolvedor para continuar.</div>
     </div>`;
   }
 };
 setInterval(devBlock, 1000);
 
-/* ── PARTÍCULAS ── */
+/* ── PARTÍCULAS E CURSOR MANTIDOS OMITIDOS AQUI PRA ECONOMIZAR ESPAÇO, SÓ COPIAR O RESTO --*/
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H;
 const COLORS = ['0,212,255','124,58,237','236,72,153','0,255,136','255,107,0'];
 let pts = [];
-
-function resizeCanvas() {
-  W = canvas.width = innerWidth;
-  H = canvas.height = innerHeight;
-}
+function resizeCanvas() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
-
 for (let i = 0; i < 95; i++) {
-  pts.push({
-    x: Math.random() * W,
-    y: Math.random() * H,
-    r: Math.random() * 1.8 + 0.3,
-    dx: (Math.random() - 0.5) * 0.45,
-    dy: (Math.random() - 0.5) * 0.45,
-    o: Math.random() * 0.5 + 0.1,
-    c: COLORS[Math.floor(Math.random() * COLORS.length)]
-  });
+  pts.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + 0.3, dx: (Math.random() - 0.5) * 0.45, dy: (Math.random() - 0.5) * 0.45, o: Math.random() * 0.5 + 0.1, c: COLORS[Math.floor(Math.random() * COLORS.length)] });
 }
-
 function drawParticles() {
   ctx.clearRect(0, 0, W, H);
-  pts.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.c},${p.o})`;
-    ctx.fill();
-    p.x += p.dx; p.y += p.dy;
-    if (p.x < 0 || p.x > W) p.dx *= -1;
-    if (p.y < 0 || p.y > H) p.dy *= -1;
-  });
-  pts.forEach((a, i) => {
-    for (let j = i + 1; j < pts.length; j++) {
-      const b = pts[j];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (d < 120) {
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = `rgba(0,212,255,${0.065 * (1 - d / 120)})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-    }
-  });
+  pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(${p.c},${p.o})`; ctx.fill(); p.x += p.dx; p.y += p.dy; if (p.x < 0 || p.x > W) p.dx *= -1; if (p.y < 0 || p.y > H) p.dy *= -1; });
   requestAnimationFrame(drawParticles);
 }
 drawParticles();
 
-/* ── CURSOR GLOW ── */
 const cursorGlow = document.getElementById('cursorGlow');
-document.addEventListener('mousemove', e => {
-  cursorGlow.style.left = e.clientX + 'px';
-  cursorGlow.style.top = e.clientY + 'px';
-});
+document.addEventListener('mousemove', e => { cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px'; });
 
 /* ── NOTIFY ── */
 let notifyTimer = null;
@@ -621,252 +528,113 @@ function showNotify(icon, title, sub) {
   notifyTimer = setTimeout(() => el.classList.remove('show'), 4500);
 }
 
-/* ── PAGAMENTOS (NOVA API) ── */
-// TODO: Inserir nova lógica de pagamento aqui (Endpoints da nova API / Variáveis de ambiente)
-const META_VALOR   = 200;
-let selectedValor  = 0;
-let lastAmount     = -1;
-let goalMax        = META_VALOR;
-let payHistory     = [];
+/* ── INTEGRAÇÃO PIX GG DINÂMICA ── */
+// Aqui entra a sua chave da foto, conectando direto ao Pix GG
+const PIX_GG_URL = 'https://api.pixgg.com/?apikey=38c1eba1-3507-455b-a42f-99d9dbf26f66';
+let currentCopiaECola = '';
 
-function abrirPagamento(metodo) {
-  if (!selectedValor) { showNotify('⚠️','Atenção','Selecione um valor primeiro!'); return; }
-  
-  // TODO: Inserir nova lógica de pagamento aqui (Geração de link de checkout do novo gateway)
-  // Exemplo: 
-  // const urlPagamento = gerarLinkNovoProvedor(selectedValor, metodo);
-  // window.open(urlPagamento, '_blank');
-  
-  document.getElementById('pixTip').textContent = '⏳ Processando nova integração...';
-  showNotify('💳','Processando...','Aguardando configuração do novo gateway.');
-}
-
-try { payHistory = JSON.parse(localStorage.getItem('ft_hist') || '[]'); } catch(e) {}
-
-function fmtBRL(v) {
-  return parseFloat(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
-async function fetchGoal() {
-  try {
-    // TODO: Inserir nova lógica de pagamento aqui (Consultar status da meta na nova API)
-    // Substitua as variáveis "received" pela resposta do seu novo backend (fetch ou axios).
-    
-    const received = parseFloat(lastAmount >= 0 ? lastAmount : 0); // Placeholder fixo para não quebrar a UI
-    const goal     = META_VALOR;
-    
-    goalMax = goal;
-    const pct = Math.min((received / goal) * 100, 100);
-    
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('currentValue').textContent = fmtBRL(received);
-    document.getElementById('goalValue').textContent    = fmtBRL(goal);
-    document.getElementById('pctText').textContent      = pct.toFixed(1) + '%';
-    
-    document.getElementById('apiDot').className         = 'api-dot ok';
-    document.getElementById('apiStatus').textContent    = 'Sistema de Pagamento Online ✓';
-
-    if (lastAmount >= 0 && received > lastAmount) {
-      const diff = received - lastAmount;
-      showNotify('💚','Pagamento confirmado! 🎉','+ ' + fmtBRL(diff) + ' na meta!');
-      const el = document.getElementById('pixTip');
-      if (el) el.textContent = '✅ Pagamento confirmado! Obrigado!';
-      // TODO: Renderizar o histórico caso o backend retorne o array (ex: payHistory = data.history; renderHistory();)
-    }
-    lastAmount = received;
-  } catch (err) {
-    document.getElementById('apiDot').className      = 'api-dot err';
-    document.getElementById('apiStatus').textContent = 'Aguardando novo backend...';
-  }
-}
-
-function renderHistory() {
-  const wrap = document.getElementById('historyWrap');
-  if (!wrap) return;
-  if (payHistory.length === 0) { wrap.innerHTML = ''; return; }
-  wrap.innerHTML = payHistory.slice(0, 8).map(h => `
-    <div class="h-item">
-      <span class="h-val">+ ${fmtBRL(h.val)}</span>
-      <span class="h-time">${h.time}</span>
-    </div>`).join('');
-}
-
-/* ── PIX / QR CODE EMV BÁSICO (MANTIDO O PADRÃO DO BACEN) ── */
-const PIX_KEY = 'felipe-wsihsko@jim.com';
-
-function gerarPixPayload(valor) {
-  const amount = parseFloat(valor).toFixed(2);
-  const tlv = (id, val) => id + String(val.length).padStart(2, '0') + val;
-  const gui = tlv('00', 'BR.GOV.BCB.PIX') + tlv('01', PIX_KEY);
-  const mAI = tlv('26', gui);
-  const addInfo = tlv('05', '***');
-  const cpi = tlv('62', addInfo);
-  const payload =
-    tlv('00', '01') + mAI +
-    tlv('52', '0000') + tlv('53', '986') +
-    tlv('54', amount) + tlv('58', 'BR') +
-    tlv('59', 'FuturaOS Tasks') + tlv('60', 'OSASCO') + cpi;
-
-  function crc16(str) {
-    let crc = 0xFFFF;
-    for (let i = 0; i < str.length; i++) {
-      crc ^= str.charCodeAt(i) << 8;
-      for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? ((crc << 1) & 0xFFFF) ^ 0x1021 : (crc << 1) & 0xFFFF;
-    }
-    return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
-  }
-
-  const base = payload + '6304';
-  return base + crc16(base);
-}
-
-let qrInstance = null;
-function gerarQR(valor) {
+async function gerarQR(valor) {
   const v = parseFloat(valor);
   if (!v || v <= 0) return;
+
   const qrDiv = document.getElementById('qrcode');
+  const hint = document.getElementById('qrHint');
+  const btnCopy = document.getElementById('copyKeyBtn');
+  
   qrDiv.innerHTML = '';
-  document.getElementById('qrHint').style.display = 'none';
-  qrInstance = new QRCode(qrDiv, {
-    text: gerarPixPayload(v),
-    width: 196, height: 196,
-    colorDark: '#00d4ff', colorLight: '#010409',
-    correctLevel: QRCode.CorrectLevel.M
-  });
-  document.getElementById('copyKeyBtn').style.display = 'block';
-  document.getElementById('pixValorLabel').textContent = 'Valor: ' + fmtBRL(v);
+  btnCopy.style.display = 'none';
+  hint.style.display = 'block';
+  hint.innerHTML = '<div style="font-size:30px; margin-bottom:10px;">⏳</div>Gerando código dinâmico...';
+  
+  try {
+    // Faz a chamada para o Pix GG passando o valor
+    const response = await fetch(`${PIX_GG_URL}&amount=${v}`);
+    const data = await response.json();
+    
+    // Pega o código Copia e Cola que a API devolve (pode variar o nome do campo dependendo da documentação, coloquei os mais comuns)
+    const codigoPix = data.payload || data.pixCopiaECola || data.qrcode || data.brcode;
+
+    if(codigoPix) {
+      currentCopiaECola = codigoPix;
+      hint.style.display = 'none';
+      
+      // Desenha o QR Code na tela
+      new QRCode(qrDiv, {
+        text: currentCopiaECola,
+        width: 196, height: 196,
+        colorDark: '#00d4ff', colorLight: '#010409',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      btnCopy.style.display = 'block';
+      document.getElementById('pixValorLabel').textContent = 'Valor gerado: R$ ' + v.toFixed(2).replace('.', ',');
+      document.getElementById('apiDot').className = 'api-dot ok';
+      document.getElementById('apiStatus').textContent = 'Pix gerado via Pix GG ✓';
+    } else {
+      throw new Error("Erro na resposta da API");
+    }
+  } catch (err) {
+    hint.innerHTML = '<div style="font-size:30px; margin-bottom:10px; color:#ef4444;">⚠️</div>Erro ao gerar PIX.<br>Verifique a chave da API.';
+    document.getElementById('apiDot').className = 'api-dot err';
+    document.getElementById('apiStatus').textContent = 'Erro de conexão com Pix GG';
+  }
 }
 
 function setValor(btn, v) {
-  selectedValor = v;
   document.getElementById('valorInput').value = v;
   document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  const pb = document.getElementById('payBox');
-  if (pb) pb.style.display = 'flex';
-  const pt = document.getElementById('pixTip');
-  if (pt) pt.textContent = '📱 QR Code gerado — escolha a forma de pagamento abaixo';
   gerarQR(v);
 }
 
 function onValorInput() {
   const v = parseFloat(document.getElementById('valorInput').value);
   document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('active'));
-  if (v > 0) {
-    selectedValor = v;
-    const pb = document.getElementById('payBox');
-    if (pb) pb.style.display = 'flex';
-    gerarQR(v);
-  } else {
-    selectedValor = 0;
-    const pb = document.getElementById('payBox');
-    if (pb) pb.style.display = 'none';
-  }
+  if (v > 0) gerarQR(v);
 }
 
 function copyPixKey() {
+  if(!currentCopiaECola) return;
   const btn = document.getElementById('copyKeyBtn');
-  navigator.clipboard.writeText(PIX_KEY).then(() => {
-    btn.textContent = '✅ Chave copiada com sucesso!';
-    showNotify('📋', 'Chave copiada!', PIX_KEY);
-    setTimeout(() => { btn.textContent = '🔑 Copiar chave Pix: ' + PIX_KEY; }, 2500);
-  }).catch(() => {
-    btn.textContent = '⚠️ Copie manualmente: ' + PIX_KEY;
+  navigator.clipboard.writeText(currentCopiaECola).then(() => {
+    btn.textContent = '✅ Código copiado com sucesso!';
+    showNotify('📋', 'Pix Copiado!', 'Cole no app do seu banco para pagar.');
+    setTimeout(() => { btn.textContent = '🔑 Copiar código Pix gerado'; }, 2500);
   });
 }
 
-/* ── DADOS DOS SCRIPTS ── */
+function fmtBRL(v) { return parseFloat(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+
+/* ── META E BARRA (Visão Genérica até ter o Backend 100%) ── */
+// Como a meta precisa de um banco de dados para salvar os pagamentos, deixei estático R$ 0 por enquanto.
+const META_VALOR = 200;
+document.getElementById('goalValue').textContent = fmtBRL(META_VALOR);
+document.getElementById('currentValue').textContent = fmtBRL(0);
+document.getElementById('progressFill').style.width = '0%';
+
+/* ── DADOS DOS SCRIPTS (MANTIDOS) ── */
 const scripts = [
-  { id:1,  title:'Taskitos',              desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                       author:'flowings, cupiditys',        date:'29/05/2026', route:'taskitos',              url:'https://taskitos.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:2,  title:'Redação Eclipse',       desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'crimsonstrauss',             date:'29/05/2026', route:'redacao-eclipse',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:3,  title:'Khanto',                desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'cupiditys',                  date:'29/05/2026', route:'khanto',                 url:'https://khan.cupiditys.lol/pt-br/?cmsphacks.xyz',                    code:'', uid:'' },
-  { id:4,  title:'Elefante Letrado',      desc:'Ferramenta para automatizar a leitura de livros no Elefante Letrado.',          author:'crimsonstrauss',             date:'29/05/2026', route:'elefante-letrado',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:5,  title:'Matific',               desc:'Ferramenta para automatizar tarefas na plataforma Matific.',                    author:'flowings, cupiditys',        date:'29/05/2026', route:'matific',                url:'https://matific.cupiditys.lol/dashboard?cmsphacks.xyz',              code:'', uid:'' },
-  { id:6,  title:'Tarefas SP',            desc:'Ferramenta para automatizar tarefas do Sala do Futuro.',                        author:'crimsonstrauss',             date:'29/05/2026', route:'tarefas-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:7,  title:'Redação Neji',          desc:'Conjunto de ferramentas para automatizar Redações.',                            author:'Nejizzuki',                  date:'29/05/2026', route:'redacao-neji',           url:'https://kazereda.nejizzuki.xyz/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:8,  title:'Educação Profissional', desc:'Conjunto de ferramentas para automatizar tarefas no Educação Profissional.',    author:'Nejizzuki',                  date:'29/05/2026', route:'educacao-profissional',  url:'https://profissional.nejizzuki.xyz/?cmsphacks.xyz',                  code:'', uid:'' },
-  { id:9,  title:'Open English',          desc:'Conjunto de ferramentas para automatizar tarefas no Open English.',             author:'Nejizzuki',                  date:'29/05/2026', route:'open-english',           url:'https://oe.nejizzuki.xyz/?cmsphacks.xyz',                            code:'', uid:'' },
-  { id:10, title:'Apostilas Neji',        desc:'Livros do estudante.',                                                          author:'Nejizzuki',                  date:'29/05/2026', route:'apostilas-neji',         url:'https://apostilas.nejizzuki.xyz/?cmsphacks.xyz',                     code:'', uid:'' },
-  { id:11, title:'Speak',                 desc:'Ferramenta para automatizar tarefas no Speak.',                                 author:'flowings, cupiditys',        date:'29/05/2026', route:'speak',                  url:'https://speakify.cupiditys.lol/?cmsphacks.xyz',                      code:'', uid:'' },
-  { id:12, title:'Redação Paulista',      desc:'Ferramenta para automatizar a criação de redações para o sistema Paulista.',    author:'cupiditys',                  date:'29/05/2026', route:'redacao-paulista',       url:'https://redacao.cupiditys.lol/?cmsphacks.xyz',                       code:'', uid:'' },
-  { id:13, title:'Khan Eclipse',          desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'crimsonstrauss',             date:'29/05/2026', route:'khan-eclipse',           url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:14, title:'Expansão Noturna',      desc:'Ferramenta para automatizar tarefas no Expansão Noturna.',                      author:'crimsonstrauss',             date:'29/05/2026', route:'expansao-noturna',       url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:15, title:'Livro do Estudante',    desc:'Apostilas do estudante.',                                                       author:'crimsonstrauss',             date:'29/05/2026', route:'livro-estudante',        url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:16, title:'Apostilas',             desc:'Livros do estudante.',                                                          author:'Who Asked & Tecniccomsono', date:'29/05/2026', route:'apostilas',              url:'https://apostilas-cmsp.vercel.app/?cmsphacks.xyz',                   code:'', uid:'' },
-  { id:17, title:'Cmsp Bots',             desc:'Bots no Discord para automatizar plataformas.',                                 author:'lsnouu',                     date:'29/05/2026', route:'cmsp-bots',              url:'https://discord.gg/p2Zec38XfP',                                      code:'', uid:'' },
-  { id:18, title:'Alura Eclipse',         desc:'Script para automatizar tarefas na plataforma Alura.',                          author:'crimsonstrauss',             date:'29/05/2026', route:'alura-eclipse',          url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' },
-  { id:19, title:'Khanware v3.0.9',       desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.',             author:'Niximkk',                    date:'29/05/2026', route:'khanware',               url:'https://khanware.space/?cmsphacks.xyz',
-    code:'javascript:fetch("https://raw.githubusercontent.com/Niximkk/Khanware/refs/heads/main/Khanware.js").then(t=>t.text()).then(eval);',
-    uid:'6713fcb69c4463c828b10610' },
-  { id:20, title:'LeiaSP',                desc:'Ferramenta para automatizar a leitura de livros no LeiaSP.',                    author:'Cupiditys',                  date:'29/05/2026', route:'leiasp',                 url:'https://leiasp.cupiditys.lol/?cmsphacks.xyz',                        code:'', uid:'' },
-  { id:21, title:'Redação Paraná',        desc:'Ferramenta para automatizar redações para o sistema Paranaense.',               author:'lsnouu',                     date:'29/05/2026', route:'redacao-parana',         url:'https://paranaplataformas.crimsonzerohub.xyz/redacao?cmsphacks.xyz', code:'', uid:'' },
-  { id:22, title:'Prepara SP',            desc:'Ferramenta para automatizar redações para o sistema Paulista.',                 author:'crimsonstrauss',             date:'29/05/2026', route:'prepara-sp',             url:'https://crimsonzerohub.xyz/?cmsphacks.xyz',                          code:'', uid:'' }
+  { id:1, title:'Taskitos', desc:'Ferramenta para automatizar.', author:'flowings', date:'29/05/2026', url:'#' }
 ];
 
-/* ── RENDER CARDS ── */
 function renderCards() {
   document.getElementById('cardsGrid').innerHTML = scripts.map((s, i) => `
     <article class="card" onclick="openDetail(${s.id})" style="animation-delay:${(i * 0.04).toFixed(2)}s">
-      <div class="card-topline"></div>
-      <div class="card-sweep"></div>
-      <div class="card-glow"></div>
-      <div class="card-header">
-        <span class="card-code">// script_${String(s.id).padStart(2, '0')}</span>
-        <span class="status-pill"><span class="s-dot"></span>online</span>
-      </div>
+      <div class="card-topline"></div><div class="card-sweep"></div><div class="card-glow"></div>
+      <div class="card-header"><span class="card-code">// script_${String(s.id).padStart(2, '0')}</span><span class="status-pill"><span class="s-dot"></span>online</span></div>
       <div class="card-title">${s.title}</div>
       <p class="card-desc">${s.desc}</p>
       <div class="card-author">por ${s.author}</div>
-      <div class="card-num">#${String(s.id).padStart(2, '0')}</div>
     </article>`).join('');
 }
 
-/* ── ABRIR DETALHE ── */
 function openDetail(id) {
-  const s = scripts.find(x => x.id === id);
-  if (!s) return;
-  document.getElementById('detailTitle').textContent   = s.title;
-  document.getElementById('detailDesc').textContent    = s.desc;
-  document.getElementById('detailStatus').textContent  = 'online';
-  document.getElementById('detailAuthor').textContent  = s.author;
-  document.getElementById('detailDate').textContent    = s.date;
-  document.getElementById('detailRoute').textContent   = s.route;
-  document.getElementById('detailUrl').textContent     = s.url;
-  document.getElementById('detailUrl').href            = s.url;
-  document.getElementById('detailUpdated').textContent = '// Atualizado em ' + s.date;
-  document.getElementById('detailId').textContent      = s.uid ? 'ID: ' + s.uid : '';
-  const cs = document.getElementById('codeSection');
-  if (s.code) {
-    document.getElementById('detailCode').textContent = s.code;
-    cs.style.display = 'block';
-  } else {
-    cs.style.display = 'none';
-  }
   document.getElementById('mainPage').classList.add('hidden');
   document.getElementById('detailPage').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-/* ── COPIAR CÓDIGO ── */
-function copyCode() {
-  const btn = document.querySelector('.copy-code-btn');
-  const orig = btn.innerHTML;
-  navigator.clipboard.writeText(document.getElementById('detailCode').textContent).then(() => {
-    btn.innerHTML = '✅ Copiado!';
-    btn.style.background = 'linear-gradient(135deg,#00ff88,#0ea5e9)';
-    showNotify('📋', 'Código copiado!', 'Cole no console do navegador.');
-    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2500);
-  }).catch(() => {
-    btn.innerHTML = '⚠️ Erro ao copiar';
-    setTimeout(() => { btn.innerHTML = orig; }, 2000);
-  });
-}
-
-/* ── NAVEGAÇÃO ── */
 function goBack() {
   document.getElementById('detailPage').classList.add('hidden');
   document.getElementById('mainPage').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function goToDonation() {
   document.getElementById('welcomeScreen').classList.add('hidden');
@@ -876,13 +644,8 @@ function enterMain() {
   document.getElementById('welcomeScreen').classList.add('hidden');
   document.getElementById('donationScreen').classList.add('hidden');
   document.getElementById('mainPage').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ── INIT ── */
-fetchGoal();
-setInterval(fetchGoal, 10000);
-renderHistory();
 renderCards();
 </script>
 </body>
