@@ -79,22 +79,22 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   transition:all .3s cubic-bezier(.16,1,.3,1)}
 .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);transform:translateX(-100%);transition:.55s}
 .btn:hover::after{transform:translateX(100%)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.btn:disabled::after{display:none}
 .btn-primary{background:linear-gradient(135deg,#0ea5e9,var(--purple),var(--pink));color:#fff;
   box-shadow:0 0 40px rgba(0,212,255,0.12),0 8px 28px rgba(0,0,0,0.4)}
-.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 60px rgba(0,212,255,0.25),0 20px 50px rgba(0,0,0,0.5)}
+.btn-primary:not(:disabled):hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 60px rgba(0,212,255,0.25),0 20px 50px rgba(0,0,0,0.5)}
 .btn-ghost{background:rgba(0,212,255,0.05);color:var(--text);border:1px solid var(--border-hi)}
-.btn-ghost:hover{background:rgba(0,212,255,0.1);border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 0 30px rgba(0,212,255,0.1)}
+.btn-ghost:not(:disabled):hover{background:rgba(0,212,255,0.1);border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 0 30px rgba(0,212,255,0.1)}
 .btn-green{background:linear-gradient(135deg,#059669,#0ea5e9);color:#fff;
   box-shadow:0 0 40px rgba(0,255,136,0.12),0 8px 28px rgba(0,0,0,0.4)}
-.btn-green:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 60px rgba(0,255,136,0.25),0 20px 50px rgba(0,0,0,0.5)}
+.btn-green:not(:disabled):hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 60px rgba(0,255,136,0.25),0 20px 50px rgba(0,0,0,0.5)}
 .welcome-title{font-size:clamp(1.8rem,4.5vw,3.4rem);line-height:1.15;font-weight:900;letter-spacing:-.03em;margin-bottom:20px;
   background:linear-gradient(135deg,#ffffff 0%,var(--cyan) 35%,var(--purple) 65%,var(--pink) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .15s both}
 .welcome-sub{color:var(--muted);font-size:1rem;line-height:1.85;max-width:560px;margin-bottom:38px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .3s both}
 .sys-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,212,255,0.2);letter-spacing:.04em}
-
-/* ── PAYWALL / ADWALL ── */
 .paywall-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .pw-panel{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:30px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:16px}
 .pw-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.3),rgba(124,58,237,0.25),transparent)}
@@ -122,18 +122,12 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .timer-bar-wrap{width:100%;height:6px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
 .timer-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:999px;width:100%;transition:width 1s linear}
 .security-badge{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(0,212,255,0.4);font-family:'JetBrains Mono',monospace;padding:10px 14px;background:rgba(0,212,255,0.03);border:1px solid rgba(0,212,255,0.08);border-radius:10px}
-
-/* ── BLOQUEIO DE VIOLAÇÃO ── */
-.violation-overlay{position:fixed;inset:0;z-index:99999;background:rgba(2,4,8,0.97);
-  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(20px)}
-.violation-box{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.3);border-radius:24px;
-  padding:48px;text-align:center;max-width:460px;animation:boxIn .5s cubic-bezier(.16,1,.3,1) both}
+.violation-overlay{position:fixed;inset:0;z-index:99999;background:rgba(2,4,8,0.97);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(20px)}
+.violation-box{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.3);border-radius:24px;padding:48px;text-align:center;max-width:460px;animation:boxIn .5s cubic-bezier(.16,1,.3,1) both}
 .violation-icon{font-size:56px;margin-bottom:18px}
 .violation-title{font-size:1.5rem;font-weight:900;color:var(--red);margin-bottom:12px}
 .violation-sub{color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:28px}
 .violation-code{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(239,68,68,0.4);margin-top:16px}
-
-/* ── MAIN PAGE ── */
 .main-page{padding:72px 20px 100px;position:relative;z-index:10}
 .container{width:100%;max-width:1300px;margin:0 auto}
 .hero{text-align:center;margin-bottom:64px;position:relative}
@@ -170,8 +164,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .card:hover .card-desc{color:#6a98bc}
 .card-author{color:rgba(0,212,255,0.32);font-size:12px;font-family:'JetBrains Mono',monospace;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-num{position:absolute;bottom:18px;right:20px;font-size:11px;color:rgba(0,212,255,0.09);font-family:'JetBrains Mono',monospace;font-weight:700}
-
-/* ── DETAIL PAGE ── */
 .detail-page{padding:54px 20px 90px;min-height:100vh;position:relative;z-index:10}
 .detail-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 370px;gap:36px;align-items:start}
 .back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:36px;border:1px solid var(--border);background:rgba(0,212,255,0.03);border-radius:12px;padding:10px 20px;transition:all .3s;font-family:'Inter',sans-serif;outline:none}
@@ -241,7 +233,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   <div class="glass">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
-    <div class="sys-tag" style="top:18px;right:24px">SYS_v4.0 ■ ONLINE</div>
+    <div class="sys-tag" style="top:18px;right:24px">SYS_v4.1 ■ ZERO TRUST</div>
     <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
     <h1 class="welcome-title">Olá, seja muito bem‑vindo ao FuturaOS_Tasks.</h1>
     <p class="welcome-sub">A suíte de automações educacionais mais avançada do Brasil. Acesse todos os 22 scripts com segurança e tecnologia de ponta.</p>
@@ -251,7 +243,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         Acessar o sistema
       </button>
     </div>
-    <div class="sys-tag" style="bottom:20px;left:24px">SESSION: FT-2026 // ZERO TRUST</div>
+    <div class="sys-tag" style="bottom:20px;left:24px">SESSION: FT-2026 // KV_AUTH</div>
   </div>
 </section>
 
@@ -260,7 +252,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   <div class="glass" style="max-width:1020px">
     <div class="corner tl"></div><div class="corner tr"></div>
     <div class="corner bl"></div><div class="corner br"></div>
-    <div class="sys-tag" style="top:18px;right:24px">MÓDULO DE ACESSO // SECURE</div>
+    <div class="sys-tag" style="top:18px;right:24px">MÓDULO DE ACESSO // KV_SECURE</div>
     <div class="badge" style="margin-bottom:24px"><span class="live-dot"></span>Escolha seu método de acesso</div>
     <div class="paywall-grid">
 
@@ -268,7 +260,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
       <div class="pw-panel premium">
         <div class="pw-title">⚡ Acesso Premium</div>
         <p class="pw-desc">Chega de esperar. Com o Premium você acessa <strong style="color:var(--cyan)">todos os 22 scripts instantaneamente</strong>, sem cronômetro, sem restrições. Cada minuto que você economiza vale mais do que qualquer assinatura.</p>
-        <a class="plan-card" href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=dfbb590c7f8d4e7e931889420b6a00db" target="_blank" rel="noopener" onclick="onPremiumClick()">
+        <a class="plan-card" href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=dfbb590c7f8d4e7e931889420b6a00db" target="_blank" rel="noopener">
           <div class="plan-name">🗓 Plano Semanal</div>
           <div class="plan-price">R$ 1,50</div>
           <div class="plan-period">7 dias de acesso total</div>
@@ -278,7 +270,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
             <li>Cancelamento a qualquer momento</li>
           </ul>
         </a>
-        <a class="plan-card gold" href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=58d53f9eb7a54cab9e53a2c862615ddf" target="_blank" rel="noopener" onclick="onPremiumClick()">
+        <a class="plan-card gold" href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=58d53f9eb7a54cab9e53a2c862615ddf" target="_blank" rel="noopener">
           <div class="plan-name">👑 Plano Mensal <span style="background:linear-gradient(135deg,var(--orange),var(--pink));color:#fff;font-size:10px;padding:2px 8px;border-radius:999px;margin-left:6px">MELHOR OPÇÃO</span></div>
           <div class="plan-price gold-price">R$ 9,99</div>
           <div class="plan-period">30 dias de acesso total</div>
@@ -290,11 +282,12 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
           </ul>
         </a>
         <div class="divider"></div>
-        <button class="btn btn-green" style="width:100%" onclick="validarPremium()">
+        <!-- BOTÃO COM BLOQUEIO ANTI-DUPLO-CLIQUE -->
+        <button class="btn btn-green" id="btnValidarPremium" style="width:100%" onclick="validarPremium()">
           ✅ Já efetuei o pagamento / Entrar como Premium
         </button>
         <div class="security-badge">
-          🔒 Pagamento processado com segurança pelo Mercado Pago
+          🔒 Verificação de assinatura via banco de dados do servidor
         </div>
       </div>
 
@@ -394,7 +387,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         <div class="code-block" id="codeBlock">
           <div class="loading-box" id="loadingBox">
             <div class="spinner"></div>
-            Buscando script no servidor...
+            Autenticando no servidor...
           </div>
           <pre class="code-text hidden" id="detailCode"></pre>
           <button class="copy-code-btn hidden" id="copyCodeBtn" onclick="copyCode()">
@@ -430,12 +423,11 @@ document.addEventListener('keydown', e => {
     (e.ctrlKey && ['U','S'].includes(e.key.toUpperCase()))
   ) { e.preventDefault(); return false; }
 });
-const devBlock = () => {
+setInterval(() => {
   if (window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160) {
     mostrarViolacao('DEV_TOOLS_DETECTED', 'DevTools detectado. Feche as ferramentas de desenvolvedor para continuar.');
   }
-};
-setInterval(devBlock, 1000);
+}, 1000);
 
 // ── PARTÍCULAS ──
 const canvas = document.getElementById('particles');
@@ -463,8 +455,8 @@ function drawParticles() {
   pts.forEach((a,i) => {
     for(let j=i+1;j<pts.length;j++){
       const b=pts[j], d=Math.hypot(a.x-b.x,a.y-b.y);
-      if(d<120){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle=`rgba(0,212,255,${0.065*(1-d/120)})`; ctx.lineWidth=0.5; ctx.stroke(); }
+      if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(0,212,255,${0.065*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke();}
     }
   });
   requestAnimationFrame(drawParticles);
@@ -479,9 +471,9 @@ document.addEventListener('mousemove', e => {
 // ── NOTIFY ──
 let notifyTimer = null;
 function showNotify(icon, title, sub) {
-  document.getElementById('notifyIcon').textContent = icon;
+  document.getElementById('notifyIcon').textContent  = icon;
   document.getElementById('notifyTitle').textContent = title;
-  document.getElementById('notifySub').textContent = sub;
+  document.getElementById('notifySub').textContent   = sub;
   const el = document.getElementById('notify');
   el.classList.add('show');
   clearTimeout(notifyTimer);
@@ -489,10 +481,10 @@ function showNotify(icon, title, sub) {
 }
 
 // ── CONFIG ──
-const WORKER_URL = 'https://SEU-WORKER.SEU-SUBDOMINIO.workers.dev'; // ← troque pela URL real do seu Worker
+const WORKER_URL      = 'https://fancy-sunset-fd9e.souzacarisemanuelfelipe4.workers.dev';
 const TEMPO_LIVRE_SEG = 600;
 
-// ── USER ID PERSISTENTE ──
+// ── USER ID (gerado uma vez, nunca remove do localStorage) ──
 function getUserId() {
   let id = localStorage.getItem('ft_user_id');
   if (!id) {
@@ -502,17 +494,16 @@ function getUserId() {
   return id;
 }
 
-// ── ESTADO DE ACESSO ──
-let modoAcesso = null; // 'premium' | 'gratuito'
-let timerInterval = null;
+// ── ESTADO DE ACESSO (em memória — não persiste no localStorage) ──
+// A fonte de verdade é SEMPRE o servidor (KV).
+let modoAcesso       = null; // 'premium' | 'gratuito' — só definido após resposta do servidor
+let timerInterval    = null;
 let timerSegRestante = TEMPO_LIVRE_SEG;
-let timerAtivo = false;
-let timerFoiIniciado = false;
+let timerAtivo       = false;
 
-// ── VIOLAÇÃO DE SEGURANÇA ──
+// ── VIOLAÇÃO DE SEGURANÇA (overlay bloqueante) ──
 function mostrarViolacao(codigo, mensagem) {
-  const old = document.getElementById('violationOverlay');
-  if (old) return;
+  if (document.getElementById('violationOverlay')) return;
   const overlay = document.createElement('div');
   overlay.id = 'violationOverlay';
   overlay.className = 'violation-overlay';
@@ -522,75 +513,64 @@ function mostrarViolacao(codigo, mensagem) {
       <div class="violation-title">Acesso Bloqueado</div>
       <div class="violation-sub">${mensagem}</div>
       <button class="btn btn-ghost" style="width:100%" onclick="location.reload()">↺ Recarregar página</button>
-      <div class="violation-code">ERR_CODE: ${codigo} // FuturaOS_ZeroTrust_v4</div>
+      <div class="violation-code">ERR_CODE: ${codigo} // FuturaOS_ZeroTrust_v4.1</div>
     </div>`;
   document.body.appendChild(overlay);
   pararTimer();
 }
 
-// ── CICLO DE VIDA: RESET AO SAIR/TROCAR ABA ──
-window.addEventListener('beforeunload', () => { pararTimer(); });
+// ── CICLO DE VIDA: RESET AO TROCAR ABA ──
+window.addEventListener('beforeunload', pararTimer);
 document.addEventListener('visibilitychange', () => {
   if (document.hidden && timerAtivo && modoAcesso !== 'premium') {
     pararTimer();
     timerSegRestante = TEMPO_LIVRE_SEG;
-    timerFoiIniciado = false;
     atualizarDisplayTimer(TEMPO_LIVRE_SEG);
-    document.getElementById('timerLabel').textContent = 'REINICIADO — troca de aba detectada';
-    document.getElementById('timerBtn').textContent = '▶ Iniciar contagem gratuita';
-    document.getElementById('timerBtn').disabled = false;
+    document.getElementById('timerLabel').textContent   = 'REINICIADO — troca de aba detectada';
+    document.getElementById('timerBtn').textContent     = '▶ Iniciar contagem gratuita';
+    document.getElementById('timerBtn').disabled        = false;
     document.getElementById('timerBarFill').style.width = '100%';
-    showNotify('⚠️','Cronômetro reiniciado','Você trocou de aba. Reinicie a contagem.');
+    showNotify('⚠️', 'Cronômetro reiniciado', 'Você trocou de aba. Reinicie a contagem.');
   }
 });
 
 // ── TIMER ──
 function atualizarDisplayTimer(seg) {
-  const m = String(Math.floor(seg / 60)).padStart(2,'0');
-  const s = String(seg % 60).padStart(2,'0');
-  document.getElementById('timerDisplay').textContent = `${m}:${s}`;
-  const pct = (seg / TEMPO_LIVRE_SEG) * 100;
-  document.getElementById('timerBarFill').style.width = pct + '%';
+  const m = String(Math.floor(seg / 60)).padStart(2, '0');
+  const s = String(seg % 60).padStart(2, '0');
+  document.getElementById('timerDisplay').textContent  = `${m}:${s}`;
+  document.getElementById('timerBarFill').style.width  = ((seg / TEMPO_LIVRE_SEG) * 100) + '%';
 }
-
-function pararTimer() {
-  clearInterval(timerInterval);
-  timerAtivo = false;
-}
+function pararTimer() { clearInterval(timerInterval); timerAtivo = false; }
 
 async function iniciarTimer() {
   if (timerAtivo) return;
   const btn = document.getElementById('timerBtn');
-  btn.disabled = true;
+  btn.disabled    = true;
   btn.textContent = '⏳ Conectando ao servidor...';
 
   try {
-    const res = await fetch(`${WORKER_URL}/api/start-free`, {
-      method: 'POST',
+    const res  = await fetch(`${WORKER_URL}/api/start-free`, {
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: getUserId() })
+      body:    JSON.stringify({ userId: getUserId() })
     });
     const data = await res.json();
 
-    if (data.status === 'em_andamento') {
-      timerSegRestante = data.restanteSeg;
-      showNotify('🔄','Sessão retomada',`${data.restanteSeg}s restantes no servidor`);
-    } else {
-      timerSegRestante = TEMPO_LIVRE_SEG;
-    }
+    timerSegRestante = data.restanteSeg ?? TEMPO_LIVRE_SEG;
+    timerAtivo       = true;
 
-    timerAtivo = true;
-    timerFoiIniciado = true;
     document.getElementById('timerLabel').textContent = 'CRONÔMETRO DO SERVIDOR ATIVO';
     btn.textContent = '⏱ Aguardando liberação...';
 
     timerInterval = setInterval(() => {
       if (timerSegRestante <= 0) {
         pararTimer();
-        document.getElementById('timerLabel').textContent = '✅ TEMPO CONCLUÍDO — ACESSO LIBERADO';
+        document.getElementById('timerLabel').textContent   = '✅ TEMPO CONCLUÍDO — ACESSO LIBERADO';
         document.getElementById('timerDisplay').textContent = '00:00';
         document.getElementById('timerBarFill').style.width = '0%';
         modoAcesso = 'gratuito';
+        showNotify('✅', 'Acesso liberado!', 'Cronômetro concluído. Carregando scripts...');
         setTimeout(enterMain, 1200);
         return;
       }
@@ -599,27 +579,51 @@ async function iniciarTimer() {
     }, 1000);
 
   } catch {
-    btn.disabled = false;
+    btn.disabled    = false;
     btn.textContent = '▶ Tentar novamente';
-    showNotify('❌','Erro de conexão','Não foi possível conectar ao servidor.');
+    showNotify('❌', 'Erro de conexão', 'Não foi possível conectar ao servidor.');
   }
 }
 
-// ── PREMIUM ──
-function onPremiumClick() {
-  showNotify('💳','Redirecionando...','Após o pagamento, clique em "Já efetuei o pagamento".');
-}
-
+// ── VALIDAÇÃO PREMIUM — 100% delegada ao servidor ──
 async function validarPremium() {
-  showNotify('🔄','Verificando...','Validando seu acesso premium...');
-  // Em produção: verificar assinatura ativa via Worker antes de liberar
-  // Por ora, marca localmente e entra
-  modoAcesso = 'premium';
-  localStorage.setItem('ft_modo', 'premium');
-  setTimeout(() => {
-    showNotify('👑','Acesso Premium!','Bem-vindo. Todos os scripts estão liberados.');
-    enterMain();
-  }, 800);
+  const btn = document.getElementById('btnValidarPremium');
+
+  // Bloqueia o botão imediatamente — impede cliques duplos e manipulação via console
+  btn.disabled    = true;
+  btn.textContent = '🔒 VALIDANDO ASSINATURA NO SERVIDOR...';
+
+  try {
+    const res  = await fetch(`${WORKER_URL}/api/verify-premium`, {
+      method:  'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Id':    getUserId()
+      },
+      body: JSON.stringify({ userId: getUserId() })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.isPremium === true) {
+      // Servidor confirmou: assinatura ativa no KV
+      modoAcesso = 'premium';
+      showNotify('👑', 'Acesso Premium confirmado!', 'Assinatura verificada no banco de dados.');
+      setTimeout(enterMain, 900);
+      // Botão permanece desativado — usuário já foi redirecionado
+    } else {
+      // Servidor negou — reativa o botão para nova tentativa
+      btn.disabled    = false;
+      btn.textContent = '✅ Já efetuei o pagamento / Entrar como Premium';
+      showNotify('❌', 'Assinatura não encontrada',
+        data.mensagem || 'Aguarde a confirmação do Mercado Pago e tente novamente.');
+    }
+
+  } catch {
+    // Erro de rede — reativa o botão
+    btn.disabled    = false;
+    btn.textContent = '✅ Já efetuei o pagamento / Entrar como Premium';
+    showNotify('❌', 'Erro de conexão', 'Não foi possível verificar com o servidor. Tente novamente.');
+  }
 }
 
 // ── NAVEGAÇÃO ──
@@ -667,7 +671,7 @@ const scripts = [
 
 // ── RENDER CARDS ──
 function renderCards() {
-  document.getElementById('cardsGrid').innerHTML = scripts.map((s,i) => `
+  document.getElementById('cardsGrid').innerHTML = scripts.map((s, i) => `
     <article class="card" onclick="openDetail(${s.id})" style="animation-delay:${(i*0.04).toFixed(2)}s">
       <div class="card-topline"></div><div class="card-sweep"></div><div class="card-glow"></div>
       <div class="card-header">
@@ -681,7 +685,7 @@ function renderCards() {
     </article>`).join('');
 }
 
-// ── ABRIR DETALHE — requisição ao Worker ──
+// ── ABRIR DETALHE — requisição Zero-Trust ao Worker ──
 async function openDetail(id) {
   const s = scripts.find(x => x.id === id);
   if (!s) return;
@@ -692,10 +696,19 @@ async function openDetail(id) {
   document.getElementById('detailDate').textContent    = s.date;
   document.getElementById('detailRoute').textContent   = s.route;
   document.getElementById('detailUpdated').textContent = '// Atualizado em ' + s.date;
-  document.getElementById('detailId').textContent      = '';
   document.getElementById('detailCode').classList.add('hidden');
   document.getElementById('copyCodeBtn').classList.add('hidden');
   document.getElementById('loadingBox').classList.remove('hidden');
+  document.getElementById('codeBlock').innerHTML = `
+    <div class="loading-box" id="loadingBox">
+      <div class="spinner"></div>
+      Autenticando no servidor...
+    </div>
+    <pre class="code-text hidden" id="detailCode"></pre>
+    <button class="copy-code-btn hidden" id="copyCodeBtn" onclick="copyCode()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copiar
+    </button>`;
 
   document.getElementById('mainPage').classList.add('hidden');
   document.getElementById('detailPage').classList.remove('hidden');
@@ -703,16 +716,13 @@ async function openDetail(id) {
 
   try {
     const res = await fetch(`${WORKER_URL}/api/get-script`, {
-      method: 'POST',
+      method:  'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-User-Id': getUserId()
+        'X-User-Id':    getUserId()
       },
-      body: JSON.stringify({
-        userId:   getUserId(),
-        scriptId: id,
-        jaPagou:  modoAcesso === 'premium'
-      })
+      // NOTA: jaPagou REMOVIDO. O servidor decide via KV — o cliente não tem voz aqui.
+      body: JSON.stringify({ userId: getUserId(), scriptId: id })
     });
 
     const data = await res.json();
@@ -724,9 +734,7 @@ async function openDetail(id) {
       document.getElementById('copyCodeBtn').classList.remove('hidden');
     } else {
       document.getElementById('loadingBox').classList.add('hidden');
-      const codigo = data.codigo || 'ACCESS_DENIED';
-      const msg    = data.mensagem || 'Acesso negado pelo servidor.';
-      mostrarViolacaoInline(codigo, msg, data.restanteSeg);
+      mostrarViolacaoInline(data.codigo || 'ACCESS_DENIED', data.mensagem || 'Acesso negado pelo servidor.', data.restanteSeg);
     }
 
   } catch {
@@ -736,14 +744,16 @@ async function openDetail(id) {
 }
 
 function mostrarViolacaoInline(codigo, mensagem, restanteSeg) {
-  const tempoTxt = restanteSeg ? `<br><br>⏱ Aguarde mais <strong style="color:var(--cyan)">${restanteSeg}s</strong> no cronômetro.` : '';
+  const tempoTxt = restanteSeg
+    ? `<br><br>⏱ Aguarde mais <strong style="color:var(--cyan)">${restanteSeg}s</strong> no cronômetro do servidor.`
+    : '';
   document.getElementById('codeBlock').innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:36px;text-align:center">
       <div style="font-size:44px">⛔</div>
       <div style="font-size:16px;font-weight:800;color:var(--red)">Acesso Negado</div>
       <div style="font-size:13px;color:var(--muted);line-height:1.75">${mensagem}${tempoTxt}</div>
       <button class="btn btn-ghost" style="margin-top:8px" onclick="goBack()">← Voltar</button>
-      <div style="font-size:10px;color:rgba(239,68,68,0.3);font-family:'JetBrains Mono',monospace">ERR: ${codigo}</div>
+      <div style="font-size:10px;color:rgba(239,68,68,0.3);font-family:'JetBrains Mono',monospace">ERR: ${codigo} // ZeroTrust_KV</div>
     </div>`;
 }
 
@@ -751,9 +761,9 @@ function copyCode() {
   const btn  = document.getElementById('copyCodeBtn');
   const orig = btn.innerHTML;
   navigator.clipboard.writeText(document.getElementById('detailCode').textContent).then(() => {
-    btn.innerHTML = '✅ Copiado!';
+    btn.innerHTML        = '✅ Copiado!';
     btn.style.background = 'linear-gradient(135deg,#00ff88,#0ea5e9)';
-    showNotify('📋','Código copiado!','Cole no console do navegador.');
+    showNotify('📋', 'Código copiado!', 'Cole no console do navegador.');
     setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2500);
   }).catch(() => {
     btn.innerHTML = '⚠️ Erro ao copiar';
@@ -763,6 +773,4 @@ function copyCode() {
 
 // ── INIT ──
 renderCards();
-</script>
-</body>
-</html>
+</script
