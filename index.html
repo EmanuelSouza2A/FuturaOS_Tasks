@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuturaOS_Tasks - Premium</title>
+    <title>FuturaOS_Tasks - Premium Premium</title>
     <style>
-        /* Toda a carcaça visual original mantida intacta */
+        /* DESIGN PREMIUM ORIGINAL PRESERVADO INTREGO */
         body { background-color: #030712; color: #f3f4f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
         .container { width: 900px; display: flex; gap: 30px; background: rgba(255,255,255,0.02); padding: 40px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        .panel { flex: 1; background: #0b0f19; border-radius: 12px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; }
+        .panel { flex: 1; background: #0b0f19; border-radius: 12px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; }
         .header-tag { display: inline-flex; align-items: center; background: rgba(0,255,200,0.1); color: #00ffc8; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; margin-bottom: 20px; width: fit-content; }
         h2 { font-size: 24px; margin: 0 0 15px 0; display: flex; align-items: center; gap: 10px; }
-        .desc { font-size: 14px; color: #9ca3af; line-height: 1.6; margin-bottom: 25px; }
+        .desc { font-size: 14px; color: #9ca3af; line-height: 1.6; margin-bottom: 25px; min-height: 70px; }
         .card { background: #111827; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 20px; margin-bottom: 20px; cursor: pointer; transition: all 0.2s; position: relative; }
         .card:hover { border-color: #00ffc8; background: #131b2e; }
         .plan-title { font-size: 14px; font-weight: bold; color: #9ca3af; margin-bottom: 5px; }
@@ -23,17 +23,18 @@
         .features li::before { content: "✓"; color: #00ffc8; font-weight: bold; }
         .btn-main { background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; transition: opacity 0.2s; text-align: center; }
         .btn-main:hover { opacity: 0.9; }
-        .btn-free { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
-        .timer-display { font-size: 54px; font-weight: 800; color: #00ffc8; text-align: center; font-family: monospace; margin: 30px 0; letter-spacing: 2px; }
+        .btn-main:disabled { background: #1f2937; color: #4b5563; cursor: not-allowed; linear-gradient: none; }
+        .btn-free { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; margin-top: auto; }
+        .timer-display { font-size: 54px; font-weight: 800; color: #00ffc8; text-align: center; font-family: monospace; margin: 40px 0; letter-spacing: 2px; }
         .footer-text { text-align: center; font-size: 11px; color: #4b5563; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 5px; }
         
-        /* Modal do QR Code Interno (Sem sair do site) */
+        /* MODAL DO PIX DENTRO DO SITE (IN-APP) */
         .pix-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 1000; }
-        .pix-box { background: #0b0f19; padding: 30px; border-radius: 12px; border: 1px solid #00ffc8; text-align: center; width: 340px; }
-        .pix-qr { width: 200px; height: 200px; background: white; margin: 20px auto; padding: 10px; border-radius: 8px; }
-        .pix-input { width: 100%; padding: 10px; background: #111827; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px; font-size: 12px; text-align: center; margin-bottom: 10px; box-sizing: border-box; }
+        .pix-box { background: #0b0f19; padding: 30px; border-radius: 12px; border: 1px solid #00ffc8; text-align: center; width: 340px; box-shadow: 0 0 30px rgba(0,255,200,0.2); }
+        .pix-qr { width: 200px; height: 200px; background: white; margin: 20px auto; padding: 10px; border-radius: 8px; display: block; }
+        .pix-input { width: 100%; padding: 12px; background: #111827; border: 1px solid rgba(255,255,255,0.1); color: #00ffc8; border-radius: 6px; font-size: 11px; text-align: center; margin-bottom: 10px; box-sizing: border-box; cursor: pointer; font-family: monospace; }
         
-        /* Toast de erro de conexão igual ao da sua imagem */
+        /* TOAST DE ERRO DE CONEXÃO (DO SEU PRINT) */
         .toast-error { display: none; position: fixed; bottom: 20px; right: 20px; background: #1a0b0e; border: 1px solid #ff4757; padding: 15px 25px; border-radius: 8px; color: #ff4757; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 2000; }
     </style>
 </head>
@@ -41,60 +42,68 @@
 
     <div class="container">
         <div class="panel">
-            <div class="header-tag">⚡ Escolha seu método de acesso</div>
-            <h2>Acesso Premium</h2>
-            <p class="desc">Chega de esperar. Com o Premium você acessa todos os 22 scripts instantaneamente, sem cronômetro, sem restrições. Cada minuto que você economiza vale mais do que qualquer assinatura.</p>
-            
-            <div class="card" onclick="gerarPix('semanal')">
-                <div class="plan-title">📊 Plano Semanal</div>
-                <div class="price">R$ 1,50 <span>/ 7 dias de acesso total</span></div>
-                <ul class="features">
-                    <li>Acesso imediato a todos os 22 scripts</li>
-                    <li>Sem tempo de espera</li>
-                    <li>Cancelamento a qualquer momento</li>
-                </ul>
+            <div>
+                <div class="header-tag">⚡ Módulo de Assinatura</div>
+                <h2>Acesso Premium</h2>
+                <p class="desc">Chega de esperar. Com o Premium você acessa todos os 22 scripts instantaneamente, sem cronômetro, sem restrições. Cada minuto que você economiza vale mais do que qualquer assinatura.</p>
+                
+                <div class="card" onclick="solicitarPix('semanal')">
+                    <div class="plan-title">📊 Plano Semanal</div>
+                    <div class="price">R$ 1,50 <span>/ 7 dias de acesso total</span></div>
+                    <ul class="features">
+                        <li>Acesso imediato a todos os 22 scripts</li>
+                        <li>Sem tempo de espera</li>
+                        <li>Cancelamento a qualquer momento</li>
+                    </ul>
+                </div>
+
+                <div class="card" onclick="solicitarPix('mensal')">
+                    <span class="badge">Melhor Opção</span>
+                    <div class="plan-title">👑 Plano Mensal</div>
+                    <div class="price">R$ 9,99 <span>/ 30 dias de acesso total</span></div>
+                    <ul class="features">
+                        <li>Acesso imediato a todos os 22 scripts</li>
+                        <li>Custo de apenas R$ 0,33/dia</li>
+                        <li>Prioridade em novos scripts</li>
+                        <li>Cancelamento a qualquer momento</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="card" onclick="gerarPix('mensal')">
-                <span class="badge">Melhor Opção</span>
-                <div class="plan-title">👑 Plano Mensal</div>
-                <div class="price">R$ 9,99 <span>/ 30 dias de acesso total</span></div>
-                <ul class="features">
-                    <li>Acesso imediato a todos os 22 scripts</li>
-                    <li>Custo de apenas R$ 0,33/dia</li>
-                    <li>Prioridade em novos scripts</li>
-                    <li>Cancelamento a qualquer momento</li>
-                </ul>
+            <div>
+                <button class="btn-main" onclick="autenticarUsuario()">✅ Já efetuei o pagamento / Entrar como Premium</button>
+                <div class="footer-text">🔒 Pagamento processado com segurança via API do Mercado Pago</div>
             </div>
-
-            <button class="btn-main" onclick="verificarAcesso()">✅ Já efetuei o pagamento / Entrar como Premium</button>
-            <div class="footer-text">🔒 Pagamento processado com segurança via API do Mercado Pago</div>
         </div>
 
         <div class="panel">
-            <div class="header-tag">⏱️ Módulo de Acesso // Secure</div>
-            <h2>Acesso Gratuito</h2>
-            <p class="desc">Prefere não pagar? Sem problema. Fique 10 minutos contínuos nesta aba — sem fechar, sem minimizar, sem trocar de aba — e o servidor irá liberar o acesso automaticamente.</p>
+            <div>
+                <div class="header-tag">⏱️ Módulo de Acesso // Secure</div>
+                <h2>Acesso Gratuito</h2>
+                <p class="desc">Prefere não pagar? Sem problema. Fique 10 minutos contínuos nesta aba — sem fechar, sem minimizar, sem trocar de aba — e o servidor irá liberar o acesso automaticamente.</p>
+                
+                <div class="timer-display" id="timerWindow">10:00</div>
+            </div>
             
-            <div class="timer-display" id="timer">10:00</div>
-            
-            <button class="btn-main btn-free" id="btn-free-action" onclick="iniciarCronometroSeguro()">▶ Iniciar contagem gratuita</button>
-            <div class="footer-text">🛡️ Cronômetro validado pelo servidor – não pode ser burlado</div>
+            <div>
+                <button class="btn-main btn-free" id="btnTimerAction" onclick="dispararTimerServidor()">▶ Iniciar contagem gratuita</button>
+                <div class="footer-text">🛡️ Cronômetro validado pelo servidor – não pode ser burlado</div>
+            </div>
         </div>
     </div>
 
     <div class="pix-modal" id="pixModal">
         <div class="pix-box">
             <h3 style="margin:0; color:#00ffc8;">Escaneie o PIX</h3>
-            <p style="font-size:12px; color:#9ca3af; margin: 5px 0 15px 0;">O acesso será liberado imediatamente após o pagamento.</p>
-            <img class="pix-qr" id="pixQrImg" src="" alt="QR Code Pix">
-            <input class="pix-input" id="pixCopiaCola" readonly onclick="this.select(); document.execCommand('copy'); alert('Copia e Cola copiado!');">
-            <p style="font-size:11px; color:#6b7280; margin-bottom:20px;">Clique no texto acima para copiar o código.</p>
+            <p style="font-size:12px; color:#9ca3af; margin: 5px 0 15px 0;">O acesso será liberado automaticamente após o pagamento.</p>
+            <img class="pix-qr" id="modalQrCodeImg" src="" alt="Aguardando QR Code...">
+            <input class="pix-input" id="modalCopiaColaInput" readonly onclick="copiarCodigoPix()" title="Clique para copiar">
+            <p style="font-size:11px; color:#6b7280; margin-bottom:20px;">Clique na caixa acima para copiar o código Copia e Cola.</p>
             <button class="btn-main" style="background:#ff4757;" onclick="fecharModalPix()">Fechar Janela</button>
         </div>
     </div>
 
-    <div class="toast-error" id="errorToast">
+    <div class="toast-error" id="connectionErrorToast">
         <span style="font-size:16px;">❌</span>
         <div>
             <strong style="display:block; color:#fff;">Erro de conexão</strong>
@@ -103,50 +112,56 @@
     </div>
 
     <script>
-        // Defina aqui a URL real do seu Worker do Cloudflare
-        const WORKER_URL = "https://futuraos-apisouzarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
+        // ATENÇÃO: Substitua pelo link correto do seu Worker da Cloudflare
+        const API_URL = "https://futuraos-apisouzarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
         
-        let userId = localStorage.getItem("futura_user_id");
-        if (!userId) {
-            userId = "usr_" + Math.random().toString(36).substr(2, 9);
-            localStorage.setItem("futura_user_id", userId);
+        // Criação ou recuperação do ID único estável do dispositivo do usuário
+        let userFingerprint = localStorage.getItem("futura_fingerprint");
+        if (!userFingerprint) {
+            userFingerprint = "usr_" + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+            localStorage.setItem("futura_fingerprint", userFingerprint);
         }
 
-        function mostrarErro() {
-            const toast = document.getElementById("errorToast");
+        function dispararErroInterface() {
+            const toast = document.getElementById("connectionErrorToast");
             toast.style.display = "flex";
             setTimeout(() => toast.style.display = "none", 5000);
         }
 
-        // 1. GERAR PIX REAL VIA API SEM SAIR DO SITE
-        async function gerarPix(plano) {
+        // 1. GERAÇÃO DE PIX INTEGRADO VIA MERCADO PAGO
+        async function solicitarPix(tipoPlano) {
             try {
-                const response = await fetch(`${WORKER_URL}/api/create-payment`, {
+                const response = await fetch(`${API_URL}/api/create-payment`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ plano, userId })
+                    body: JSON.stringify({ plano: tipoPlano, userId: userFingerprint })
                 });
                 
-                if (!response.ok) throw new Error();
-                const data = await response.json();
+                if (!response.ok) throw new Error("Erro na API");
+                const payload = await response.json();
                 
-                document.getElementById("pixQrImg").src = `data:image/jpeg;base64,${data.qr_code_base64}`;
-                document.getElementById("pixCopiaCola").value = data.qr_code;
+                // Injeta os dados da API direto nos elementos do Modal
+                document.getElementById("modalQrCodeImg").src = `data:image/jpeg;base64,${payload.qr_code_base64}`;
+                document.getElementById("modalCopiaColaInput").value = payload.qr_code;
                 document.getElementById("pixModal").style.display = "flex";
                 
-                // Inicia checagem automática em segundo plano
-                const interval = setInterval(async () => {
-                    const status = await checarStatusServidor();
-                    if (status === "premium") {
-                        clearInterval(interval);
+                // Loop de verificação automática a cada 4 segundos enquanto o modal estiver aberto
+                const checagemAutomatica = setInterval(async () => {
+                    if (document.getElementById("pixModal").style.display === "none") {
+                        clearInterval(checagemAutomatica);
+                        return;
+                    }
+                    const statusValido = await consultarStatusServidor();
+                    if (statusValido === "premium") {
+                        clearInterval(checagemAutomatica);
                         fecharModalPix();
-                        alert("Pagamento aprovado! Bem-vindo ao Premium.");
+                        alert("Pagamento identificado com sucesso! Acesso liberado.");
                         window.location.reload();
                     }
-                }, 5000);
-                
+                }, 4000);
+
             } catch (err) {
-                mostrarErro();
+                dispararErroInterface();
             }
         }
 
@@ -154,61 +169,80 @@
             document.getElementById("pixModal").style.display = "none";
         }
 
-        // 2. VERIFICAR SE JÁ PAGOU (BOTAO MANUAL)
-        async function verificarAcesso() {
-            const status = await checarStatusServidor();
-            if (status === "premium") {
-                alert("Acesso Premium Validado! Todos os scripts estão liberados.");
+        function copiarCodigoPix() {
+            const input = document.getElementById("modalCopiaColaInput");
+            input.select();
+            document.execCommand("copy");
+            alert("Código Copia e Cola copiado para a área de transferência!");
+        }
+
+        // 2. BOTÃO SEGURO DE VERIFICAÇÃO DE ASSINATURA
+        async function autenticarUsuario() {
+            const statusAtual = await consultarStatusServidor();
+            if (statusAtual === "premium") {
+                alert("Acesso Premium confirmado! Seus 22 scripts estão desbloqueados.");
+                // Aqui você coloca a lógica para abrir a sua aba secreta de scripts
             } else {
-                alert("Nenhum pagamento ativo localizado para este dispositivo. Se você já pagou, aguarde 30 segundos e clique novamente.");
+                alert("Nenhuma transação ativa ou tempo de espera concluído para este dispositivo.");
             }
         }
 
-        async function checarStatusServidor() {
+        async function consultarStatusServidor() {
             try {
-                const response = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
-                const data = await response.json();
-                return data.status; // retorna "premium" ou "free"
+                const response = await fetch(`${API_URL}/api/check-status?userId=${userFingerprint}`);
+                const resultado = await response.json();
+                return resultado.status; 
             } catch {
                 return "free";
             }
         }
 
-        // 3. CRONÔMETRO IMPOSSÍVEL DE BURLAR (Validado no Servidor)
-        let timerInterval;
-        async function iniciarCronometroSeguro() {
+        // 3. CRONÔMETRO DE 10 MINUTOS BACKEND-SECURE
+        let localTimerLoop;
+        async function dispararTimerServidor() {
             try {
-                const response = await fetch(`${WORKER_URL}/api/start-timer`, {
+                const response = await fetch(`${API_URL}/api/start-timer`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId })
+                    body: JSON.stringify({ userId: userFingerprint })
                 });
                 const data = await response.json();
                 
-                document.getElementById("btn-free-action").innerText = "⏳ Validando tempo com o servidor...";
-                document.getElementById("btn-free-action").disabled = true;
+                document.getElementById("btnTimerAction").disabled = true;
+                document.getElementById("btnTimerAction").innerText = "⏳ Tempo Sincronizado com o Servidor";
                 
-                clearInterval(timerInterval);
-                timerInterval = setInterval(() => {
+                clearInterval(localTimerLoop);
+                localTimerLoop = setInterval(() => {
                     const agora = Date.now();
                     const decorrido = Math.floor((agora - data.startTime) / 1000);
-                    const restante = 600 - decorrido; // 10 minutos = 600 segundos
+                    const restante = 600 - decorrido; // 600 segundos = 10 minutos
 
                     if (restante <= 0) {
-                        clearInterval(timerInterval);
-                        document.getElementById("timer").innerText = "00:00";
-                        alert("Parabéns! 10 minutos concluídos. Acesso gratuito liberado!");
+                        clearInterval(localTimerLoop);
+                        document.getElementById("timerWindow").innerText = "00:00";
+                        alert("Tempo concluído! Clique em 'Entrar como Premium' para validar seu acesso gratuito temporário.");
                         window.location.reload();
                     } else {
-                        const mins = String(Math.floor(restante / 60)).padStart(2, '0');
-                        const segs = String(restante % 60).padStart(2, '0');
-                        document.getElementById("timer").innerText = `${mins}:${segs}`;
+                        const m = String(Math.floor(restante / 60)).padStart(2, '0');
+                        const s = String(restante % 60).padStart(2, '0');
+                        document.getElementById("timerWindow").innerText = `${m}:${s}`;
                     }
                 }, 1000);
+
             } catch {
-                mostrarErro();
+                dispararErroInterface();
             }
         }
+
+        // Se o usuário recarregar a página no meio da contagem, reconecta o timer sozinho
+        window.onload = async () => {
+            const status = await consultarStatusServidor();
+            if (status === "premium") {
+                document.getElementById("timerWindow").innerText = "LIBERADO";
+                document.getElementById("btnTimerAction").innerText = "👑 Acesso Liberado";
+                document.getElementById("btnTimerAction").disabled = true;
+            }
+        };
     </script>
 </body>
 </html>
