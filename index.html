@@ -43,7 +43,7 @@
         
         .main-layout { display: flex; gap: 40px; margin-top: 20px; }
         .control-panel { flex: 1; max-width: 400px; display: flex; flex-direction: column; gap: 20px; }
-        .scripts-panel { flex: 1.5; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 25px; border-radius: 16px; }
+        .scripts-panel { flex: 1.5; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 25px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; }
         
         /* CARDS E BOTÕES */
         .box-premium, .box-free { background: rgba(255,255,255,0.01); border: 1px solid var(--border); padding: 25px; border-radius: 16px; position: relative; }
@@ -54,12 +54,12 @@
         h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; color: #fff; }
         p { font-size: 13px; color: #8fa0b5; line-height: 1.5; margin-bottom: 20px; }
         
-        .btn { width: 100%; border: none; cursor: pointer; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all .2s ease; margin-bottom: 10px; color: white; }
+        .btn { width: 100%; border: none; cursor: pointer; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all .2s ease; margin-bottom: 10px; color: white; text-decoration: none; }
         .btn-primary { background: linear-gradient(135deg, #0ea5e9, var(--purple)); box-shadow: 0 4px 20px rgba(124,58,237,0.2); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(124,58,237,0.4); }
         .btn-ghost { background: rgba(0,212,255,0.05); border: 1px solid var(--border-hi); }
         .btn-ghost:hover { background: rgba(0,212,255,0.1); border-color: var(--cyan); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
         .timer-display { font-size: 42px; font-weight: 900; font-family: 'JetBrains Mono', monospace; text-align: center; color: var(--orange); margin: 15px 0; letter-spacing: 2px; }
         
@@ -67,17 +67,23 @@
         .select-custom { width: 100%; padding: 14px; background: #070c16; border: 1px solid var(--border-hi); color: #fff; border-radius: 10px; font-size: 14px; margin-bottom: 15px; outline: none; cursor: pointer; }
         .select-custom option { background: #070c16; }
 
+        /* TELEMETRIA LOG CARD */
+        .telemetry-card { background: rgba(6,10,20,0.6); border: 1px solid rgba(0,212,255,0.05); border-radius: 10px; padding: 12px; margin-bottom: 15px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #617d9c; }
+        .telemetry-card span { color: var(--cyan); }
+
         /* NOTIFY TOAST */
-        .notify { position: fixed; bottom: 28px; right: 28px; z-index: 9999; background: rgba(6,10,20,0.95); border: 1px solid var(--red); border-radius: 12px; padding: 16px; width: 300px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: translateY(120px); opacity: 0; transition: all .4s cubic-bezier(.16,1,.3,1); }
+        .notify { position: fixed; bottom: 28px; right: 28px; z-index: 9999; background: rgba(6,10,20,0.95); border: 1px solid var(--red); border-radius: 12px; padding: 16px; width: 320px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: translateY(120px); opacity: 0; transition: all .4s cubic-bezier(.16,1,.3,1); backdrop-filter: blur(10px); }
         .notify.show { transform: translateY(0); opacity: 1; }
-        .notify-title { font-weight: 700; font-size: 14px; color: #fff; }
-        .notify-sub { font-size: 12px; color: var(--red); margin-top: 4px; }
+        .notify-title { font-weight: 700; font-size: 14px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .notify-sub { font-size: 12px; color: #8fa0b5; margin-top: 6px; line-height: 1.4; }
 
         /* MODAL PIX IN-APP */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(8px); }
-        .modal-box { background: #060a14; border: 1px solid var(--cyan); box-shadow: 0 0 40px rgba(0,212,255,0.2); padding: 30px; border-radius: 16px; text-align: center; width: 360px; }
+        .modal-box { background: #060a14; border: 1px solid var(--cyan); box-shadow: 0 0 40px rgba(0,212,255,0.2); padding: 30px; border-radius: 16px; text-align: center; width: 360px; position: relative; }
         .qr-img { width: 220px; height: 220px; background: white; margin: 20px auto; padding: 10px; border-radius: 10px; display: block; }
-        .pix-input { width: 100%; padding: 12px; background: #0d1527; border: 1px solid var(--border-hi); color: var(--cyan); border-radius: 8px; font-size: 11px; text-align: center; margin-bottom: 15px; cursor: pointer; font-family: 'JetBrains Mono', monospace; }
+        .pix-input { width: 100%; padding: 12px; background: #0d1527; border: 1px solid var(--border-hi); color: var(--cyan); border-radius: 8px; font-size: 11px; text-align: center; margin-bottom: 15px; cursor: pointer; font-family: 'JetBrains Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .payment-status-pulse { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--purple); font-weight: 600; margin-bottom: 15px; animation: textGlow 1.5s ease-in-out infinite alternate; }
+        @keyframes textGlow { from { opacity: 0.5; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -91,14 +97,14 @@
 
     <div class="screen">
         <div class="glass">
-            <div class="badge"><span class="live-dot"></span>FuturaOS v4.0 • Active System</div>
+            <div class="badge"><span class="live-dot"></span>FuturaOS v4.0 • Sistema Ativo</div>
             <h1 style="font-size: 28px; font-weight: 900; margin-bottom: 5px;">Módulo de Resgate de Scripts</h1>
             <p style="margin-bottom: 30px;">Gerencie suas tarefas e automatize o fluxo com autenticação segura de ponta a ponta.</p>
 
             <div class="main-layout">
                 <div class="control-panel">
                     <div class="box-premium">
-                        <div class="badge" style="color:var(--purple); border-color:rgba(124,58,237,0.3)">Premium</div>
+                        <div class="badge" style="color:var(--purple); border-color:rgba(124,58,237,0.3)" id="premiumBadge">Premium Inativo</div>
                         <h2>Acesso Instantâneo</h2>
                         <p>Acesse imediatamente qualquer script sem tempo de espera ou restrições de abas.</p>
                         <button class="btn btn-primary" onclick="abrirModalPagamento('semanal')">Plano Semanal - R$ 1,50</button>
@@ -115,21 +121,52 @@
                 </div>
 
                 <div class="scripts-panel">
-                    <h2>Selecione o Script Desejado</h2>
-                    <p>Todos os 22 módulos educacionais e de automação integrados diretamente com a Cloudflare.</p>
-                    
-                    <select class="select-custom" id="scriptSelector">
-                        <option value="1">1. Taskitos</option>
-                        <option value="19">19. Khanware v3.0.9</option>
+                    <div>
+                        <h2>Selecione o Script Desejado</h2>
+                        <p>Todos os 22 módulos educacionais e de automação integrados diretamente com a Cloudflare.</p>
+                        
+                        <div class="telemetry-card">
+                            Dispositivo: <span id="telDevice">Carregando...</span><br>
+                            Plataforma: <span id="telOS">Carregando...</span><br>
+                            Identificador: <span id="telUID">Carregando...</span><br>
+                            Status na Nuvem: <span id="telStatus" style="color: var(--orange)">Verificando...</span>
+                        </div>
+
+                        <select class="select-custom" id="scriptSelector">
+                            <option value="1">1. Taskitos</option>
+                            <option value="2">2. Redação Eclipse</option>
+                            <option value="3">3. Khanto</option>
+                            <option value="4">4. Elefante Letrado</option>
+                            <option value="5">5. Matific</option>
+                            <option value="6">6. Tarefas SP</option>
+                            <option value="7">7. Redação Neji</option>
+                            <option value="8">8. Educação Profissional</option>
+                            <option value="9">9. Open English</option>
+                            <option value="10">10. Apostilas Neji</option>
+                            <option value="11">11. Speak</option>
+                            <option value="12">12. Redação Paulista</option>
+                            <option value="13">13. Khan Eclipse</option>
+                            <option value="14">14. Expansão Noturna</option>
+                            <option value="15">15. Livro do Estudante</option>
+                            <option value="16">16. Apostilas</option>
+                            <option value="17">17. Cmsp Bots</option>
+                            <option value="18">18. Alura Eclipse</option>
+                            <option value="19">19. Khanware v3.0.9</option>
+                            <option value="20">20. LeiaSP</option>
+                            <option value="21">21. Redação Paraná</option>
+                            <option value="22">22. Prepara SP</option>
                         </select>
+                    </div>
 
-                    <button class="btn btn-primary" style="background: var(--green); color: #020408;" onclick="solicitarEntregaScript()">
-                        🚀 Injetar e Copiar Payload
-                    </button>
+                    <div>
+                        <button class="btn btn-primary" id="btnDeliverScript" style="background: var(--green); color: #020408;" onclick="solicitarEntregaScript()" disabled>
+                            🔒 Bloqueado — Aguardando Liberação
+                        </button>
 
-                    <div style="margin-top: 20px; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">
-                        * Status de Segurança: Zero Trust Ativo.<br>
-                        * Os códigos permanecem ocultos até a autorização do servidor.
+                        <div style="margin-top: 20px; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">
+                            * Status de Segurança: Zero Trust Ativo.<br>
+                            * Os códigos permanecem criptografados na nuvem até a autorização do servidor.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,20 +175,28 @@
 
     <div class="modal" id="pixModal">
         <div class="modal-box">
-            <h3 style="color:#fff; font-size: 18px;">Pagamento via PIX</h3>
-            <p style="font-size:12px; margin-bottom:10px;">Escaneie ou copie o código abaixo:</p>
+            <h3 style="color:#fff; font-size: 18px; font-weight:800;">Pagamento via PIX</h3>
+            <p style="font-size:12px; margin-bottom:10px;">Escaneie ou copie o código abaixo para concluir:</p>
+            
             <img class="qr-img" id="qrCodeImg" src="" alt="Gerando QR Code...">
+            
+            <div class="payment-status-pulse">
+                <span class="live-dot" style="background:var(--purple); box-shadow:0 0 8px var(--purple)"></span>
+                Aguardando aprovação do Mercado Pago...
+            </div>
+
             <input class="pix-input" id="copiaColaInput" readonly onclick="copiarPix()" title="Clique para copiar">
-            <button class="btn btn-ghost" style="border-color:var(--red); color:var(--red);" onclick="fecharModal()">Cancelar</button>
+            <button class="btn btn-ghost" style="border-color:var(--red); color:var(--red); margin-top: 5px;" onclick="fecharModal()">Cancelar e Sair</button>
         </div>
     </div>
 
     <div class="notify" id="antiBypassToast">
-        <div class="notify-title">⚠️ Violação Detectada</div>
-        <div class="notify-sub">Aba desfocada ou minimizada. O progresso foi congelado localmente!</div>
+        <div class="notify-title">⚠️ Fluxo de Validação Interrompido</div>
+        <div class="notify-sub">Você saiu da aba ou minimizou o navegador. Para sua segurança, o timer precisa de foco constante para validar no servidor Cloudflare.</div>
     </div>
 
     <script>
+        // CONFIGURAÇÃO DA URL DO SEU WORKER CLOUDFLARE
         const WORKER_URL = "https://futuraos-apisouzarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
         
         let userId = localStorage.getItem("ft_user_id");
@@ -162,17 +207,54 @@
 
         let loopTimer;
         let checagemPagamento;
+        let isPremiumAtivo = false;
 
-        // ANTI-BYPASS: Detecta se o usuário trocou de aba
+        // ANALÍTICA E COLETA DE INFOS DO DISPOSITIVO
+        function coletarMetadadosDispositivo() {
+            const ua = navigator.userAgent;
+            const isMobile = /Mobi|Android|iPhone|iPad/i.test(ua);
+            const deviceType = isMobile ? "Celular / Tablet" : "Computador / Desktop";
+            
+            let os = "Desconhecido";
+            if (ua.indexOf("Windows") !== -1) os = "Windows OS";
+            else if (ua.indexOf("Macintosh") !== -1) os = "macOS";
+            else if (ua.indexOf("Android") !== -1) os = "Android";
+            else if (ua.indexOf("iPhone") !== -1 || ua.indexOf("iPad") !== -1) os = "iOS device";
+            else if (ua.indexOf("Linux") !== -1) os = "Linux OS";
+
+            document.getElementById("telDevice").innerText = deviceType;
+            document.getElementById("telOS").innerText = `${os} (${screen.width}x${screen.height})`;
+            document.getElementById("telUID").innerText = userId;
+            
+            // Envia batimento de telemetria inicial para registrar dispositivo na nuvenzinha
+            sincronizarPresencaNuvem(deviceType, os);
+        }
+
+        async function sincronizarPresencaNuvem(type, os) {
+            try {
+                await fetch(`${WORKER_URL}/api/check-status`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        userId, 
+                        deviceMeta: { type, os, res: `${screen.width}x${screen.height}` } 
+                    })
+                });
+            } catch(e) {
+                console.log("Erro de handshake de telemetria.");
+            }
+        }
+
+        // ANTI-BYPASS COMPLETO: Detecta perda de foco e avisa
         document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
+            if (document.hidden && !isPremiumAtivo) {
                 const toast = document.getElementById("antiBypassToast");
-                toast.classNames = "notify show";
                 toast.classList.add("show");
-                setTimeout(() => toast.classList.remove("show"), 5000);
+                setTimeout(() => toast.classList.remove("show"), 6000);
             }
         });
 
+        // ROTINA DA VALIDAÇÃO GRATUITA (TIMER)
         async function iniciarCronometroGratuito() {
             try {
                 const res = await fetch(`${WORKER_URL}/api/start-free`, {
@@ -182,10 +264,15 @@
                 });
                 const data = await res.json();
                 
+                if (res.status === 400) {
+                    alert(data.error);
+                    return;
+                }
+
                 document.getElementById("btnStartFree").disabled = true;
                 atualizarInterfaceTimer(data.liberadoEm);
             } catch {
-                alert("Falha na sincronização inicial do servidor.");
+                alert("Falha na sincronização inicial do servidor Cloudflare.");
             }
         }
 
@@ -197,7 +284,8 @@
                     clearInterval(loopTimer);
                     document.getElementById("timerDisplay").innerText = "LIBERADO";
                     document.getElementById("timerDisplay").style.color = "var(--green)";
-                    alert("Autenticação Gratuita Concluída! Suas próximas 2 horas estão liberadas.");
+                    verificarStatusAcessoGlobais(); // Força atualização imediata das permissões
+                    alert("Autenticação Gratuita Concluída com Sucesso! Suas próximas 2 horas foram liberadas.");
                 } else {
                     const totalSegundos = Math.ceil(restanteMs / 1000);
                     const m = String(Math.floor(totalSegundos / 60)).padStart(2, '0');
@@ -207,32 +295,44 @@
             }, 1000);
         }
 
+        // FLUXO DE PAGAMENTO REAL INTEGRADO COM MERCADO PAGO VIA WORKER
         async function abrirModalPagamento(plano) {
             try {
+                // Altera o texto temporariamente para dar feedback de carregamento
+                const targetBtn = event.currentTarget;
+                const originalText = targetBtn.innerText;
+                targetBtn.innerText = "Gerando PIX...";
+                targetBtn.disabled = true;
+
                 const res = await fetch(`${WORKER_URL}/api/create-payment`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ plano, userId })
                 });
+                
+                targetBtn.innerText = originalText;
+                targetBtn.disabled = false;
+
+                if(!res.ok) throw new Error();
+
                 const data = await res.json();
 
                 document.getElementById("qrCodeImg").src = `data:image/jpeg;base64,${data.qr_code_base64}`;
                 document.getElementById("copiaColaInput").value = data.qr_code;
                 document.getElementById("pixModal").style.display = "flex";
 
-                // Inicia monitoramento de status automático
+                // Inicia a verificação de 5 em 5 segundos conversando com a nuvenzinha
                 clearInterval(checagemPagamento);
                 checagemPagamento = setInterval(async () => {
-                    const check = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
-                    const statusData = await check.json();
-                    if (statusData.status === "premium") {
+                    const statusValido = await verificarStatusAcessoGlobais();
+                    if (statusValido === "premium") {
                         clearInterval(checagemPagamento);
                         fecharModal();
-                        alert("Pagamento processado com sucesso! Plano Premium Ativado.");
+                        alert("🎉 Pagamento Confirmado! O Mercado Pago aprovou sua transação e os 22 módulos do seu Painel de Scripts estão liberados.");
                     }
                 }, 5000);
             } catch {
-                alert("Erro ao se conectar com o gateway do Mercado Pago.");
+                alert("Erro ao conectar ao Gateway do Mercado Pago. Verifique as credenciais no Worker.");
             }
         }
 
@@ -244,36 +344,93 @@
         function copiarPix() {
             const input = document.getElementById("copiaColaInput");
             input.select();
-            document.execCommand("copy");
-            alert("Código Copia e Cola copiado!");
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value);
+            alert("Código Pix Copia e Cola copiado com sucesso!");
         }
 
-        async function solicitarEntregaScript() {
-            const scriptId = document.getElementById("scriptSelector").value;
-            // Verifica status primeiro
-            const statusCheck = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
-            const statusData = await statusCheck.json();
-            
-            const jaPagou = statusData.status === "premium";
+        // SISTEMA DE DESTRAVAMENTO POR IP / CONTA DE FORMA DINÂMICA
+        async function verificarStatusAcessoGlobais() {
+            try {
+                const check = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
+                const statusData = await check.json();
+                
+                const btnAction = document.getElementById("btnDeliverScript");
+                const premiumBadge = document.getElementById("premiumBadge");
+                const cloudStatusText = document.getElementById("telStatus");
 
+                if (statusData.status === "premium") {
+                    isPremiumAtivo = true;
+                    
+                    // Atualiza Elementos Visuais para Ativo
+                    cloudStatusText.innerText = "Autorizado via IP/Token";
+                    cloudStatusText.style.color = "var(--green)";
+                    
+                    premiumBadge.innerText = "Premium Ativo";
+                    premiumBadge.style.color = "var(--green)";
+                    premiumBadge.style.borderColor = "rgba(0, 255, 136, 0.4)";
+                    
+                    btnAction.disabled = false;
+                    btnAction.innerHTML = "🚀 Injetar e Copiar Payload";
+                    btnAction.style.background = "var(--green)";
+                    btnAction.style.color = "#020408";
+
+                    return "premium";
+                } else {
+                    isPremiumAtivo = false;
+                    cloudStatusText.innerText = "Aguardando Validação";
+                    cloudStatusText.style.color = "var(--orange)";
+                    
+                    premiumBadge.innerText = "Premium Inativo";
+                    premiumBadge.style.color = "var(--purple)";
+                    premiumBadge.style.borderColor = "rgba(124,58,237,0.3)";
+
+                    btnAction.disabled = true;
+                    btnAction.innerHTML = "🔒 Bloqueado — Aguardando Liberação";
+                    btnAction.style.background = "rgba(255,255,255,0.05)";
+                    btnAction.style.color = "var(--muted)";
+                    
+                    return "free";
+                }
+            } catch {
+                console.log("Erro ao atualizar status com a nuvem Cloudflare.");
+                return "error";
+            }
+        }
+
+        // ENTREGA DO CÓDIGO DA NUVEM (ZERO TRUST CRIPTOGRAFADO)
+        async function solicitarEntregaScript() {
+            if (document.getElementById("btnDeliverScript").disabled) return;
+
+            const scriptId = document.getElementById("scriptSelector").value;
+            
             try {
                 const res = await fetch(`${WORKER_URL}/api/get-script`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId, scriptId, jaPagou })
+                    body: JSON.stringify({ userId, scriptId, jaPagou: isPremiumAtivo })
                 });
 
                 const data = await res.json();
                 if (res.status === 403) {
                     alert(data.mensagem);
+                    verificarStatusAcessoGlobais(); // Revalida interface
                 } else if (data.code) {
-                    navigator.clipboard.writeText(data.code);
-                    alert(`Script "${data.title}" copiado com sucesso para a área de transferência!`);
+                    await navigator.clipboard.writeText(data.code);
+                    alert(`Sucesso! O payload real do modulo "${data.title}" foi injetado e copiado para sua área de transferência.`);
                 }
             } catch {
-                alert("Erro ao validar e puxar o código do script.");
+                alert("Erro crítico ao fazer requisição do payload na nuvem.");
             }
         }
+
+        // INICIALIZAÇÃO AUTOMÁTICA ASSIM QUE O DOCUMENTO CONFIGURA
+        window.addEventListener("DOMContentLoaded", () => {
+            coletarMetadadosDispositivo();
+            verificarStatusAcessoGlobais();
+            // Mantém sincronização constante a cada 30 segundos com o Worker
+            setInterval(verificarStatusAcessoGlobais, 30000);
+        });
     </script>
 </body>
 </html>
