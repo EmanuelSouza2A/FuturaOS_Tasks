@@ -4,12 +4,9 @@
 // VARIÁVEIS DE AMBIENTE — configure no painel da Cloudflare:
 //   Workers & Pages → Seu Worker → Settings → Variables
 //
-//   MP_ACCESS_TOKEN  = APP_USR-520505663956170-061508-ca22aae90b7bffe048f76dfe0455be83-2380191603
-//   MP_PUBLIC_KEY    = APP_USR-03c8841f-1280-4e5e-9afe-7cf49654dff3
-//   MP_CLIENT_ID     = 520505663956170
-//   MP_CLIENT_SECRET = JF7o1nNTVsWpUkmEgsVhVxIJCGHkckst
-//   MP_WEBHOOK_SECRET= c4393a31d736ee5fc70081559f6833d76cbe88135f6f58d0df8be64984e6e89c
-//
+//   MP_ACCESS_TOKEN  = APP_USR-8382747196121465-061518-5bfd6a6400bf5298ffe5006396e4adb7-3472009037
+//   MP_PUBLIC_KEY    = APP_USR-970e40f2-f950-4577-a9f2-008359f05e0e
+// 
 // KV NAMESPACE — vincule no painel da Cloudflare:
 //   Workers & Pages → Seu Worker → Settings → Variables → KV Namespace Bindings
 //   Variable name: FT_KV  →  Namespace: (selecione ou crie "futura_os_kv")
