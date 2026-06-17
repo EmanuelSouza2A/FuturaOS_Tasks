@@ -1,435 +1,696 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>FuturaOS_Tasks — Painel de Scripts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{
-            --bg:#020408;--cyan:#00d4ff;--purple:#7c3aed;--pink:#ec4899;
-            --green:#00ff88;--orange:#ff6b00;--red:#ef4444;
-            --text:#e8f4ff;--muted:#4a6a8a;
-            --border:rgba(0,212,255,0.08);--border-hi:rgba(0,212,255,0.22);
-        }
-        html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-family:'Inter',sans-serif}
-        .hidden{display:none!important}
-        
-        /* EFEITOS VISUAIS DE FUNDO */
-        .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
-            background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),
-            linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);
-            background-size:50px 50px;
-            mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,black,transparent);
-            -webkit-mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,black,transparent)}
-        .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-        .au{position:absolute;border-radius:50%}
-        .au1{width:900px;height:900px;background:radial-gradient(circle,rgba(0,212,255,0.055),transparent 70%);top:-250px;left:-250px;animation:au1 14s ease-in-out infinite}
-        .au2{width:750px;height:750px;background:radial-gradient(circle,rgba(124,58,237,0.065),transparent 70%);bottom:-200px;right:-150px;animation:au2 17s ease-in-out infinite}
-        @keyframes au1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,90px) scale(1.12)}}
-        @keyframes au2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-90px,-70px) scale(1.18)}}
-        .scanline{position:fixed;inset:0;z-index:1;pointer-events:none;
-            background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 6px);
-            animation:scan 12s linear infinite}
-        @keyframes scan{from{background-position:0 0}to{background-position:0 200px}}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acesso Premium</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* ESTRUTURA DO LAYOUT */
-        .screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;position:relative;z-index:10}
-        .glass{width:100%;max-width:1100px;background:rgba(6,10,20,0.88);border:1px solid var(--border-hi);
-            box-shadow:0 0 80px rgba(0,212,255,0.04),0 40px 100px rgba(0,0,0,0.85);
-            backdrop-filter:blur(36px);border-radius:24px;padding:40px;position:relative}
-        .glass::before{content:"";position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),var(--pink),transparent)}
-        
-        .main-layout { display: flex; gap: 40px; margin-top: 20px; }
-        .control-panel { flex: 1; max-width: 400px; display: flex; flex-direction: column; gap: 20px; }
-        .scripts-panel { flex: 1.5; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 25px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-        
-        /* CARDS E BOTÕES */
-        .box-premium, .box-free { background: rgba(255,255,255,0.01); border: 1px solid var(--border); padding: 25px; border-radius: 16px; position: relative; }
-        .box-premium { border-color: rgba(124,58,237,0.3); }
-        .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.18); color: var(--cyan); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; }
-        .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); display: inline-block; margin-right: 5px; }
-        
-        h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; color: #fff; }
-        p { font-size: 13px; color: #8fa0b5; line-height: 1.5; margin-bottom: 20px; }
-        
-        .btn { width: 100%; border: none; cursor: pointer; border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all .2s ease; margin-bottom: 10px; color: white; text-decoration: none; }
-        .btn-primary { background: linear-gradient(135deg, #0ea5e9, var(--purple)); box-shadow: 0 4px 20px rgba(124,58,237,0.2); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(124,58,237,0.4); }
-        .btn-ghost { background: rgba(0,212,255,0.05); border: 1px solid var(--border-hi); }
-        .btn-ghost:hover { background: rgba(0,212,255,0.1); border-color: var(--cyan); }
-        .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f0f13;
+      color: #e8e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        .timer-display { font-size: 42px; font-weight: 900; font-family: 'JetBrains Mono', monospace; text-align: center; color: var(--orange); margin: 15px 0; letter-spacing: 2px; }
-        
-        /* DROPDOWN E LISTA DE SCRIPTS */
-        .select-custom { width: 100%; padding: 14px; background: #070c16; border: 1px solid var(--border-hi); color: #fff; border-radius: 10px; font-size: 14px; margin-bottom: 15px; outline: none; cursor: pointer; }
-        .select-custom option { background: #070c16; }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
 
-        /* TELEMETRIA LOG CARD */
-        .telemetry-card { background: rgba(6,10,20,0.6); border: 1px solid rgba(0,212,255,0.05); border-radius: 10px; padding: 12px; margin-bottom: 15px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #617d9c; }
-        .telemetry-card span { color: var(--cyan); }
+    .card {
+      background: #1a1a24;
+      border: 1px solid #2a2a3a;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 16px;
+    }
 
-        /* NOTIFY TOAST */
-        .notify { position: fixed; bottom: 28px; right: 28px; z-index: 9999; background: rgba(6,10,20,0.95); border: 1px solid var(--red); border-radius: 12px; padding: 16px; width: 320px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); transform: translateY(120px); opacity: 0; transition: all .4s cubic-bezier(.16,1,.3,1); backdrop-filter: blur(10px); }
-        .notify.show { transform: translateY(0); opacity: 1; }
-        .notify-title { font-weight: 700; font-size: 14px; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .notify-sub { font-size: 12px; color: #8fa0b5; margin-top: 6px; line-height: 1.4; }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
 
-        /* MODAL PIX IN-APP */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(8px); }
-        .modal-box { background: #060a14; border: 1px solid var(--cyan); box-shadow: 0 0 40px rgba(0,212,255,0.2); padding: 30px; border-radius: 16px; text-align: center; width: 360px; position: relative; }
-        .qr-img { width: 220px; height: 220px; background: white; margin: 20px auto; padding: 10px; border-radius: 10px; display: block; }
-        .pix-input { width: 100%; padding: 12px; background: #0d1527; border: 1px solid var(--border-hi); color: var(--cyan); border-radius: 8px; font-size: 11px; text-align: center; margin-bottom: 15px; cursor: pointer; font-family: 'JetBrains Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .payment-status-pulse { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--purple); font-weight: 600; margin-bottom: 15px; animation: textGlow 1.5s ease-in-out infinite alternate; }
-        @keyframes textGlow { from { opacity: 0.5; } to { opacity: 1; } }
-    </style>
+    .subtitle {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 28px;
+    }
+
+    /* ── Planos ── */
+    .planos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .plano-btn {
+      background: #12121a;
+      border: 2px solid #2a2a3a;
+      border-radius: 12px;
+      padding: 16px 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      color: #e8e8f0;
+    }
+
+    .plano-btn:hover { border-color: #4f46e5; }
+
+    .plano-btn.ativo {
+      border-color: #4f46e5;
+      background: #1e1b4b;
+    }
+
+    .plano-nome { font-size: 13px; color: #aaa; margin-bottom: 4px; }
+    .plano-valor { font-size: 22px; font-weight: 700; color: #fff; }
+    .plano-valor span { font-size: 13px; font-weight: 400; color: #888; }
+
+    /* ── Botões de ação ── */
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+    }
+
+    .btn-pix {
+      background: #00b37e;
+      color: #fff;
+    }
+
+    .btn-pix:hover { background: #009e6e; }
+    .btn-pix:disabled { background: #1a3d30; color: #3a6652; cursor: not-allowed; }
+
+    .btn-timer {
+      background: #1e1b4b;
+      color: #a5b4fc;
+      border: 1px solid #312e81;
+    }
+
+    .btn-timer:hover { background: #2d2a5e; }
+    .btn-timer:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-acesso {
+      background: #4f46e5;
+      color: #fff;
+    }
+
+    .btn-acesso:hover { background: #4338ca; }
+    .btn-acesso:disabled { background: #1e1b4b; color: #4f46e5; cursor: not-allowed; }
+
+    /* ── QR Code ── */
+    .qrcode-area {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #2a2a3a;
+    }
+
+    .qrcode-area.visivel { display: block; }
+
+    .qrcode-area img {
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      background: #fff;
+      padding: 8px;
+    }
+
+    .copia-cola-label {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+
+    .copia-cola-box {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .copia-cola-input {
+      flex: 1;
+      background: #12121a;
+      border: 1px solid #2a2a3a;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #aaa;
+      font-family: monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn-copiar {
+      background: #2a2a3a;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #e8e8f0;
+      cursor: pointer;
+      font-size: 13px;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .btn-copiar:hover { background: #3a3a4a; }
+    .btn-copiar.copiado { background: #1a3d30; color: #00b37e; }
+
+    /* ── Timer ── */
+    .timer-display {
+      display: none;
+      text-align: center;
+      padding: 16px;
+      background: #12121a;
+      border-radius: 10px;
+      margin-top: 16px;
+      border: 1px solid #2a2a3a;
+    }
+
+    .timer-display.visivel { display: block; }
+
+    .timer-label { font-size: 12px; color: #888; margin-bottom: 6px; }
+
+    .timer-relogio {
+      font-size: 36px;
+      font-weight: 700;
+      color: #a5b4fc;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 2px;
+    }
+
+    .timer-progress {
+      width: 100%;
+      height: 4px;
+      background: #2a2a3a;
+      border-radius: 2px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+
+    .timer-progress-bar {
+      height: 100%;
+      background: #4f46e5;
+      border-radius: 2px;
+      transition: width 1s linear;
+    }
+
+    /* ── Status ── */
+    .status {
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .status.visivel { display: block; }
+    .status.sucesso { background: #0d2b1f; color: #00b37e; border: 1px solid #0f4a33; }
+    .status.erro    { background: #2b0d0d; color: #f87171; border: 1px solid #4a0f0f; }
+    .status.info    { background: #1a1a2b; color: #a5b4fc; border: 1px solid #2a2a4a; }
+
+    /* ── Acesso Liberado ── */
+    .acesso-liberado {
+      display: none;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .acesso-liberado.visivel { display: block; }
+
+    .acesso-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .acesso-titulo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #00b37e;
+      margin-bottom: 8px;
+    }
+
+    .acesso-desc { font-size: 14px; color: #888; }
+
+    /* ── Conteúdo bloqueado ── */
+    .conteudo-bloqueado {
+      filter: blur(6px);
+      user-select: none;
+      pointer-events: none;
+      transition: filter 0.5s;
+    }
+
+    .conteudo-liberado {
+      filter: none;
+      pointer-events: auto;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Seção de conteúdo ── */
+    .conteudo-card {
+      background: #1a1a24;
+      border: 1px solid #2a2a3a;
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .conteudo-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 15, 19, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      font-size: 14px;
+      color: #888;
+      backdrop-filter: blur(2px);
+      transition: opacity 0.5s;
+    }
+
+    .conteudo-overlay.oculto { opacity: 0; pointer-events: none; }
+  </style>
 </head>
 <body>
+<div class="container">
 
-    <div class="grid-bg"></div>
-    <div class="aurora">
-        <div class="au au1"></div>
-        <div class="au au2"></div>
-    </div>
-    <div class="scanline"></div>
+  <!-- ── Card de Pagamento ── -->
+  <div class="card" id="cardPagamento">
+    <h1>Acesso Premium</h1>
+    <p class="subtitle">Escolha seu plano e pague via PIX em segundos</p>
 
-    <div class="screen">
-        <div class="glass">
-            <div class="badge"><span class="live-dot"></span>FuturaOS v4.0 • Sistema Ativo</div>
-            <h1 style="font-size: 28px; font-weight: 900; margin-bottom: 5px;">Módulo de Resgate de Scripts</h1>
-            <p style="margin-bottom: 30px;">Gerencie suas tarefas e automatize o fluxo com autenticação segura de ponta a ponta.</p>
-
-            <div class="main-layout">
-                <div class="control-panel">
-                    <div class="box-premium">
-                        <div class="badge" style="color:var(--purple); border-color:rgba(124,58,237,0.3)" id="premiumBadge">Premium Inativo</div>
-                        <h2>Acesso Instantâneo</h2>
-                        <p>Acesse imediatamente qualquer script sem tempo de espera ou restrições de abas.</p>
-                        <button class="btn btn-primary" onclick="abrirModalPagamento('semanal', this)">Plano Semanal - R$ 1,99</button>
-                        <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--purple), var(--pink));" onclick="abrirModalPagamento('mensal', this)">Plano Mensal - R$ 9,99</button>
-                    </div>
-
-                    <div class="box-free">
-                        <div class="badge" style="color:var(--orange); border-color:rgba(255,107,0,0.3)">Gratuito</div>
-                        <h2>Acesso por Validação</h2>
-                        <p>Aguarde 10 minutos mantendo esta aba ativa (sem minimizar ou trocar) para validar no servidor.</p>
-                        <div class="timer-display" id="timerDisplay">10:00</div>
-                        <button class="btn btn-ghost" id="btnStartFree" onclick="iniciarCronometroGratuito()">Iniciar Validação</button>
-                    </div>
-                </div>
-
-                <div class="scripts-panel">
-                    <div>
-                        <h2>Selecione o Script Desejado</h2>
-                        <p>Todos os 22 módulos educacionais e de automação integrados diretamente com a Cloudflare.</p>
-                        
-                        <div class="telemetry-card">
-                            Dispositivo: <span id="telDevice">Carregando...</span><br>
-                            Plataforma: <span id="telOS">Carregando...</span><br>
-                            Identificador: <span id="telUID">Carregando...</span><br>
-                            Status na Nuvem: <span id="telStatus" style="color: var(--orange)">Verificando...</span>
-                        </div>
-
-                        <select class="select-custom" id="scriptSelector">
-                            <option value="1">1. Taskitos</option>
-                            <option value="2">2. Redação Eclipse</option>
-                            <option value="3">3. Khanto</option>
-                            <option value="4">4. Elefante Letrado</option>
-                            <option value="5">5. Matific</option>
-                            <option value="6">6. Tarefas SP</option>
-                            <option value="7">7. Redação Neji</option>
-                            <option value="8">8. Educação Profissional</option>
-                            <option value="9">9. Open English</option>
-                            <option value="10">10. Apostilas Neji</option>
-                            <option value="11">11. Speak</option>
-                            <option value="12">12. Redação Paulista</option>
-                            <option value="13">13. Khan Eclipse</option>
-                            <option value="14">14. Expansão Noturna</option>
-                            <option value="15">15. Livro do Estudante</option>
-                            <option value="16">16. Apostilas</option>
-                            <option value="17">17. Cmsp Bots</option>
-                            <option value="18">18. Alura Eclipse</option>
-                            <option value="19">19. Khanware v3.0.9</option>
-                            <option value="20">20. LeiaSP</option>
-                            <option value="21">21. Redação Paraná</option>
-                            <option value="22">22. Prepara SP</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <button class="btn btn-primary" id="btnDeliverScript" style="background: var(--green); color: #020408;" onclick="solicitarEntregaScript()" disabled>
-                            🔒 Bloqueado — Aguardando Liberação
-                        </button>
-
-                        <div style="margin-top: 20px; font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace;">
-                            * Status de Segurança: Zero Trust Ativo.<br>
-                            * Os códigos permanecem criptografados na nuvem até a autorização do servidor.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="planos">
+      <div class="plano-btn ativo" data-plano="semanal" onclick="selecionarPlano('semanal')">
+        <div class="plano-nome">Semanal</div>
+        <div class="plano-valor">R$ 1<span>,99 / 7 dias</span></div>
+      </div>
+      <div class="plano-btn" data-plano="mensal" onclick="selecionarPlano('mensal')">
+        <div class="plano-nome">Mensal</div>
+        <div class="plano-valor">R$ 9<span>,99 / 30 dias</span></div>
+      </div>
     </div>
 
-    <div class="modal" id="pixModal">
-        <div class="modal-box">
-            <h3 style="color:#fff; font-size: 18px; font-weight:800;">Pagamento via PIX</h3>
-            <p style="font-size:12px; margin-bottom:10px;">Escaneie ou copie o código abaixo para concluir:</p>
-            
-            <img class="qr-img" id="qrCodeImg" src="" alt="Gerando QR Code..." style="display: none;">
-            
-            <div class="payment-status-pulse">
-                <span class="live-dot" style="background:var(--purple); box-shadow:0 0 8px var(--purple)"></span>
-                Aguardando aprovação...
-            </div>
+    <button class="btn btn-pix" id="btnPagar" onclick="criarPagamento()">
+      Gerar QR Code PIX
+    </button>
 
-            <input class="pix-input" id="copiaColaInput" readonly onclick="copiarPix()" title="Clique para copiar">
-            <button class="btn btn-ghost" style="border-color:var(--red); color:var(--red); margin-top: 5px;" onclick="fecharModal()">Cancelar e Sair</button>
-        </div>
+    <button class="btn btn-timer" id="btnTimer" onclick="iniciarTimer()">
+      ⏱ Assistir por 10 minutos (grátis)
+    </button>
+
+    <div class="status" id="statusMsg"></div>
+
+    <!-- QR Code -->
+    <div class="qrcode-area" id="qrcodeArea">
+      <img id="qrcodeImg" src="" alt="QR Code PIX" />
+      <div class="copia-cola-label">Ou use Pix Copia e Cola:</div>
+      <div class="copia-cola-box">
+        <input class="copia-cola-input" id="copiaCola" readonly />
+        <button class="btn-copiar" id="btnCopiar" onclick="copiarPix()">Copiar</button>
+      </div>
     </div>
 
-    <div class="notify" id="antiBypassToast">
-        <div class="notify-title">⚠️ Fluxo de Validação Interrompido</div>
-        <div class="notify-sub">Você saiu da aba ou minimizou o navegador. Para sua segurança, o timer precisa de foco constante para validar no servidor Cloudflare.</div>
+    <!-- Timer -->
+    <div class="timer-display" id="timerDisplay">
+      <div class="timer-label">Tempo restante para liberar acesso</div>
+      <div class="timer-relogio" id="timerRelogio">10:00</div>
+      <div class="timer-progress">
+        <div class="timer-progress-bar" id="timerBar" style="width: 100%"></div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // URL DO SEU WORKER MANTIDA
-        const WORKER_URL = "https://futuraos-apisouzacarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
-        
-        let userId = localStorage.getItem("ft_user_id");
-        if (!userId) {
-            userId = "usr_" + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
-            localStorage.setItem("ft_user_id", userId);
+  <!-- ── Card de Conteúdo ── -->
+  <div class="conteudo-card" id="cardConteudo">
+    <div class="conteudo-overlay" id="conteudoOverlay">
+      🔒 Faça o pagamento ou aguarde o timer para acessar
+    </div>
+    <div id="conteudoReal">
+      <h2 style="font-size:18px; margin-bottom:12px; color:#fff;">Conteúdo Exclusivo</h2>
+      <p style="font-size:14px; color:#aaa; line-height:1.6; margin-bottom:16px;">
+        Aqui fica o conteúdo premium que você quiser exibir após a liberação.
+        Pode ser um link, um script, botões de acesso, etc.
+      </p>
+      <button class="btn btn-acesso" id="btnAcesso" disabled onclick="usarAcesso()">
+        🔐 Acessar Conteúdo
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+//  CONFIGURAÇÃO — ajuste a URL do seu Worker abaixo
+// ════════════════════════════════════════════════════════════════════
+const WORKER_URL = "https://SEU_WORKER.SEU_USUARIO.workers.dev"; // ← substitua aqui
+
+const TIMER_TOTAL_MS   = 10 * 60 * 1000;
+const POLLING_INTERVAL = 5000; // verifica pagamento a cada 5s
+
+// ════════════════════════════════════════════════════════════════════
+//  Identificação do usuário (persistente no localStorage)
+// ════════════════════════════════════════════════════════════════════
+function getUserID() {
+  let id = localStorage.getItem("mp_user_id");
+  if (!id) {
+    id = "u_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem("mp_user_id", id);
+  }
+  return id;
+}
+
+const USER_ID = getUserID();
+
+// ════════════════════════════════════════════════════════════════════
+//  Estado global
+// ════════════════════════════════════════════════════════════════════
+let planoSelecionado  = "semanal";
+let pollingInterval   = null;
+let timerInterval     = null;
+let timerTerminaEm    = null;
+
+// ════════════════════════════════════════════════════════════════════
+//  Inicialização — verifica acesso ao carregar a página
+// ════════════════════════════════════════════════════════════════════
+(async function init() {
+  await verificarAcessoInicial();
+})();
+
+async function verificarAcessoInicial() {
+  try {
+    const res  = await workerFetch("/verificar-acesso");
+    const data = await res.json();
+    if (data.liberado) {
+      liberarInterface("pagamento");
+      return;
+    }
+
+    // Verifica se há timer em andamento
+    const timerRes  = await workerFetch("/status-timer");
+    const timerData = await timerRes.json();
+    if (timerData.timerAtivo) {
+      timerTerminaEm = timerData.terminaEm;
+      mostrarTimer();
+      iniciarContagemLocal();
+    } else if (timerData.liberado) {
+      liberarInterface("timer");
+    }
+  } catch (e) {
+    // Worker pode estar offline — sem bloqueio crítico, apenas não libera
+    console.warn("Não foi possível verificar acesso:", e.message);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  Seleção de plano
+// ════════════════════════════════════════════════════════════════════
+function selecionarPlano(plano) {
+  planoSelecionado = plano;
+  document.querySelectorAll(".plano-btn").forEach(b => {
+    b.classList.toggle("ativo", b.dataset.plano === plano);
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  Criar pagamento PIX
+// ════════════════════════════════════════════════════════════════════
+async function criarPagamento() {
+  const btn = document.getElementById("btnPagar");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Gerando QR Code...';
+  ocultarStatus();
+
+  try {
+    const res  = await workerFetch("/criar-pagamento", {
+      method: "POST",
+      body: JSON.stringify({ plano: planoSelecionado }),
+    });
+    const data = await res.json();
+
+    if (!data.ok) {
+      mostrarStatus("Erro: " + (data.erro || "Tente novamente"), "erro");
+      btn.disabled = false;
+      btn.textContent = "Gerar QR Code PIX";
+      return;
+    }
+
+    // Se usuário já tem acesso ativo
+    if (data.expiraEm && !data.qrCode) {
+      liberarInterface("pagamento");
+      return;
+    }
+
+    // Mostra QR Code
+    const qrImg = document.getElementById("qrcodeImg");
+    if (data.qrCodeBase64) {
+      qrImg.src = "data:image/png;base64," + data.qrCodeBase64;
+    } else {
+      qrImg.style.display = "none";
+    }
+    document.getElementById("copiaCola").value = data.copiaCola || "";
+    document.getElementById("qrcodeArea").classList.add("visivel");
+
+    mostrarStatus("QR Code gerado! Aguardando confirmação do pagamento...", "info");
+    btn.textContent = "QR Code gerado";
+
+    // Inicia polling para detectar pagamento
+    iniciarPolling();
+
+  } catch (e) {
+    mostrarStatus("Erro de conexão: " + e.message, "erro");
+    btn.disabled = false;
+    btn.textContent = "Gerar QR Code PIX";
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  Polling — verifica pagamento aprovado a cada N segundos
+// ════════════════════════════════════════════════════════════════════
+function iniciarPolling() {
+  if (pollingInterval) clearInterval(pollingInterval);
+  pollingInterval = setInterval(async () => {
+    try {
+      const res  = await workerFetch("/verificar-acesso");
+      const data = await res.json();
+      if (data.liberado) {
+        clearInterval(pollingInterval);
+        liberarInterface("pagamento");
+      }
+    } catch (_) {}
+  }, POLLING_INTERVAL);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  Timer de 10 minutos (validado no servidor)
+// ════════════════════════════════════════════════════════════════════
+async function iniciarTimer() {
+  const btn = document.getElementById("btnTimer");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Iniciando timer...';
+
+  try {
+    const res  = await workerFetch("/iniciar-timer", { method: "POST" });
+    const data = await res.json();
+
+    if (!data.ok) {
+      mostrarStatus("Erro ao iniciar timer: " + (data.erro || "Tente novamente"), "erro");
+      btn.disabled = false;
+      btn.textContent = "⏱ Assistir por 10 minutos (grátis)";
+      return;
+    }
+
+    timerTerminaEm = data.terminaEm;
+
+    if (data.liberado) {
+      liberarInterface("timer");
+      return;
+    }
+
+    mostrarStatus("Timer iniciado no servidor! Aguarde os 10 minutos.", "info");
+    mostrarTimer();
+    iniciarContagemLocal();
+
+  } catch (e) {
+    mostrarStatus("Erro de conexão: " + e.message, "erro");
+    btn.disabled = false;
+    btn.textContent = "⏱ Assistir por 10 minutos (grátis)";
+  }
+}
+
+function mostrarTimer() {
+  document.getElementById("timerDisplay").classList.add("visivel");
+  document.getElementById("btnTimer").disabled = true;
+  document.getElementById("btnTimer").textContent = "⏱ Timer em andamento...";
+}
+
+function iniciarContagemLocal() {
+  if (timerInterval) clearInterval(timerInterval);
+
+  timerInterval = setInterval(async () => {
+    const restante = timerTerminaEm - Date.now();
+
+    if (restante <= 0) {
+      clearInterval(timerInterval);
+      // Confirma no servidor
+      try {
+        const res  = await workerFetch("/status-timer");
+        const data = await res.json();
+        if (data.liberado || !data.timerAtivo) {
+          liberarInterface("timer");
+          return;
         }
+      } catch (_) {}
+      // Fallback: libera mesmo sem confirmação (timer local expirou)
+      liberarInterface("timer");
+      return;
+    }
 
-        let loopTimer;
-        let checagemPagamento;
-        let isPremiumAtivo = false;
+    // Atualiza display
+    const min     = Math.floor(restante / 60000);
+    const seg     = Math.floor((restante % 60000) / 1000);
+    const pct     = (restante / TIMER_TOTAL_MS) * 100;
 
-        function coletarMetadadosDispositivo() {
-            const ua = navigator.userAgent;
-            const isMobile = /Mobi|Android|iPhone|iPad/i.test(ua);
-            const deviceType = isMobile ? "Celular / Tablet" : "Computador / Desktop";
-            
-            let os = "Desconhecido";
-            if (ua.indexOf("Windows") !== -1) os = "Windows OS";
-            else if (ua.indexOf("Macintosh") !== -1) os = "macOS";
-            else if (ua.indexOf("Android") !== -1) os = "Android";
-            else if (ua.indexOf("iPhone") !== -1 || ua.indexOf("iPad") !== -1) os = "iOS device";
-            else if (ua.indexOf("Linux") !== -1) os = "Linux OS";
+    document.getElementById("timerRelogio").textContent =
+      String(min).padStart(2, "0") + ":" + String(seg).padStart(2, "0");
+    document.getElementById("timerBar").style.width = pct + "%";
 
-            document.getElementById("telDevice").innerText = deviceType;
-            document.getElementById("telOS").innerText = `${os} (${screen.width}x${screen.height})`;
-            document.getElementById("telUID").innerText = userId;
-            
-            sincronizarPresencaNuvem(deviceType, os);
+    // A cada 30s, confirma no servidor que o timer ainda está ativo
+    if (restante % 30000 < 1000) {
+      try {
+        const res  = await workerFetch("/status-timer");
+        const data = await res.json();
+        if (data.liberado) {
+          clearInterval(timerInterval);
+          liberarInterface("timer");
+        } else if (data.timerAtivo && data.terminaEm) {
+          timerTerminaEm = data.terminaEm; // sincroniza com servidor
         }
+      } catch (_) {}
+    }
+  }, 1000);
+}
 
-        async function sincronizarPresencaNuvem(type, os) {
-            try {
-                await fetch(`${WORKER_URL}/api/check-status`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId, deviceMeta: { type, os, res: `${screen.width}x${screen.height}` } })
-                });
-            } catch(e) { console.log("Erro de telemetria."); }
-        }
+// ════════════════════════════════════════════════════════════════════
+//  Liberar interface
+// ════════════════════════════════════════════════════════════════════
+function liberarInterface(motivo) {
+  if (pollingInterval) clearInterval(pollingInterval);
+  if (timerInterval)   clearInterval(timerInterval);
 
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden && !isPremiumAtivo) {
-                const toast = document.getElementById("antiBypassToast");
-                toast.classList.add("show");
-                setTimeout(() => toast.classList.remove("show"), 6000);
-            }
-        });
+  document.getElementById("conteudoOverlay").classList.add("oculto");
+  document.getElementById("btnAcesso").disabled = false;
 
-        async function iniciarCronometroGratuito() {
-            try {
-                const res = await fetch(`${WORKER_URL}/api/start-free`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId })
-                });
-                const data = await res.json();
-                
-                if (res.status === 400) { alert(data.error); return; }
+  const msg = motivo === "pagamento"
+    ? "✅ Pagamento confirmado! Acesso liberado."
+    : "✅ Tempo completo! Acesso liberado.";
 
-                document.getElementById("btnStartFree").disabled = true;
-                atualizarInterfaceTimer(data.liberadoEm);
-            } catch { alert("Falha na sincronização inicial do servidor."); }
-        }
+  mostrarStatus(msg, "sucesso");
+  document.getElementById("timerDisplay").classList.remove("visivel");
+  document.getElementById("timerRelogio").textContent = "00:00";
+}
 
-        function atualizarInterfaceTimer(liberadoEm) {
-            clearInterval(loopTimer);
-            loopTimer = setInterval(() => {
-                const restanteMs = liberadoEm - Date.now();
-                if (restanteMs <= 0) {
-                    clearInterval(loopTimer);
-                    document.getElementById("timerDisplay").innerText = "LIBERADO";
-                    document.getElementById("timerDisplay").style.color = "var(--green)";
-                    verificarStatusAcessoGlobais(); 
-                    alert("Autenticação Gratuita Concluída com Sucesso!");
-                } else {
-                    const totalSegundos = Math.ceil(restanteMs / 1000);
-                    const m = String(Math.floor(totalSegundos / 60)).padStart(2, '0');
-                    const s = String(totalSegundos % 60).padStart(2, '0');
-                    document.getElementById("timerDisplay").innerText = `${m}:${s}`;
-                }
-            }, 1000);
-        }
+// ════════════════════════════════════════════════════════════════════
+//  Usar acesso (gateway de scripts externos)
+// ════════════════════════════════════════════════════════════════════
+async function usarAcesso() {
+  const btn = document.getElementById("btnAcesso");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Validando acesso...';
 
-        // INTEGRAÇÃO CORRIGIDA COM A ROTA /gerar-pix
-        async function abrirModalPagamento(plano, targetBtn) {
-            try {
-                if (!targetBtn) targetBtn = event.currentTarget;
-                const originalText = targetBtn.innerText;
-                targetBtn.innerText = "Gerando PIX...";
-                targetBtn.disabled = true;
+  try {
+    const res  = await workerFetch("/validar-token");
+    const data = await res.json();
 
-                // Agora ele aponta para o endpoint correto que configuramos na Cloudflare
-                const res = await fetch(`${WORKER_URL}/gerar-pix`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ plano: plano, userId: userId })
-                });
-                
-                targetBtn.innerText = originalText;
-                targetBtn.disabled = false;
+    if (data.autorizado) {
+      mostrarStatus("✅ Acesso validado! Bem-vindo.", "sucesso");
+      btn.textContent = "✅ Acesso Ativo";
+      // Aqui você pode redirecionar, carregar script externo, etc.
+      // Exemplo: window.location.href = "/conteudo-exclusivo";
+    } else {
+      mostrarStatus("Acesso negado ou expirado. Faça um novo pagamento.", "erro");
+      btn.disabled = false;
+      btn.textContent = "🔐 Acessar Conteúdo";
+    }
+  } catch (e) {
+    mostrarStatus("Erro de conexão: " + e.message, "erro");
+    btn.disabled = false;
+    btn.textContent = "🔐 Acessar Conteúdo";
+  }
+}
 
-                if(!res.ok) throw new Error();
+// ════════════════════════════════════════════════════════════════════
+//  Copiar Pix
+// ════════════════════════════════════════════════════════════════════
+function copiarPix() {
+  const val = document.getElementById("copiaCola").value;
+  if (!val) return;
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById("btnCopiar");
+    btn.textContent = "Copiado!";
+    btn.classList.add("copiado");
+    setTimeout(() => {
+      btn.textContent = "Copiar";
+      btn.classList.remove("copiado");
+    }, 2500);
+  });
+}
 
-                const data = await res.json();
+// ════════════════════════════════════════════════════════════════════
+//  Helpers
+// ════════════════════════════════════════════════════════════════════
+function workerFetch(path, options = {}) {
+  return fetch(WORKER_URL + path, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      "X-User-ID": USER_ID,
+      ...(options.headers || {}),
+    },
+  });
+}
 
-                // Lida com a imagem do QR Code apenas se o worker a enviar
-                const imgElement = document.getElementById("qrCodeImg");
-                if (data.qr_code_base64) {
-                    imgElement.src = `data:image/jpeg;base64,${data.qr_code_base64}`;
-                    imgElement.style.display = "block";
-                } else {
-                    imgElement.style.display = "none";
-                }
+function mostrarStatus(msg, tipo) {
+  const el = document.getElementById("statusMsg");
+  el.textContent = msg;
+  el.className   = "status visivel " + tipo;
+}
 
-                // O input recebe o código PIX Copia e Cola corretamente
-                document.getElementById("copiaColaInput").value = data.copia_e_cola || data.qr_code || "Código gerado com sucesso, clique para copiar.";
-                document.getElementById("pixModal").style.display = "flex";
-
-                clearInterval(checagemPagamento);
-                checagemPagamento = setInterval(async () => {
-                    const statusValido = await verificarStatusAcessoGlobais();
-                    if (statusValido === "premium") {
-                        clearInterval(checagemPagamento);
-                        fecharModal();
-                        alert("🎉 Pagamento Confirmado!");
-                    }
-                }, 5000);
-            } catch {
-                if (targetBtn) {
-                    targetBtn.innerText = "Tentar Novamente";
-                    targetBtn.disabled = false;
-                }
-                alert("Erro ao conectar ao Mercado Pago. Verifique as credenciais no Worker.");
-            }
-        }
-
-        function fecharModal() {
-            document.getElementById("pixModal").style.display = "none";
-            clearInterval(checagemPagamento);
-        }
-
-        function copiarPix() {
-            const input = document.getElementById("copiaColaInput");
-            input.select();
-            input.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(input.value);
-            alert("Código Pix Copia e Cola copiado com sucesso!");
-        }
-
-        async function verificarStatusAcessoGlobais() {
-            try {
-                const check = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
-                const statusData = await check.json();
-                
-                const btnAction = document.getElementById("btnDeliverScript");
-                const premiumBadge = document.getElementById("premiumBadge");
-                const cloudStatusText = document.getElementById("telStatus");
-
-                if (statusData.status === "premium") {
-                    isPremiumAtivo = true;
-                    cloudStatusText.innerText = "Autorizado via IP/Token";
-                    cloudStatusText.style.color = "var(--green)";
-                    premiumBadge.innerText = "Premium Ativo";
-                    premiumBadge.style.color = "var(--green)";
-                    premiumBadge.style.borderColor = "rgba(0, 255, 136, 0.4)";
-                    btnAction.disabled = false;
-                    btnAction.innerHTML = "🚀 Injetar e Copiar Payload";
-                    btnAction.style.background = "var(--green)";
-                    btnAction.style.color = "#020408";
-                    return "premium";
-                } else {
-                    isPremiumAtivo = false;
-                    cloudStatusText.innerText = "Aguardando Validação";
-                    cloudStatusText.style.color = "var(--orange)";
-                    premiumBadge.innerText = "Premium Inativo";
-                    premiumBadge.style.color = "var(--purple)";
-                    premiumBadge.style.borderColor = "rgba(124,58,237,0.3)";
-                    btnAction.disabled = true;
-                    btnAction.innerHTML = "🔒 Bloqueado — Aguardando Liberação";
-                    btnAction.style.background = "rgba(255,255,255,0.05)";
-                    btnAction.style.color = "var(--muted)";
-                    return "free";
-                }
-            } catch {
-                return "error";
-            }
-        }
-
-        async function solicitarEntregaScript() {
-            if (document.getElementById("btnDeliverScript").disabled) return;
-
-            const selector = document.getElementById("scriptSelector");
-            const scriptId = selector.value;
-            const scriptName = selector.options[selector.selectedIndex].text;
-            
-            try {
-                const res = await fetch(`${WORKER_URL}/api/get-script`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userId, scriptId, jaPagou: isPremiumAtivo })
-                });
-
-                const data = await res.json();
-                if (res.status === 403) {
-                    alert(data.mensagem);
-                    verificarStatusAcessoGlobais(); 
-                } else if (data.code) {
-                    try {
-                        await navigator.clipboard.writeText(data.code);
-                        alert(`Sucesso! O payload real do módulo "${data.title || scriptName}" foi injetado e copiado para sua área de transferência.`);
-                    } catch (clipErr) {
-                        const tempBox = document.createElement("textarea");
-                        tempBox.value = data.code;
-                        tempBox.style.position = "fixed"; 
-                        document.body.appendChild(tempBox);
-                        tempBox.select();
-                        tempBox.setSelectionRange(0, 99999);
-                        document.execCommand("copy");
-                        document.body.removeChild(tempBox);
-                        alert(`Sucesso! O payload do módulo "${data.title || scriptName}" foi liberado e copiado via canal de segurança.`);
-                    }
-                }
-            } catch {
-                alert("Erro crítico ao fazer requisição do payload na nuvem.");
-            }
-        }
-
-        window.addEventListener("DOMContentLoaded", () => {
-            coletarMetadadosDispositivo();
-            verificarStatusAcessoGlobais();
-            setInterval(verificarStatusAcessoGlobais, 30000);
-        });
-    </script>
+function ocultarStatus() {
+  document.getElementById("statusMsg").className = "status";
+}
+</script>
 </body>
 </html>
