@@ -107,14 +107,14 @@
                         <div class="badge" style="color:var(--purple); border-color:rgba(124,58,237,0.3)" id="premiumBadge">Premium Inativo</div>
                         <h2>Acesso Instantâneo</h2>
                         <p>Acesse imediatamente qualquer script sem tempo de espera ou restrições de abas.</p>
-                        <button class="btn btn-primary" onclick="abrirModalPagamento('semanal')">Plano Semanal - R$ 1,50</button>
-                        <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--purple), var(--pink));" onclick="abrirModalPagamento('mensal')">Plano Mensal - R$ 9,99</button>
+                        <button class="btn btn-primary" onclick="abrirModalPagamento('semanal', this)">Plano Semanal - R$ 1,50</button>
+                        <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--purple), var(--pink));" onclick="abrirModalPagamento('mensal', this)">Plano Mensal - R$ 9,99</button>
                     </div>
 
                     <div class="box-free">
                         <div class="badge" style="color:var(--orange); border-color:rgba(255,107,0,0.3)">Gratuito</div>
                         <h2>Acesso por Validação</h2>
-                        <p>Aguarde 10 minutos mantendo esta aba ativa (sem minimizar ou trocar) para validar no servidor.</p>
+                        <p>Aguarde 10 minutes mantendo esta aba ativa (sem minimizar ou trocar) para validar no servidor.</p>
                         <div class="timer-display" id="timerDisplay">10:00</div>
                         <button class="btn btn-ghost" id="btnStartFree" onclick="iniciarCronometroGratuito()">Iniciar Validação</button>
                     </div>
@@ -196,7 +196,7 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO DA URL DO SEU WORKER CLOUDFLARE
+        // ⚠️ ATENÇÃO: Certifique-se de que essa URL abaixo é exatamente igual à do seu painel Cloudflare Workers!
         const WORKER_URL = "https://futuraos-apisouzarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
         
         let userId = localStorage.getItem("ft_user_id");
@@ -226,7 +226,6 @@
             document.getElementById("telOS").innerText = `${os} (${screen.width}x${screen.height})`;
             document.getElementById("telUID").innerText = userId;
             
-            // Envia batimento de telemetria inicial para registrar dispositivo na nuvenzinha
             sincronizarPresencaNuvem(deviceType, os);
         }
 
@@ -284,7 +283,7 @@
                     clearInterval(loopTimer);
                     document.getElementById("timerDisplay").innerText = "LIBERADO";
                     document.getElementById("timerDisplay").style.color = "var(--green)";
-                    verificarStatusAcessoGlobais(); // Força atualização imediata das permissões
+                    verificarStatusAcessoGlobais(); 
                     alert("Autenticação Gratuita Concluída com Sucesso! Suas próximas 2 horas foram liberadas.");
                 } else {
                     const totalSegundos = Math.ceil(restanteMs / 1000);
@@ -295,11 +294,10 @@
             }, 1000);
         }
 
-        // FLUXO DE PAGAMENTO REAL INTEGRADO COM MERCADO PAGO VIA WORKER
-        async function abrirModalPagamento(plano) {
+        // CORREÇÃO: Função agora recebe o 'targetBtn' diretamente para evitar quebras no iOS/Mobile
+        async function abrirModalPagamento(plano, targetBtn) {
             try {
-                // Altera o texto temporariamente para dar feedback de carregamento
-                const targetBtn = event.currentTarget;
+                if (!targetBtn) targetBtn = event.currentTarget;
                 const originalText = targetBtn.innerText;
                 targetBtn.innerText = "Gerando PIX...";
                 targetBtn.disabled = true;
@@ -321,7 +319,6 @@
                 document.getElementById("copiaColaInput").value = data.qr_code;
                 document.getElementById("pixModal").style.display = "flex";
 
-                // Inicia a verificação de 5 em 5 segundos conversando com a nuvenzinha
                 clearInterval(checagemPagamento);
                 checagemPagamento = setInterval(async () => {
                     const statusValido = await verificarStatusAcessoGlobais();
@@ -332,6 +329,10 @@
                     }
                 }, 5000);
             } catch {
+                if (targetBtn) {
+                    targetBtn.innerText = "Tentar Novamente";
+                    targetBtn.disabled = false;
+                }
                 alert("Erro ao conectar ao Gateway do Mercado Pago. Verifique as credenciais no Worker.");
             }
         }
@@ -349,7 +350,7 @@
             alert("Código Pix Copia e Cola copiado com sucesso!");
         }
 
-        // SISTEMA DE DESTRAVAMENTO POR IP / CONTA DE FORMA DINÂMICA
+        // SISTEMA DE DESTRAVAMENTO DINÂMICO VIA WORKER
         async function verificarStatusAcessoGlobais() {
             try {
                 const check = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
@@ -362,7 +363,6 @@
                 if (statusData.status === "premium") {
                     isPremiumAtivo = true;
                     
-                    // Atualiza Elementos Visuais para Ativo
                     cloudStatusText.innerText = "Autorizado via IP/Token";
                     cloudStatusText.style.color = "var(--green)";
                     
@@ -398,11 +398,13 @@
             }
         }
 
-        // ENTREGA DO CÓDIGO DA NUVEM (ZERO TRUST CRIPTOGRAFADO)
+        // CORREÇÃO: Adicionado Fallback de segurança para cópia de payload no iPhone/Safari pós-fetch
         async function solicitarEntregaScript() {
             if (document.getElementById("btnDeliverScript").disabled) return;
 
-            const scriptId = document.getElementById("scriptSelector").value;
+            const selector = document.getElementById("scriptSelector");
+            const scriptId = selector.value;
+            const scriptName = selector.options[selector.selectedIndex].text;
             
             try {
                 const res = await fetch(`${WORKER_URL}/api/get-script`, {
@@ -414,21 +416,34 @@
                 const data = await res.json();
                 if (res.status === 403) {
                     alert(data.mensagem);
-                    verificarStatusAcessoGlobais(); // Revalida interface
+                    verificarStatusAcessoGlobais(); 
                 } else if (data.code) {
-                    await navigator.clipboard.writeText(data.code);
-                    alert(`Sucesso! O payload real do modulo "${data.title}" foi injetado e copiado para sua área de transferência.`);
+                    try {
+                        // Tenta copiar pelo método moderno
+                        await navigator.clipboard.writeText(data.code);
+                        alert(`Sucesso! O payload real do módulo "${data.title || scriptName}" foi injetado e copiado para sua área de transferência.`);
+                    } catch (clipErr) {
+                        // Fallback mecânico robusto para navegadores mobile (iOS/Safari) que bloqueiam eventos assíncronos
+                        const tempBox = document.createElement("textarea");
+                        tempBox.value = data.code;
+                        tempBox.style.position = "fixed"; 
+                        document.body.appendChild(tempBox);
+                        tempBox.select();
+                        tempBox.setSelectionRange(0, 99999);
+                        document.execCommand("copy");
+                        document.body.removeChild(tempBox);
+                        
+                        alert(`Sucesso! O payload do módulo "${data.title || scriptName}" foi liberado e copiado via canal de segurança.`);
+                    }
                 }
             } catch {
                 alert("Erro crítico ao fazer requisição do payload na nuvem.");
             }
         }
 
-        // INICIALIZAÇÃO AUTOMÁTICA ASSIM QUE O DOCUMENTO CONFIGURA
         window.addEventListener("DOMContentLoaded", () => {
             coletarMetadadosDispositivo();
             verificarStatusAcessoGlobais();
-            // Mantém sincronização constante a cada 30 segundos com o Worker
             setInterval(verificarStatusAcessoGlobais, 30000);
         });
     </script>
