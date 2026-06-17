@@ -107,14 +107,14 @@
                         <div class="badge" style="color:var(--purple); border-color:rgba(124,58,237,0.3)" id="premiumBadge">Premium Inativo</div>
                         <h2>Acesso Instantâneo</h2>
                         <p>Acesse imediatamente qualquer script sem tempo de espera ou restrições de abas.</p>
-                        <button class="btn btn-primary" onclick="abrirModalPagamento('semanal', this)">Plano Semanal - R$ 1,50</button>
+                        <button class="btn btn-primary" onclick="abrirModalPagamento('semanal', this)">Plano Semanal - R$ 1,99</button>
                         <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--purple), var(--pink));" onclick="abrirModalPagamento('mensal', this)">Plano Mensal - R$ 9,99</button>
                     </div>
 
                     <div class="box-free">
                         <div class="badge" style="color:var(--orange); border-color:rgba(255,107,0,0.3)">Gratuito</div>
                         <h2>Acesso por Validação</h2>
-                        <p>Aguarde 10 minutes mantendo esta aba ativa (sem minimizar ou trocar) para validar no servidor.</p>
+                        <p>Aguarde 10 minutos mantendo esta aba ativa (sem minimizar ou trocar) para validar no servidor.</p>
                         <div class="timer-display" id="timerDisplay">10:00</div>
                         <button class="btn btn-ghost" id="btnStartFree" onclick="iniciarCronometroGratuito()">Iniciar Validação</button>
                     </div>
@@ -178,11 +178,11 @@
             <h3 style="color:#fff; font-size: 18px; font-weight:800;">Pagamento via PIX</h3>
             <p style="font-size:12px; margin-bottom:10px;">Escaneie ou copie o código abaixo para concluir:</p>
             
-            <img class="qr-img" id="qrCodeImg" src="" alt="Gerando QR Code...">
+            <img class="qr-img" id="qrCodeImg" src="" alt="Gerando QR Code..." style="display: none;">
             
             <div class="payment-status-pulse">
                 <span class="live-dot" style="background:var(--purple); box-shadow:0 0 8px var(--purple)"></span>
-                Aguardando aprovação do Mercado Pago...
+                Aguardando aprovação...
             </div>
 
             <input class="pix-input" id="copiaColaInput" readonly onclick="copiarPix()" title="Clique para copiar">
@@ -196,8 +196,8 @@
     </div>
 
     <script>
-        // ⚠️ ATENÇÃO: Certifique-se de que essa URL abaixo é exatamente igual à do seu painel Cloudflare Workers!
-        const WORKER_URL = "https://futuraos-apisouzarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
+        // URL DO SEU WORKER MANTIDA
+        const WORKER_URL = "https://futuraos-apisouzacarisemanuelfelipe4workersdev.souzacarisemanuelfelipe4.workers.dev";
         
         let userId = localStorage.getItem("ft_user_id");
         if (!userId) {
@@ -209,7 +209,6 @@
         let checagemPagamento;
         let isPremiumAtivo = false;
 
-        // ANALÍTICA E COLETA DE INFOS DO DISPOSITIVO
         function coletarMetadadosDispositivo() {
             const ua = navigator.userAgent;
             const isMobile = /Mobi|Android|iPhone|iPad/i.test(ua);
@@ -234,17 +233,11 @@
                 await fetch(`${WORKER_URL}/api/check-status`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        userId, 
-                        deviceMeta: { type, os, res: `${screen.width}x${screen.height}` } 
-                    })
+                    body: JSON.stringify({ userId, deviceMeta: { type, os, res: `${screen.width}x${screen.height}` } })
                 });
-            } catch(e) {
-                console.log("Erro de handshake de telemetria.");
-            }
+            } catch(e) { console.log("Erro de telemetria."); }
         }
 
-        // ANTI-BYPASS COMPLETO: Detecta perda de foco e avisa
         document.addEventListener("visibilitychange", () => {
             if (document.hidden && !isPremiumAtivo) {
                 const toast = document.getElementById("antiBypassToast");
@@ -253,7 +246,6 @@
             }
         });
 
-        // ROTINA DA VALIDAÇÃO GRATUITA (TIMER)
         async function iniciarCronometroGratuito() {
             try {
                 const res = await fetch(`${WORKER_URL}/api/start-free`, {
@@ -263,16 +255,11 @@
                 });
                 const data = await res.json();
                 
-                if (res.status === 400) {
-                    alert(data.error);
-                    return;
-                }
+                if (res.status === 400) { alert(data.error); return; }
 
                 document.getElementById("btnStartFree").disabled = true;
                 atualizarInterfaceTimer(data.liberadoEm);
-            } catch {
-                alert("Falha na sincronização inicial do servidor Cloudflare.");
-            }
+            } catch { alert("Falha na sincronização inicial do servidor."); }
         }
 
         function atualizarInterfaceTimer(liberadoEm) {
@@ -284,7 +271,7 @@
                     document.getElementById("timerDisplay").innerText = "LIBERADO";
                     document.getElementById("timerDisplay").style.color = "var(--green)";
                     verificarStatusAcessoGlobais(); 
-                    alert("Autenticação Gratuita Concluída com Sucesso! Suas próximas 2 horas foram liberadas.");
+                    alert("Autenticação Gratuita Concluída com Sucesso!");
                 } else {
                     const totalSegundos = Math.ceil(restanteMs / 1000);
                     const m = String(Math.floor(totalSegundos / 60)).padStart(2, '0');
@@ -294,7 +281,7 @@
             }, 1000);
         }
 
-        // CORREÇÃO: Função agora recebe o 'targetBtn' diretamente para evitar quebras no iOS/Mobile
+        // INTEGRAÇÃO CORRIGIDA COM A ROTA /gerar-pix
         async function abrirModalPagamento(plano, targetBtn) {
             try {
                 if (!targetBtn) targetBtn = event.currentTarget;
@@ -302,10 +289,11 @@
                 targetBtn.innerText = "Gerando PIX...";
                 targetBtn.disabled = true;
 
-                const res = await fetch(`${WORKER_URL}/api/create-payment`, {
+                // Agora ele aponta para o endpoint correto que configuramos na Cloudflare
+                const res = await fetch(`${WORKER_URL}/gerar-pix`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ plano, userId })
+                    body: JSON.stringify({ plano: plano, userId: userId })
                 });
                 
                 targetBtn.innerText = originalText;
@@ -315,8 +303,17 @@
 
                 const data = await res.json();
 
-                document.getElementById("qrCodeImg").src = `data:image/jpeg;base64,${data.qr_code_base64}`;
-                document.getElementById("copiaColaInput").value = data.qr_code;
+                // Lida com a imagem do QR Code apenas se o worker a enviar
+                const imgElement = document.getElementById("qrCodeImg");
+                if (data.qr_code_base64) {
+                    imgElement.src = `data:image/jpeg;base64,${data.qr_code_base64}`;
+                    imgElement.style.display = "block";
+                } else {
+                    imgElement.style.display = "none";
+                }
+
+                // O input recebe o código PIX Copia e Cola corretamente
+                document.getElementById("copiaColaInput").value = data.copia_e_cola || data.qr_code || "Código gerado com sucesso, clique para copiar.";
                 document.getElementById("pixModal").style.display = "flex";
 
                 clearInterval(checagemPagamento);
@@ -325,7 +322,7 @@
                     if (statusValido === "premium") {
                         clearInterval(checagemPagamento);
                         fecharModal();
-                        alert("🎉 Pagamento Confirmado! O Mercado Pago aprovou sua transação e os 22 módulos do seu Painel de Scripts estão liberados.");
+                        alert("🎉 Pagamento Confirmado!");
                     }
                 }, 5000);
             } catch {
@@ -333,7 +330,7 @@
                     targetBtn.innerText = "Tentar Novamente";
                     targetBtn.disabled = false;
                 }
-                alert("Erro ao conectar ao Gateway do Mercado Pago. Verifique as credenciais no Worker.");
+                alert("Erro ao conectar ao Mercado Pago. Verifique as credenciais no Worker.");
             }
         }
 
@@ -350,7 +347,6 @@
             alert("Código Pix Copia e Cola copiado com sucesso!");
         }
 
-        // SISTEMA DE DESTRAVAMENTO DINÂMICO VIA WORKER
         async function verificarStatusAcessoGlobais() {
             try {
                 const check = await fetch(`${WORKER_URL}/api/check-status?userId=${userId}`);
@@ -362,43 +358,34 @@
 
                 if (statusData.status === "premium") {
                     isPremiumAtivo = true;
-                    
                     cloudStatusText.innerText = "Autorizado via IP/Token";
                     cloudStatusText.style.color = "var(--green)";
-                    
                     premiumBadge.innerText = "Premium Ativo";
                     premiumBadge.style.color = "var(--green)";
                     premiumBadge.style.borderColor = "rgba(0, 255, 136, 0.4)";
-                    
                     btnAction.disabled = false;
                     btnAction.innerHTML = "🚀 Injetar e Copiar Payload";
                     btnAction.style.background = "var(--green)";
                     btnAction.style.color = "#020408";
-
                     return "premium";
                 } else {
                     isPremiumAtivo = false;
                     cloudStatusText.innerText = "Aguardando Validação";
                     cloudStatusText.style.color = "var(--orange)";
-                    
                     premiumBadge.innerText = "Premium Inativo";
                     premiumBadge.style.color = "var(--purple)";
                     premiumBadge.style.borderColor = "rgba(124,58,237,0.3)";
-
                     btnAction.disabled = true;
                     btnAction.innerHTML = "🔒 Bloqueado — Aguardando Liberação";
                     btnAction.style.background = "rgba(255,255,255,0.05)";
                     btnAction.style.color = "var(--muted)";
-                    
                     return "free";
                 }
             } catch {
-                console.log("Erro ao atualizar status com a nuvem Cloudflare.");
                 return "error";
             }
         }
 
-        // CORREÇÃO: Adicionado Fallback de segurança para cópia de payload no iPhone/Safari pós-fetch
         async function solicitarEntregaScript() {
             if (document.getElementById("btnDeliverScript").disabled) return;
 
@@ -419,11 +406,9 @@
                     verificarStatusAcessoGlobais(); 
                 } else if (data.code) {
                     try {
-                        // Tenta copiar pelo método moderno
                         await navigator.clipboard.writeText(data.code);
                         alert(`Sucesso! O payload real do módulo "${data.title || scriptName}" foi injetado e copiado para sua área de transferência.`);
                     } catch (clipErr) {
-                        // Fallback mecânico robusto para navegadores mobile (iOS/Safari) que bloqueiam eventos assíncronos
                         const tempBox = document.createElement("textarea");
                         tempBox.value = data.code;
                         tempBox.style.position = "fixed"; 
@@ -432,7 +417,6 @@
                         tempBox.setSelectionRange(0, 99999);
                         document.execCommand("copy");
                         document.body.removeChild(tempBox);
-                        
                         alert(`Sucesso! O payload do módulo "${data.title || scriptName}" foi liberado e copiado via canal de segurança.`);
                     }
                 }
