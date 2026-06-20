@@ -1,78 +1,64 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>FuturaOS_Tasks</title>
-    <style>
-        /* (Seu CSS permanece exatamente o mesmo, não alterei nada para não quebrar seu layout) */
-        .hidden { display: none !important; }
-        /* Adicionei apenas isso para garantir que o login funcione: */
-    </style>
-</head>
-<body>
-
-<section class="screen hidden" id="loginScreen">
-  <div class="glass" style="max-width:500px">
-    <div class="input-group">
-      <label class="input-label">E-MAIL</label>
-      <input type="email" id="loginEmail" class="form-input" placeholder="seuemail@gmail.com">
+<a href="#">Suporte</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="#">Privacidade</a>
+        </div>
+      </div>
     </div>
-    <div class="input-group">
-      <label class="input-label">SENHA</label>
-      <input type="password" id="loginSenha" class="form-input" placeholder="Sua senha">
-    </div>
-    <div class="input-group">
-      <label class="input-label">CÓDIGO DE ACESSO</label>
-      <input type="text" id="loginCode" class="form-input" placeholder="Sua chave">
-    </div>
-    <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Entrar Agora</button>
-  </div>
-</section>
+  </footer>
+</main>
 
 <script>
-'use strict';
+// 1. CONFIGURAÇÃO DO LOGIN E COMUNICAÇÃO
+const WEB_APP_URL = "SEU_LINK_DO_GOOGLE_APP_SCRIPT_AQUI"; // Cole o link do seu /exec
 
-/* ── CONFIGURAÇÃO DO WHATSAPP ── */
-const MEU_WHATSAPP = "5511926705115";
-
-/* ── A FUNÇÃO DO LOGIN CORRIGIDA ── */
 function doLogin() {
-    const email = document.getElementById('loginEmail').value;
-    const senha = document.getElementById('loginSenha').value; // Agora lê a senha
-    const code = document.getElementById('loginCode').value;
-
-    // AQUI VOCÊ COLA O LINK QUE TERMINA EM /exec QUE O GOOGLE TE DEU
-    const WEB_APP_URL = "COLE_SEU_LINK_AQUI_QUE_TERMINA_EM_/exec";
-
-    if(!email || !senha || !code) {
-        showNotify('⚠️', 'Atenção', 'Preencha todos os campos!');
+    const email = document.getElementById('loginEmail')?.value;
+    const senha = document.getElementById('loginSenha')?.value;
+    
+    if(!email || !senha) {
+        showNotify('⚠️', 'Atenção', 'Preencha os campos de acesso.');
         return;
     }
 
-    showNotify('⏳', 'Conectando...', 'Verificando dados na planilha');
-
-    const url = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}&codigo=${encodeURIComponent(code)}`;
-
-    fetch(url)
+    fetch(`${WEB_APP_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
         .then(res => res.json())
         .then(data => {
-            if (data.status === "sucesso") {
-                showNotify('✅', 'Sucesso', 'Acesso liberado!');
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('mainPage').classList.remove('hidden');
+            if(data.status === "sucesso") {
+                showNotify('✅', 'Acesso Liberado', 'Bem-vindo ao painel.');
+                enterMain();
             } else {
-                showNotify('❌', 'Erro', 'Dados incorretos ou não encontrados.');
+                showNotify('❌', 'Acesso Negado', 'Credenciais inválidas.');
             }
         })
         .catch(err => {
             console.error(err);
-            showNotify('🚨', 'Erro de Conexão', 'Não foi possível falar com o servidor.');
+            showNotify('🚨', 'Erro', 'Falha na conexão com o servidor.');
         });
 }
 
-// ... (Mantenha o resto das suas funções abaixo normalmente) ...
+// 2. FUNÇÃO DE NOTIFICAÇÃO (Mantendo seu padrão)
+function showNotify(icon, title, sub) {
+    const n = document.getElementById('notify');
+    document.getElementById('notifyIcon').textContent = icon;
+    document.getElementById('notifyTitle').textContent = title;
+    document.getElementById('notifySub').textContent = sub;
+    n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 3000);
+}
 
+// 3. SEU SCRIPT DE PARTÍCULAS E NAVEGAÇÃO (Mantenha o resto que você já tinha)
+function enterMain() {
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('donationScreen').classList.add('hidden');
+    document.getElementById('mainPage').classList.remove('hidden');
+}
+
+function goToDonation() {
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('donationScreen').classList.remove('hidden');
+}
 </script>
 </body>
 </html>
