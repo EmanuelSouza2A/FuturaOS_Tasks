@@ -99,17 +99,6 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .btn-wpp:hover{transform:translateY(-3px) scale(1.02);
   box-shadow:0 0 60px rgba(37,211,102,0.25),0 20px 50px rgba(0,0,0,0.5)}
 
-/* ── TELA BOAS-VINDAS ── */
-.welcome-title{
-  font-size:clamp(1.8rem,4.5vw,3.4rem);
-  line-height:1.15;font-weight:900;letter-spacing:-.03em;margin-bottom:20px;
-  background:linear-gradient(135deg,#ffffff 0%,var(--cyan) 35%,var(--purple) 65%,var(--pink) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .15s both}
-.welcome-sub{color:var(--muted);font-size:1rem;line-height:1.85;max-width:560px;
-  margin-bottom:38px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .3s both}
-.sys-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,212,255,0.2);letter-spacing:.04em}
-
 /* ── FORMULÁRIOS E PAINEIS ── */
 .panel{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:26px;position:relative;overflow:hidden;}
 .panel-title{font-size:1.3rem;font-weight:800;margin-bottom:10px;
@@ -128,6 +117,16 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .plan-price span{font-size:1rem; color:var(--muted); font-weight:500;}
 
 /* ── O RESTO DO CSS MANTIDO IGUAL ── */
+.welcome-title{
+  font-size:clamp(1.8rem,4.5vw,3.4rem);
+  line-height:1.15;font-weight:900;letter-spacing:-.03em;margin-bottom:20px;
+  background:linear-gradient(135deg,#ffffff 0%,var(--cyan) 35%,var(--purple) 65%,var(--pink) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .15s both}
+.welcome-sub{color:var(--muted);font-size:1rem;line-height:1.85;max-width:560px;
+  margin-bottom:38px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .3s both}
+.sys-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,212,255,0.2);letter-spacing:.04em}
+
 .main-page{padding:72px 20px 100px;position:relative;z-index:10}
 .container{width:100%;max-width:1300px;margin:0 auto}
 .hero{text-align:center;margin-bottom:64px;position:relative}
@@ -176,6 +175,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 <div class="scanline"></div>
 <div class="cursor-glow" id="cursorGlow"></div>
 
+<!-- NOTIFICAÇÃO -->
 <div class="notify" id="notify">
   <div class="notify-icon" id="notifyIcon">💚</div>
   <div>
@@ -184,6 +184,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </div>
 
+<!-- ══ TELA 1: BOAS-VINDAS ══ -->
 <section class="screen" id="welcomeScreen">
   <div class="glass">
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -191,16 +192,19 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
     <div class="sys-tag" style="top:18px;right:24px">SYS_v3.0 ■ ONLINE</div>
     <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
     <h1 class="welcome-title">Acesse o FuturaOS_Tasks.</h1>
-    <p class="welcome-sub">Plataforma premium para automatização. Se você já tem seu código de acesso, faça login. Se for novo, adquira um plano via WhatsApp.</p>
+    <p class="welcome-sub">Escolha como deseja acessar a plataforma. Faça login com seu e-mail VIP, adquira um acesso Premium ou assista a um anúncio para entrar gratuitamente.</p>
+    
     <div style="display:flex;gap:14px;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="showLogin()">
-        🔑 Fazer Login
-      </button>
+      <button class="btn btn-primary" onclick="showLogin()">🔑 Fazer Login</button>
       <button class="btn btn-ghost" onclick="showPlans()">🛒 Comprar Acesso</button>
+      <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:5px; border-color:var(--orange)" onclick="showAdScreen()">
+        🎁 Acessar Gratuitamente (Requer 10 min de atenção)
+      </button>
     </div>
   </div>
 </section>
 
+<!-- ══ TELA 2: LOGIN ══ -->
 <section class="screen hidden" id="loginScreen">
   <div class="glass" style="max-width:500px">
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -228,6 +232,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </section>
 
+<!-- ══ TELA 3: PLANOS E COMPRA VIA WHATSAPP ══ -->
 <section class="screen hidden" id="plansScreen">
   <div class="glass" style="max-width:1000px">
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -237,17 +242,19 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
     <p class="panel-desc">O pagamento e a liberação do código de acesso são feitos de forma rápida pelo WhatsApp.</p>
     
     <div class="plan-grid">
+      <!-- PLANO MENSAL -->
       <div class="panel plan-card">
         <div>
           <h3 class="input-label" style="font-size:14px;">ACESSO MENSAL</h3>
           <div class="plan-price">R$ 9,99<span>/ 30 dias</span></div>
-          <p class="panel-desc" style="font-size:12px;">Acesso completo a todos os 22 scripts sem interrupções por 1 mês.</p>
+          <p class="panel-desc" style="font-size:12px;">Acesso completo a todos os scripts sem interrupções por 1 mês.</p>
         </div>
         <button class="btn btn-wpp" onclick="buyPlan('Plano Mensal (30 dias)', '9,99')">
           📱 Comprar via WhatsApp
         </button>
       </div>
 
+      <!-- PLANO SEMANAL -->
       <div class="panel plan-card">
         <div>
           <h3 class="input-label" style="font-size:14px;">ACESSO SEMANAL</h3>
@@ -259,6 +266,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
         </button>
       </div>
 
+      <!-- PLANO BÁSICO -->
       <div class="panel plan-card">
         <div>
           <h3 class="input-label" style="font-size:14px;">ACESSO BÁSICO</h3>
@@ -277,13 +285,42 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </section>
 
+<!-- ══ TELA 4: ACESSO GRATUITO (ANÚNCIO DE 10 MIN) ══ -->
+<section class="screen hidden" id="adScreen">
+  <div class="glass" style="max-width:550px; text-align:center;">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <div class="badge" style="margin-bottom:20px; border-color:var(--orange); color:var(--orange)">
+      <span class="live-dot" style="background:var(--orange); box-shadow:0 0 8px var(--orange)"></span>Patrocinador
+    </div>
+    <h2 class="panel-title" style="font-size:1.8rem; margin-bottom:10px;">Acesso Gratuito</h2>
+    <p class="panel-desc">Aguarde o tempo do anúncio para liberar o sistema. <br><strong style="color:var(--pink)">Atenção: Se você sair do site ou mudar de aba, o tempo será zerado!</strong></p>
+    
+    <!-- ÁREA DO VÍDEO / TIMER -->
+    <div class="panel" style="background:rgba(0,0,0,0.6); padding:40px; margin-bottom:20px; border-color:rgba(255,107,0,0.3)">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:15px; text-transform:uppercase; letter-spacing:2px;">Tempo restante</div>
+      <div id="adTimerDisplay" style="font-size:4.5rem; font-weight:900; color:var(--orange); font-family:'JetBrains Mono',monospace; text-shadow: 0 0 30px rgba(255,107,0,0.4);">
+        10:00
+      </div>
+    </div>
+
+    <button id="btnSkipAd" class="btn btn-primary hidden" style="width:100%; justify-content:center; background:var(--green); box-shadow:0 0 30px rgba(0,255,136,0.3); color:#000" onclick="finishAd()">
+      ✅ Entrar no Sistema
+    </button>
+    <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:10px; font-size:13px" onclick="cancelAd()">
+      Cancelar
+    </button>
+  </div>
+</section>
+
+<!-- ══ TELA 5: SCRIPTS (MAIN PAGE) ══ -->
 <main class="main-page hidden" id="mainPage">
   <div class="container">
     <section class="hero">
       <div class="hero-glow"></div>
-      <div class="badge" style="margin-bottom:22px"><span class="live-dot"></span>FuturaOS_Tasks — 22 Scripts Ativos</div>
+      <div class="badge" style="margin-bottom:22px"><span class="live-dot"></span>FuturaOS_Tasks — Scripts Ativos</div>
       <h2 class="hero-title">Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
-      <p class="hero-desc">Você está logado. Clique em qualquer card para ver detalhes e acessar o script.</p>
+      <p class="hero-desc">Você está logado no sistema. Clique em qualquer card para acessar o script.</p>
     </section>
     <section class="cards-grid" id="cardsGrid"></section>
   </div>
@@ -293,10 +330,9 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 'use strict';
 
 /* ── CONFIGURAÇÃO DO WHATSAPP ── */
-// Coloque seu número de WhatsApp aqui! (Com o código do país e DDD, tudo junto)
-const MEU_WHATSAPP = "5511999999999"; 
+const MEU_WHATSAPP = "5511926705115"; // Atualizado conforme solicitado
 
-/* ── PARTÍCULAS DE FUNDO (Seu código original mantido) ── */
+/* ── PARTÍCULAS DE FUNDO ── */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H;
@@ -361,7 +397,7 @@ function buyPlan(nomePlano, valor) {
   window.open(`https://wa.me/${MEU_WHATSAPP}?text=${texto}`, '_blank');
 }
 
-/* ── SISTEMA DE LOGIN (Preparo para Apps Script) ── */
+/* ── SISTEMA DE LOGIN DE E-MAIL E SENHA ── */
 function doLogin() {
   const email = document.getElementById('loginEmail').value;
   const code = document.getElementById('loginCode').value;
@@ -370,15 +406,76 @@ function doLogin() {
     showNotify('⚠️', 'Atenção', 'Preencha o e-mail e o código de acesso.');
     return;
   }
-
-  // AQUI VAI ENTRAR O CÓDIGO DO GOOGLE APPS SCRIPT DEPOIS.
-  // Por enquanto, para você testar a tela visualmente, ele vai "fingir" que fez o login:
-  showNotify('✅', 'Acesso Liberado', 'Seja bem-vindo ao FuturaOS_Tasks!');
+  showNotify('✅', 'Acesso Liberado', 'Seja bem-vindo ao sistema!');
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('mainPage').classList.remove('hidden');
 }
 
-/* ── DADOS DOS SCRIPTS (Apenas alguns para não poluir o código visualmente, adicione os outros) ── */
+/* ── SISTEMA DE ACESSO GRATUITO (TIMER 10 MIN + ANTI-FRAUDE) ── */
+let adInterval;
+const TOTAL_AD_TIME = 600; // 600 segundos = 10 minutos
+let currentAdTime = TOTAL_AD_TIME;
+let isWatchingAd = false;
+
+function showAdScreen() {
+  document.getElementById('welcomeScreen').classList.add('hidden');
+  document.getElementById('adScreen').classList.remove('hidden');
+  startAdTimer();
+}
+
+function startAdTimer() {
+  isWatchingAd = true;
+  currentAdTime = TOTAL_AD_TIME;
+  document.getElementById('btnSkipAd').classList.add('hidden');
+  updateAdDisplay();
+  
+  clearInterval(adInterval);
+  adInterval = setInterval(() => {
+    currentAdTime--;
+    updateAdDisplay();
+    
+    if(currentAdTime <= 0) {
+      clearInterval(adInterval);
+      document.getElementById('adTimerDisplay').textContent = "00:00";
+      document.getElementById('btnSkipAd').classList.remove('hidden');
+      showNotify('✅', 'Concluído', 'Seu acesso gratuito foi liberado!');
+      isWatchingAd = false;
+    }
+  }, 1000);
+}
+
+function updateAdDisplay() {
+  let m = Math.floor(currentAdTime / 60).toString().padStart(2, '0');
+  let s = (currentAdTime % 60).toString().padStart(2, '0');
+  document.getElementById('adTimerDisplay').textContent = `${m}:${s}`;
+}
+
+function cancelAd() {
+  clearInterval(adInterval);
+  isWatchingAd = false;
+  document.getElementById('adScreen').classList.add('hidden');
+  document.getElementById('welcomeScreen').classList.remove('hidden');
+}
+
+function finishAd() {
+  document.getElementById('adScreen').classList.add('hidden');
+  document.getElementById('mainPage').classList.remove('hidden');
+  showNotify('🎁', 'Acesso Gratuito', 'Aproveite o sistema!');
+}
+
+/* O PULO DO GATO: Detectar se a pessoa saiu do site/mudou de aba */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && isWatchingAd) {
+    // Se a tela ficar oculta, o tempo reseta para 600
+    clearInterval(adInterval);
+    currentAdTime = TOTAL_AD_TIME; 
+    updateAdDisplay();
+    startAdTimer(); 
+    showNotify('🚨', 'Tempo Zerado!', 'Você saiu do site e o tempo foi reiniciado.');
+  }
+});
+
+/* ── DADOS DOS SCRIPTS ── */
 const scripts = [
   { id:1, title:'Taskitos', desc:'Ferramenta para automatizar tarefas do Sala do Futuro.', author:'flowings' },
   { id:2, title:'Redação Eclipse', desc:'Ferramenta para automatizar a criação de redações.', author:'crimsonstrauss' },
