@@ -204,7 +204,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   </div>
 </section>
 
-<!-- ══ TELA 2: LOGIN ══ -->
+<!-- ══ TELA 2: LOGIN (AGORA COM CAMPO SENHA) ══ -->
 <section class="screen hidden" id="loginScreen">
   <div class="glass" style="max-width:500px">
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -217,9 +217,15 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
       <input type="email" id="loginEmail" class="form-input" placeholder="seuemail@gmail.com">
     </div>
 
+    <!-- CAMPO DE SENHA ADICIONADO -->
+    <div class="input-group">
+      <label class="input-label">SENHA</label>
+      <input type="password" id="loginSenha" class="form-input" placeholder="Digite sua senha">
+    </div>
+
     <div class="input-group">
       <label class="input-label">CÓDIGO DE ACESSO</label>
-      <input type="password" id="loginCode" class="form-input" placeholder="Digite a chave gerada">
+      <input type="text" id="loginCode" class="form-input" placeholder="Digite a chave gerada">
     </div>
 
     <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="doLogin()">
