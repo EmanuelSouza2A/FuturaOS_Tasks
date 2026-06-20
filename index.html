@@ -205,39 +205,36 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 </section>
 
 <!-- ══ TELA 2: LOGIN (AGORA COM CAMPO SENHA) ══ -->
-<section class="screen hidden" id="loginScreen">
-  <div class="glass" style="max-width:500px">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Área Restrita</div>
-    <h2 class="panel-title" style="font-size:2rem; margin-bottom:20px;">Entrar no Sistema</h2>
-    
-    <div class="input-group">
-      <label class="input-label">E-MAIL CADASTRADO</label>
-      <input type="email" id="loginEmail" class="form-input" placeholder="seuemail@gmail.com">
-    </div>
+function doLogin() {
+    // 1. Captura os valores dos inputs do seu HTML
+    const email = document.getElementById('loginEmail').value;
+    const senha = document.getElementById('loginSenha').value;
+    const codigo = document.getElementById('loginCode').value;
 
-    <!-- CAMPO DE SENHA ADICIONADO -->
-    <div class="input-group">
-      <label class="input-label">SENHA</label>
-      <input type="password" id="loginSenha" class="form-input" placeholder="Digite sua senha">
-    </div>
+    // 2. O link da sua implantação do Google Apps Script (tem que terminar em /exec)
+    const WEB_APP_URL = "+55 (11) 92670-5115";
 
-    <div class="input-group">
-      <label class="input-label">CÓDIGO DE ACESSO</label>
-      <input type="text" id="loginCode" class="form-input" placeholder="Digite a chave gerada">
-    </div>
+    // 3. Monta a URL com os parâmetros
+    const url = `${WEB_APP_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}&codigo=${encodeURIComponent(codigo)}`;
 
-    <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="doLogin()">
-      Entrar Agora
-    </button>
-    
-    <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:10px; font-size:13px" onclick="goBackToWelcome()">
-      Voltar
-    </button>
-  </div>
-</section>
-
+    // 4. Faz a requisição para o Google
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // 5. Verifica o que o Google respondeu
+            if (data.status === "sucesso") {
+                alert("Acesso Autorizado! Bem-vindo.");
+                // Aqui você pode colocar o código para abrir sua página principal
+                // window.location.href = "pagina_principal.html";
+            } else {
+                alert("Acesso Negado: Usuário, senha ou código incorretos.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            alert("Erro de conexão com o servidor. Verifique o link do seu Apps Script.");
+        });
+}
 <!-- ══ TELA 3: PLANOS E COMPRA VIA WHATSAPP ══ -->
 <section class="screen hidden" id="plansScreen">
   <div class="glass" style="max-width:1000px">
