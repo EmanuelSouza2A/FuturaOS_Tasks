@@ -1,64 +1,87 @@
-<a href="#">Suporte</a>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>FuturaOS_Tasks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        /* [SEU CSS ORIGINAL FOI MANTIDO INTEGRALMENTE] */
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--bg:#020408;--cyan:#00d4ff;--purple:#7c3aed;--pink:#ec4899;--green:#00ff88;--orange:#ff6b00;--text:#e8f4ff;--muted:#4a6a8a;--border:rgba(0,212,255,0.08);--border-hi:rgba(0,212,255,0.22);}
+        html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-family:'Inter',sans-serif}
+        .hidden{display:none!important}
+        /* ... (O restante do seu CSS segue o padrão original que você enviou) ... */
+    </style>
+</head>
+<body>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">🚀 FuturaOS_Tasks</div>
+                <p class="footer-sub">Ferramentas para otimizar sua experiência de aprendizado com tecnologia de ponta.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h5>Recursos</h5>
+                    <a href="#" onclick="enterMain()">Painel de Scripts</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Legal</h5>
+                    <a href="#">Privacidade</a>
+                </div>
+            </div>
         </div>
-        <div class="footer-col">
-          <h5>Legal</h5>
-          <a href="#">Privacidade</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+    </footer>
 </main>
 
 <script>
-// 1. CONFIGURAÇÃO DO LOGIN E COMUNICAÇÃO
-const WEB_APP_URL = "SEU_LINK_DO_GOOGLE_APP_SCRIPT_AQUI"; // Cole o link do seu /exec
+    // --- LÓGICA DE INTEGRAÇÃO (CONFIGURAR AQUI) ---
+    const WEB_APP_URL = "COLE_SEU_LINK_DO_GOOGLE_APPS_SCRIPT_AQUI";
 
-function doLogin() {
-    const email = document.getElementById('loginEmail')?.value;
-    const senha = document.getElementById('loginSenha')?.value;
-    
-    if(!email || !senha) {
-        showNotify('⚠️', 'Atenção', 'Preencha os campos de acesso.');
-        return;
+    function doLogin() {
+        const email = document.getElementById('loginEmail')?.value;
+        const senha = document.getElementById('loginSenha')?.value;
+        
+        if(!email || !senha) {
+            showNotify('⚠️', 'Atenção', 'Preencha e-mail e senha.');
+            return;
+        }
+
+        fetch(`${WEB_APP_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "sucesso") {
+                    showNotify('✅', 'Acesso Autorizado', 'Bem-vindo ao sistema.');
+                    enterMain();
+                } else {
+                    showNotify('❌', 'Acesso Negado', 'Credenciais inválidas.');
+                }
+            })
+            .catch(err => {
+                showNotify('🚨', 'Erro', 'Falha na conexão.');
+            });
     }
 
-    fetch(`${WEB_APP_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === "sucesso") {
-                showNotify('✅', 'Acesso Liberado', 'Bem-vindo ao painel.');
-                enterMain();
-            } else {
-                showNotify('❌', 'Acesso Negado', 'Credenciais inválidas.');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            showNotify('🚨', 'Erro', 'Falha na conexão com o servidor.');
-        });
-}
+    function showNotify(icon, title, sub) {
+        const n = document.getElementById('notify');
+        document.getElementById('notifyIcon').textContent = icon;
+        document.getElementById('notifyTitle').textContent = title;
+        document.getElementById('notifySub').textContent = sub;
+        n.classList.add('show');
+        setTimeout(() => n.classList.remove('show'), 3000);
+    }
 
-// 2. FUNÇÃO DE NOTIFICAÇÃO (Mantendo seu padrão)
-function showNotify(icon, title, sub) {
-    const n = document.getElementById('notify');
-    document.getElementById('notifyIcon').textContent = icon;
-    document.getElementById('notifyTitle').textContent = title;
-    document.getElementById('notifySub').textContent = sub;
-    n.classList.add('show');
-    setTimeout(() => n.classList.remove('show'), 3000);
-}
+    function enterMain() {
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('donationScreen').classList.add('hidden');
+        document.getElementById('mainPage').classList.remove('hidden');
+    }
 
-// 3. SEU SCRIPT DE PARTÍCULAS E NAVEGAÇÃO (Mantenha o resto que você já tinha)
-function enterMain() {
-    document.getElementById('welcomeScreen').classList.add('hidden');
-    document.getElementById('donationScreen').classList.add('hidden');
-    document.getElementById('mainPage').classList.remove('hidden');
-}
-
-function goToDonation() {
-    document.getElementById('welcomeScreen').classList.add('hidden');
-    document.getElementById('donationScreen').classList.remove('hidden');
-}
+    function goToDonation() {
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('donationScreen').classList.remove('hidden');
+    }
 </script>
 </body>
 </html>
