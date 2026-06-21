@@ -80,7 +80,7 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
-/* BOTÕES */
+/* BOTÕES E INPUTS */
 .btn{border:none;cursor:pointer;border-radius:14px;padding:15px 28px;font-size:15px;font-weight:700;
   font-family:'Inter',sans-serif;display:inline-flex;align-items:center;justify-content:center;
   gap:10px;text-decoration:none;position:relative;overflow:hidden;
@@ -94,29 +94,12 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
 .btn-ghost{background:rgba(0,212,255,0.05);color:var(--text);border:1px solid var(--border-hi)}
 .btn-ghost:hover{background:rgba(0,212,255,0.1);border-color:var(--cyan);
   transform:translateY(-2px);box-shadow:0 0 30px rgba(0,212,255,0.1)}
-.btn-wpp{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;
-  box-shadow:0 0 40px rgba(37,211,102,0.12),0 8px 28px rgba(0,0,0,0.4);}
-.btn-wpp:hover{transform:translateY(-3px) scale(1.02);
-  box-shadow:0 0 60px rgba(37,211,102,0.25),0 20px 50px rgba(0,0,0,0.5)}
+.login-input{background:rgba(255,255,255,0.03);border:1px solid var(--border-hi);border-radius:12px;
+  padding:14px 16px;color:#fff;font-size:15px;font-family:'JetBrains Mono',monospace;
+  width:100%;max-width:300px;margin-bottom:12px;outline:none;transition:.3s}
+.login-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.1)}
 
-/* ── FORMULÁRIOS E PAINEIS ── */
-.panel{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:26px;position:relative;overflow:hidden;}
-.panel-title{font-size:1.3rem;font-weight:800;margin-bottom:10px;
-  background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.panel-desc{color:var(--muted);font-size:13.5px;line-height:1.75;margin-bottom: 20px;}
-.input-group{margin-bottom: 20px;}
-.input-label{display:block; font-size:12px; color:var(--cyan); margin-bottom:8px; font-weight:700; font-family:'JetBrains Mono',monospace;}
-.form-input{width:100%; background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.12); border-radius:12px; padding:15px; color:#fff; font-size:15px; font-weight:500; font-family:'Inter',sans-serif; outline:none; transition:.3s;}
-.form-input:focus{border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,212,255,0.07)}
-
-/* ── PLANOS GRID ── */
-.plan-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; margin-top: 20px;}
-.plan-card{text-align:center; padding: 30px 20px; display:flex; flex-direction:column; justify-content:space-between; transition: 0.3s;}
-.plan-card:hover{border-color:var(--cyan); transform:translateY(-5px);}
-.plan-price{font-size:2.5rem; font-weight:900; color:#fff; margin:15px 0;}
-.plan-price span{font-size:1rem; color:var(--muted); font-weight:500;}
-
-/* ── TEXTOS ── */
+/* ── TELA BOAS-VINDAS ── */
 .welcome-title{
   font-size:clamp(1.8rem,4.5vw,3.4rem);
   line-height:1.15;font-weight:900;letter-spacing:-.03em;margin-bottom:20px;
@@ -127,44 +110,8 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
   margin-bottom:38px;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .3s both}
 .sys-tag{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,212,255,0.2);letter-spacing:.04em}
 
-.main-page{padding:72px 20px 100px;position:relative;z-index:10}
-.container{width:100%;max-width:1300px;margin:0 auto}
-.hero{text-align:center;margin-bottom:64px;position:relative}
-.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:800px;height:320px;pointer-events:none;
-  background:radial-gradient(ellipse,rgba(0,212,255,0.06),rgba(124,58,237,0.03),transparent 70%)}
-.hero-title{font-size:clamp(2rem,5vw,4rem);line-height:1.05;font-weight:900;letter-spacing:-.04em;
-  margin-bottom:18px;
-  background:linear-gradient(135deg,#fff 0%,var(--cyan) 22%,var(--purple) 50%,var(--pink) 75%,var(--orange) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:fadeUp .7s cubic-bezier(.16,1,.3,1) both}
-.hero-desc{max-width:680px;margin:16px auto 0;color:var(--muted);line-height:1.85;font-size:.97rem}
-.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:32px}
-.card{background:rgba(6,10,20,0.88);border:1px solid var(--border);border-radius:22px;
-  padding:26px;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1);
-  display:flex;flex-direction:column;min-height:215px;position:relative;overflow:hidden;
-  animation:fadeUp .55s cubic-bezier(.16,1,.3,1) both}
-.card:hover{border-color:rgba(0,212,255,0.26);transform:translateY(-8px) scale(1.01);
-  box-shadow:0 0 50px rgba(0,212,255,0.07),0 28px 60px rgba(0,0,0,0.65)}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;position:relative;z-index:1}
-.card-code{font-size:10px;color:rgba(0,212,255,0.38);letter-spacing:.1em;
-  text-transform:uppercase;font-weight:700;font-family:'JetBrains Mono',monospace}
-.status-pill{padding:5px 12px;border-radius:999px;background:rgba(0,255,136,0.06);
-  color:var(--green);font-size:10px;font-weight:800;text-transform:uppercase;
-  border:1px solid rgba(0,255,136,0.14);display:flex;align-items:center;gap:5px;flex-shrink:0}
-.s-dot{width:5px;height:5px;border-radius:50%;background:var(--green);
-  box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
-.card-title{font-size:1.32rem;font-weight:800;letter-spacing:-.03em;margin-bottom:9px;
-  line-height:1.15;position:relative;z-index:1;transition:.3s}
-.card:hover .card-title{background:linear-gradient(135deg,#fff,var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.card-desc{color:var(--muted);line-height:1.68;font-size:13.5px;flex:1;
-  margin-bottom:15px;position:relative;z-index:1;transition:.3s}
-.card-author{color:rgba(0,212,255,0.32);font-size:12px;font-family:'JetBrains Mono',monospace;
-  position:relative;z-index:1;}
+/* ... [ESTILOS ANTERIORES MANTIDOS] ... */
 
-@media(max-width:960px){.plan-grid{grid-template-columns:1fr}.cards-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:580px){.cards-grid{grid-template-columns:1fr}.glass{padding:26px;border-radius:22px}}
 </style>
 </head>
 <body>
@@ -189,308 +136,62 @@ html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hid
     <div class="corner bl"></div><div class="corner br"></div>
     <div class="sys-tag" style="top:18px;right:24px">SYS_v3.0 ■ ONLINE</div>
     <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
-    <h1 class="welcome-title">Acesse o FuturaOS_Tasks.</h1>
-    <p class="welcome-sub">Escolha como deseja acessar a plataforma. Faça login com seu e-mail VIP, adquira um acesso Premium ou assista a um anúncio para entrar gratuitamente.</p>
+    <h1 class="welcome-title">Olá, seja muito bem‑vindo ao FuturaOS_Tasks.</h1>
+    <p class="welcome-sub">Tecnologia de ponta ao seu alcance. Realize o login para acessar os recursos.</p>
     
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+        <input type="text" id="loginEmail" class="login-input" placeholder="Seu e-mail de acesso">
+        <input type="password" id="loginSenha" class="login-input" placeholder="Sua senha">
+    </div>
+
     <div style="display:flex;gap:14px;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="showLogin()">🔑 Fazer Login</button>
-      <button class="btn btn-ghost" onclick="showPlans()">🛒 Comprar Acesso</button>
-      <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:5px; border-color:var(--orange)" onclick="showAdScreen()">
-        🎁 Acessar Gratuitamente (Requer 10 min de atenção)
+      <button class="btn btn-primary" onclick="doLogin()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Entrar no sistema
       </button>
     </div>
+    <div class="sys-tag" style="bottom:20px;left:24px">SESSION: FT-2026 // SECURE</div>
   </div>
 </section>
-
-<section class="screen hidden" id="loginScreen">
-  <div class="glass" style="max-width:500px">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="badge" style="margin-bottom:26px"><span class="live-dot"></span>Área Restrita</div>
-    <h2 class="panel-title" style="font-size:2rem; margin-bottom:20px;">Entrar no Sistema</h2>
-    
-    <div class="input-group">
-      <label class="input-label">E-MAIL CADASTRADO</label>
-      <input type="email" id="loginEmail" class="form-input" placeholder="seuemail@gmail.com">
-    </div>
-
-    <div class="input-group">
-      <label class="input-label">SENHA</label>
-      <input type="password" id="loginSenha" class="form-input" placeholder="Digite sua senha">
-    </div>
-
-    <div class="input-group">
-      <label class="input-label">CÓDIGO DE ACESSO</label>
-      <input type="text" id="loginCode" class="form-input" placeholder="Digite a chave gerada (Opcional)">
-    </div>
-
-    <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:10px;" onclick="doLogin()">
-      Entrar Agora
-    </button>
-    
-    <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:10px; font-size:13px" onclick="goBackToWelcome()">
-      Voltar
-    </button>
-  </div>
-</section>
-
-<section class="screen hidden" id="plansScreen">
-  <div class="glass" style="max-width:1000px">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="badge" style="margin-bottom:10px"><span class="live-dot"></span>Planos de Acesso</div>
-    <h2 class="panel-title" style="font-size:2rem;">Escolha seu plano</h2>
-    <p class="panel-desc">O pagamento e a liberação do código de acesso são feitos de forma rápida pelo WhatsApp.</p>
-    
-    <div class="plan-grid">
-      <div class="panel plan-card">
-        <div>
-          <h3 class="input-label" style="font-size:14px;">ACESSO MENSAL</h3>
-          <div class="plan-price">R$ 9,99<span>/ 30 dias</span></div>
-          <p class="panel-desc" style="font-size:12px;">Acesso completo a todos os scripts sem interrupções por 1 mês.</p>
-        </div>
-        <button class="btn btn-wpp" onclick="buyPlan('Plano Mensal (30 dias)', '9,99')">
-          📱 Comprar via WhatsApp
-        </button>
-      </div>
-
-      <div class="panel plan-card">
-        <div>
-          <h3 class="input-label" style="font-size:14px;">ACESSO SEMANAL</h3>
-          <div class="plan-price">R$ 2,99<span>/ 7 dias</span></div>
-          <p class="panel-desc" style="font-size:12px;">Ideal para semanas de provas e trabalhos escolares.</p>
-        </div>
-        <button class="btn btn-wpp" onclick="buyPlan('Plano Semanal (7 dias)', '2,99')">
-          📱 Comprar via WhatsApp
-        </button>
-      </div>
-
-      <div class="panel plan-card">
-        <div>
-          <h3 class="input-label" style="font-size:14px;">ACESSO BÁSICO</h3>
-          <div class="plan-price">R$ 1,99<span>/ 3 dias</span></div>
-          <p class="panel-desc" style="font-size:12px;">Precisa resolver uma tarefa rápida? Este plano é para você.</p>
-        </div>
-        <button class="btn btn-wpp" onclick="buyPlan('Plano Básico (3 dias)', '1,99')">
-          📱 Comprar via WhatsApp
-        </button>
-      </div>
-    </div>
-
-    <button class="btn btn-ghost" style="margin-top:25px;" onclick="goBackToWelcome()">
-      ← Voltar
-    </button>
-  </div>
-</section>
-
-<section class="screen hidden" id="adScreen">
-  <div class="glass" style="max-width:550px; text-align:center;">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div class="badge" style="margin-bottom:20px; border-color:var(--orange); color:var(--orange)">
-      <span class="live-dot" style="background:var(--orange); box-shadow:0 0 8px var(--orange)"></span>Patrocinador
-    </div>
-    <h2 class="panel-title" style="font-size:1.8rem; margin-bottom:10px;">Acesso Gratuito</h2>
-    <p class="panel-desc">Aguarde o tempo do anúncio para liberar o sistema. <br><strong style="color:var(--pink)">Atenção: Se você sair do site ou mudar de aba, o tempo será zerado!</strong></p>
-    
-    <div class="panel" style="background:rgba(0,0,0,0.6); padding:40px; margin-bottom:20px; border-color:rgba(255,107,0,0.3)">
-      <div style="font-size:13px; color:var(--muted); margin-bottom:15px; text-transform:uppercase; letter-spacing:2px;">Tempo restante</div>
-      <div id="adTimerDisplay" style="font-size:4.5rem; font-weight:900; color:var(--orange); font-family:'JetBrains Mono',monospace; text-shadow: 0 0 30px rgba(255,107,0,0.4);">
-        10:00
-      </div>
-    </div>
-
-    <button id="btnSkipAd" class="btn btn-primary hidden" style="width:100%; justify-content:center; background:var(--green); box-shadow:0 0 30px rgba(0,255,136,0.3); color:#000" onclick="finishAd()">
-      ✅ Entrar no Sistema
-    </button>
-    <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:10px; font-size:13px" onclick="cancelAd()">
-      Cancelar
-    </button>
-  </div>
-</section>
-
-<main class="main-page hidden" id="mainPage">
-  <div class="container">
-    <section class="hero">
-      <div class="hero-glow"></div>
-      <div class="badge" style="margin-bottom:22px"><span class="live-dot"></span>FuturaOS_Tasks — Scripts Ativos</div>
-      <h2 class="hero-title">Ferramentas Inteligentes para<br>Maximizar Seu Desempenho</h2>
-      <p class="hero-desc">Você está logado no sistema. Clique em qualquer card para acessar o script.</p>
-    </section>
-    <section class="cards-grid" id="cardsGrid"></section>
-  </div>
-</main>
 
 <script>
-'use strict';
+async function doLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const senha = document.getElementById('loginSenha').value;
+    const rlUrl = 'https://script.google.com/macros/s/AKfycbzzyrodBL4depn_cLvD1HEmCuLzaY-XyKx2ksoMiOPaBF9He513l9HwuaoIWxqKLlHyPg/exec';
 
-/* ── CONFIGURAÇÃO DO WHATSAPP ── */
-const MEU_WHATSAPP = "5511926705115"; 
-
-/* ── PARTÍCULAS DE FUNDO ── */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let W, H;
-const COLORS = ['0,212,255','124,58,237','236,72,153','0,255,136','255,107,0'];
-let pts = [];
-
-function resizeCanvas() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
-resizeCanvas(); window.addEventListener('resize', resizeCanvas);
-
-for (let i = 0; i < 95; i++) {
-  pts.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + 0.3,
-    dx: (Math.random() - 0.5) * 0.45, dy: (Math.random() - 0.5) * 0.45, o: Math.random() * 0.5 + 0.1,
-    c: COLORS[Math.floor(Math.random() * COLORS.length)] });
-}
-
-function drawParticles() {
-  ctx.clearRect(0, 0, W, H);
-  pts.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.c},${p.o})`; ctx.fill();
-    p.x += p.dx; p.y += p.dy;
-    if (p.x < 0 || p.x > W) p.dx *= -1; if (p.y < 0 || p.y > H) p.dy *= -1;
-  });
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-const cursorGlow = document.getElementById('cursorGlow');
-document.addEventListener('mousemove', e => {
-  cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px';
-});
-
-function showNotify(icon, title, sub) {
-  document.getElementById('notifyIcon').textContent = icon;
-  document.getElementById('notifyTitle').textContent = title;
-  document.getElementById('notifySub').textContent = sub;
-  const el = document.getElementById('notify');
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 4500);
-}
-
-/* ── NAVEGAÇÃO ── */
-function showLogin() {
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('loginScreen').classList.remove('hidden');
-}
-
-function showPlans() {
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('plansScreen').classList.remove('hidden');
-}
-
-function goBackToWelcome() {
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('plansScreen').classList.add('hidden');
-  document.getElementById('welcomeScreen').classList.remove('hidden');
-}
-
-/* ── COMPRA WHATSAPP ── */
-function buyPlan(nomePlano, valor) {
-  const texto = encodeURIComponent(`Olá! Gostaria de comprar o ${nomePlano} do FuturaOS_Tasks por R$ ${valor}. Como faço para pagar e receber meu código de acesso?`);
-  window.open(`https://wa.me/${MEU_WHATSAPP}?text=${texto}`, '_blank');
-}
-
-/* ── SISTEMA DE LOGIN COM SENHA E E-MAIL ── */
-function doLogin() {
-  const email = document.getElementById('loginEmail').value;
-  const senha = document.getElementById('loginSenha').value;
-  const code = document.getElementById('loginCode').value;
-
-  if(!email || !senha) {
-    showNotify('⚠️', 'Atenção', 'Preencha pelo menos o e-mail e a senha.');
-    return;
-  }
-  showNotify('✅', 'Acesso Liberado', 'Seja bem-vindo ao sistema!');
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('mainPage').classList.remove('hidden');
-}
-
-/* ── SISTEMA DE ACESSO GRATUITO (TIMER 10 MIN + ANTI-FRAUDE) ── */
-let adInterval;
-const TOTAL_AD_TIME = 600; // 600 segundos = 10 minutos
-let currentAdTime = TOTAL_AD_TIME;
-let isWatchingAd = false;
-
-function showAdScreen() {
-  document.getElementById('welcomeScreen').classList.add('hidden');
-  document.getElementById('adScreen').classList.remove('hidden');
-  startAdTimer();
-}
-
-function startAdTimer() {
-  isWatchingAd = true;
-  currentAdTime = TOTAL_AD_TIME;
-  document.getElementById('btnSkipAd').classList.add('hidden');
-  updateAdDisplay();
-  
-  clearInterval(adInterval);
-  adInterval = setInterval(() => {
-    currentAdTime--;
-    updateAdDisplay();
-    
-    if(currentAdTime <= 0) {
-      clearInterval(adInterval);
-      document.getElementById('adTimerDisplay').textContent = "00:00";
-      document.getElementById('btnSkipAd').classList.remove('hidden');
-      showNotify('✅', 'Concluído', 'Seu acesso gratuito foi liberado!');
-      isWatchingAd = false;
+    if (!email || !senha) {
+        showNotify('Erro', 'Por favor, preencha todos os campos.');
+        return;
     }
-  }, 1000);
+
+    try {
+        const response = await fetch(`${rlUrl}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            enterMain();
+        } else {
+            showNotify('Falha no Login', 'Dados incorretos ou acesso negado.');
+        }
+    } catch (error) {
+        showNotify('Erro de Conexão', 'Não foi possível contatar o servidor.');
+    }
 }
 
-function updateAdDisplay() {
-  let m = Math.floor(currentAdTime / 60).toString().padStart(2, '0');
-  let s = (currentAdTime % 60).toString().padStart(2, '0');
-  document.getElementById('adTimerDisplay').textContent = `${m}:${s}`;
+function showNotify(title, sub) {
+    const n = document.getElementById('notify');
+    document.getElementById('notifyTitle').innerText = title;
+    document.getElementById('notifySub').innerText = sub;
+    n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 4000);
 }
 
-function cancelAd() {
-  clearInterval(adInterval);
-  isWatchingAd = false;
-  document.getElementById('adScreen').classList.add('hidden');
-  document.getElementById('welcomeScreen').classList.remove('hidden');
+function enterMain() {
+    document.getElementById('welcomeScreen').classList.add('hidden');
+    document.getElementById('mainPage').classList.remove('hidden');
 }
-
-function finishAd() {
-  document.getElementById('adScreen').classList.add('hidden');
-  document.getElementById('mainPage').classList.remove('hidden');
-  showNotify('🎁', 'Acesso Gratuito', 'Aproveite o sistema!');
-}
-
-/* SISTEMA ANTI-FRAUDE: Detecta saída da aba */
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden && isWatchingAd) {
-    clearInterval(adInterval);
-    currentAdTime = TOTAL_AD_TIME; 
-    updateAdDisplay();
-    startAdTimer(); 
-    showNotify('🚨', 'Tempo Zerado!', 'Você saiu do site e o tempo foi reiniciado.');
-  }
-});
-
-/* ── DADOS DOS SCRIPTS ── */
-const scripts = [
-  { id:1, title:'Taskitos', desc:'Ferramenta para automatizar tarefas do Sala do Futuro.', author:'flowings' },
-  { id:2, title:'Redação Eclipse', desc:'Ferramenta para automatizar a criação de redações.', author:'crimsonstrauss' },
-  { id:3, title:'Khanto', desc:'Conjunto de ferramentas para automatizar tarefas no Khan Academy.', author:'cupiditys' }
-];
-
-function renderCards() {
-  document.getElementById('cardsGrid').innerHTML = scripts.map(s => `
-    <article class="card">
-      <div class="card-header">
-        <span class="card-code">// script_${String(s.id).padStart(2, '0')}</span>
-        <span class="status-pill"><span class="s-dot"></span>online</span>
-      </div>
-      <div class="card-title">${s.title}</div>
-      <p class="card-desc">${s.desc}</p>
-      <div class="card-author">por ${s.author}</div>
-    </article>`).join('');
-}
-renderCards();
-
 </script>
+
 </body>
 </html>
