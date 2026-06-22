@@ -1,188 +1,71 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>FuturaOS_Tasks</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#020408;
-  --cyan:#00d4ff;--purple:#7c3aed;--pink:#ec4899;--green:#00ff88;--orange:#ff6b00;
-  --text:#e8f4ff;--muted:#4a6a8a;
-  --border:rgba(0,212,255,0.08);--border-hi:rgba(0,212,255,0.22);
-}
-html,body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-family:'Inter',sans-serif}
-.hidden{display:none!important}
-
-/* FUNDO E EFEITOS (MANTIDOS) */
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
-.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,black,transparent);-webkit-mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,black,transparent)}
-.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.au{position:absolute;border-radius:50%}
-.au1{width:900px;height:900px;background:radial-gradient(circle,rgba(0,212,255,0.055),transparent 70%);top:-250px;left:-250px;animation:au1 14s ease-in-out infinite}
-.au2{width:750px;height:750px;background:radial-gradient(circle,rgba(124,58,237,0.065),transparent 70%);bottom:-200px;right:-150px;animation:au2 17s ease-in-out infinite}
-.au3{width:550px;height:550px;background:radial-gradient(circle,rgba(236,72,153,0.04),transparent 70%);top:35%;left:35%;transform:translate(-50%,-50%);animation:au3 11s ease-in-out infinite}
-@keyframes au1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,90px) scale(1.12)}}
-@keyframes au2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-90px,-70px) scale(1.18)}}
-@keyframes au3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.25)}}
-.scanline{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.012) 3px,rgba(0,0,0,0.012) 6px);animation:scan 12s linear infinite}
-@keyframes scan{from{background-position:0 0}to{background-position:0 200px}}
-.cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.03),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;will-change:left,top}
-
-/* NOTIFICAÇÃO */
-.notify{position:fixed;bottom:28px;right:28px;z-index:9999;background:rgba(6,10,20,0.95);border:1px solid rgba(0,255,136,0.3);border-radius:16px;padding:16px 22px;display:flex;align-items:center;gap:14px;box-shadow:0 0 40px rgba(0,255,136,0.1),0 20px 60px rgba(0,0,0,0.6);backdrop-filter:blur(24px);transform:translateY(120px);opacity:0;transition:all .45s cubic-bezier(.16,1,.3,1);min-width:260px}
-.notify.show{transform:translateY(0);opacity:1}
-.notify-icon{font-size:22px;flex-shrink:0}
-.notify-title{font-size:14px;font-weight:700;color:var(--text)}
-.notify-sub{font-size:12px;color:var(--muted);margin-top:3px;font-family:'JetBrains Mono',monospace}
-
-/* COMPONENTES BASE */
-.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 20px;position:relative;z-index:10}
-.glass{width:100%;max-width:960px;background:rgba(6,10,20,0.88);border:1px solid var(--border-hi);box-shadow:0 0 80px rgba(0,212,255,0.04),0 40px 100px rgba(0,0,0,0.85),inset 0 1px 0 rgba(0,212,255,0.08);backdrop-filter:blur(36px);border-radius:28px;padding:48px;position:relative;overflow:hidden;animation:boxIn .8s cubic-bezier(.16,1,.3,1) both}
-@keyframes boxIn{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
-.glass::before{content:"";position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),var(--pink),transparent)}
-.corner{position:absolute;width:20px;height:20px;border-color:var(--cyan);border-style:solid;animation:cornerPulse 3s ease-in-out infinite}
-.corner.tl{top:14px;left:14px;border-width:2px 0 0 2px}
-.corner.tr{top:14px;right:14px;border-width:2px 2px 0 0}
-.corner.bl{bottom:14px;left:14px;border-width:0 0 2px 2px}
-.corner.br{bottom:14px;right:14px;border-width:0 2px 2px 0}
-@keyframes cornerPulse{0%,100%{opacity:.25}50%{opacity:.8}}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:linear-gradient(135deg,rgba(0,212,255,0.07),rgba(124,58,237,0.07));border:1px solid rgba(0,212,255,0.18);color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;animation:badgePulse 3s ease-in-out infinite}
-@keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0)}50%{box-shadow:0 0 25px rgba(0,212,255,0.15)}}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.6s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
-
-/* BOTÕES E PAINÉIS */
-.btn{border:none;cursor:pointer;border-radius:14px;padding:15px 28px;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;position:relative;overflow:hidden;transition:all .3s cubic-bezier(.16,1,.3,1)}
-.btn-primary{background:linear-gradient(135deg,#0ea5e9,var(--purple),var(--pink));color:#fff;box-shadow:0 0 40px rgba(0,212,255,0.12),0 8px 28px rgba(0,0,0,0.4)}
-.btn-ghost{background:rgba(0,212,255,0.05);color:var(--text);border:1px solid var(--border-hi)}
-.btn-wpp{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff}
-.panel{background:rgba(255,255,255,0.016);border:1px solid var(--border);border-radius:20px;padding:26px}
-.panel-title{font-size:1.3rem;font-weight:800;margin-bottom:10px;background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.form-input{width:100%; background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.12); border-radius:12px; padding:15px; color:#fff; font-size:15px; margin-bottom:15px;}
-.welcome-title{font-size:clamp(1.8rem,4.5vw,3.4rem);line-height:1.15;font-weight:900;background:linear-gradient(135deg,#ffffff 0%,var(--cyan) 35%,var(--purple) 65%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-.main-page{padding:72px 20px 100px;position:relative;z-index:10}
-.container{width:100%;max-width:1300px;margin:0 auto}
-.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:32px}
-.card{background:rgba(6,10,20,0.88);border:1px solid var(--border);border-radius:22px;padding:26px;cursor:pointer;transition:all .35s;min-height:215px}
-.card:hover{border-color:rgba(0,212,255,0.26);transform:translateY(-8px) scale(1.01)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção - FuturaOS_Tasks</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 650px;
+            margin: auto;
+        }
+        h1 { color: #b71c1c; margin-bottom: 10px; }
+        h2 { color: #555; }
+        p { line-height: 1.7; font-size: 1.1em; color: #444; }
+        .alert {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .donate-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 18px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .donate-btn:hover { background-color: #218838; }
+        footer { margin-top: 40px; font-size: 0.9em; color: #888; }
+    </style>
 </head>
 <body>
-
-<canvas id="particles"></canvas>
-<div class="grid-bg"></div>
-<div class="notify" id="notify">
-  <div class="notify-icon" id="notifyIcon">💚</div>
-  <div>
-    <div class="notify-title" id="notifyTitle"></div>
-    <div class="notify-sub" id="notifySub"></div>
-  </div>
-</div>
-
-<section class="screen" id="welcomeScreen">
-  <div class="glass">
-    <div class="badge"><span class="live-dot"></span>FuturaOS_Tasks — Sistema Premium</div>
-    <h1 class="welcome-title">Acesse o FuturaOS_Tasks.</h1>
-    <p style="margin-bottom:30px; color:var(--muted)">Escolha como deseja acessar a plataforma.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap">
-      <button class="btn btn-primary" onclick="showLogin()">🔑 Fazer Login</button>
-      <button class="btn btn-ghost" onclick="showPlans()">🛒 Comprar Acesso</button>
-      <button class="btn btn-ghost" style="width:100%; margin-top:5px; border-color:var(--orange)" onclick="showAdScreen()">🎁 Acessar Gratuitamente</button>
+    <div class="container">
+        <h1>Serviço em Manutenção</h1>
+        <h2>O FuturaOS_Tasks está temporariamente offline</h2>
+        
+        <p>Pedimos desculpas pelo transtorno. Identificamos um erro crítico durante a nossa última atualização e, por precaução, o site foi colocado em modo de manutenção para evitar maiores danos técnicos.</p>
+        
+        <div class="alert">
+            <strong>Precisamos da vossa ajuda!</strong><br>
+            Para mantermos o site online e disponível para todos, dependemos inteiramente da colaboração da comunidade. Os custos de servidor são elevados e, sem o vosso apoio, não conseguimos manter a plataforma ativa.
+        </div>
+        
+        <p>Cada doação ajuda diretamente a cobrir as despesas de manutenção e garante que o Futura ou S-Desk possa retornar e permanecer online. Se valoriza o nosso trabalho, considere fazer uma contribuição.</p>
+        
+        <a href="https://pixgg.com/FELIPEXX" class="donate-btn">Fazer uma Doação via PIX</a>
+        
+        <p style="margin-top: 30px;">Estamos a trabalhar incansavelmente para resolver o problema e voltaremos o mais breve possível. Agradecemos a compreensão e o apoio de todos.</p>
+        
+        <footer>Equipa FuturaOS_Tasks</footer>
     </div>
-  </div>
-</section>
-
-<section class="screen hidden" id="loginScreen">
-  <div class="glass" style="max-width:500px">
-    <h2 class="panel-title">Entrar no Sistema</h2>
-    <input type="email" id="loginEmail" class="form-input" placeholder="E-mail">
-    <input type="password" id="loginSenha" class="form-input" placeholder="Senha">
-    <input type="text" id="loginCode" class="form-input" placeholder="Código de Acesso (Opcional)">
-    <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Entrar Agora</button>
-    <button class="btn btn-ghost" style="width:100%; margin-top:10px;" onclick="goBackToWelcome()">Voltar</button>
-  </div>
-</section>
-
-<section class="screen hidden" id="adScreen">
-  <div class="glass" style="max-width:550px; text-align:center;">
-    <h2 class="panel-title">Acesso Gratuito</h2>
-    <div id="adTimerDisplay" style="font-size:4rem; color:var(--orange); margin:20px 0;">10:00</div>
-    <button id="btnSkipAd" class="btn btn-primary hidden" style="width:100%" onclick="finishAd()">✅ Entrar no Sistema</button>
-    <button class="btn btn-ghost" style="width:100%; margin-top:10px;" onclick="cancelAd()">Cancelar</button>
-  </div>
-</section>
-
-<main class="main-page hidden" id="mainPage">
-  <div class="container">
-    <h2 class="welcome-title" style="text-align:center">Scripts Ativos</h2>
-    <section class="cards-grid" id="cardsGrid"></section>
-  </div>
-</main>
-
-<script>
-'use strict';
-
-const URL_API = "https://script.google.com/macros/s/AKfycbzgp1Bx5JSee5-L-nJD3X36XfB0kqh38GbjJukELqy7qwpZYVdLFd-W2nzi2Kvi-p60Pg/exec";
-
-function showNotify(icon, title, sub) {
-  document.getElementById('notifyIcon').textContent = icon;
-  document.getElementById('notifyTitle').textContent = title;
-  document.getElementById('notifySub').textContent = sub;
-  const el = document.getElementById('notify');
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 4500);
-}
-
-function showLogin() { document.getElementById('welcomeScreen').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); }
-function goBackToWelcome() { document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('plansScreen').classList.add('hidden'); document.getElementById('welcomeScreen').classList.remove('hidden'); }
-function showPlans() { document.getElementById('welcomeScreen').classList.add('hidden'); document.getElementById('plansScreen').classList.remove('hidden'); }
-
-async function doLogin() {
-  const email = document.getElementById('loginEmail').value;
-  const senha = document.getElementById('loginSenha').value;
-  const code = document.getElementById('loginCode').value;
-
-  if(!email || !senha) { showNotify('⚠️', 'Atenção', 'Preencha e-mail e senha.'); return; }
-  showNotify('🔄', 'Processando', 'Verificando acesso...');
-
-  try {
-    const resposta = await fetch(`${URL_API}?email=${email}&senha=${senha}&codigo=${code}`);
-    const dados = await resposta.json();
-    if (dados.status === true) {
-      showNotify('✅', 'Sucesso', 'Acesso liberado!');
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('mainPage').classList.remove('hidden');
-    } else {
-      showNotify('❌', 'Erro', 'Dados incorretos.');
-    }
-  } catch (err) {
-    showNotify('🚨', 'Erro', 'Falha ao conectar no servidor.');
-  }
-}
-
-/* (Mantendo as funções de timer e renderização de cards que você enviou) */
-let adInterval;
-const TOTAL_AD_TIME = 600;
-let currentAdTime = TOTAL_AD_TIME;
-function showAdScreen() { document.getElementById('welcomeScreen').classList.add('hidden'); document.getElementById('adScreen').classList.remove('hidden'); startAdTimer(); }
-function startAdTimer() { 
-    adInterval = setInterval(() => { 
-        currentAdTime--; 
-        let m = Math.floor(currentAdTime/60).toString().padStart(2,'0'); 
-        let s = (currentAdTime%60).toString().padStart(2,'0');
-        document.getElementById('adTimerDisplay').textContent = `${m}:${s}`;
-        if(currentAdTime <= 0) { clearInterval(adInterval); document.getElementById('btnSkipAd').classList.remove('hidden'); }
-    }, 1000); 
-}
-function finishAd() { document.getElementById('adScreen').classList.add('hidden'); document.getElementById('mainPage').classList.remove('hidden'); }
-function cancelAd() { clearInterval(adInterval); document.getElementById('adScreen').classList.add('hidden'); document.getElementById('welcomeScreen').classList.remove('hidden'); }
-
-const scripts = [{id:1, title:'Taskitos', desc:'Automatizar tarefas.', author:'flowings'},{id:2, title:'Redação', desc:'Criação de redações.', author:'crimsonstrauss'},{id:3, title:'Khanto', desc:'Tarefas Khan Academy.', author:'cupiditys'}];
-document.getElementById('cardsGrid').innerHTML = scripts.map(s => `<article class="card"><div class="card-title">${s.title}</div><p>${s.desc}</p></article>`).join('');
-</script>
 </body>
 </html>
